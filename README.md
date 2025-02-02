@@ -1,6 +1,6 @@
 ------
 ------
-# <div align="center"> 🛠️ Outils et Technologies global utilisés dans le Projet</div> 
+# <div align="center"> 🛠️ Outils et Technos utilisés dans le Projet</div> 
 ------- 
 ------- 
 
