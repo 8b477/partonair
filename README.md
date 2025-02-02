@@ -1,28 +1,24 @@
 ------
 ------
-# <div align="center"> 🛑 Need update 🛑</div> 
+# <div align="center"> 🛠️ Outils et Technologies global utilisés dans le Projet</div> 
 ------- 
 ------- 
-
-<br>
-<br>
-<br>
-
-# 🛠️ Outils et Technologies Utilisés dans le Projet
 
 ## 🖥️ Backend
-- **ASP.NET Core API**  
+- **ASP.NET Core API**
 - **Framework** : .NET 8  
 - **Langage** : C# 12  
+- **MediatR** pour l'implémentation du pattern Mediator  
+- **Problem Details RFC 9457** pour la gestion standardisée des erreurs  
 
 ## 🗃️ Base de données
 - **SQL Server**  
 - **Entity Framework Core (ORM)**  
 - **T-SQL** pour la création des tables et scripts de départ  
-- **Modélisation** : [Looping](https://www.looping-mcd.fr)  
+- **Modélisation** : Looping  
 
 ## 🔒 Sécurité
-- **OAuth 2.0** pour l'authentification  
+- **JWT + OAuth 2.0** pour l'authentification  
 - **BCrypt** pour le hachage des mots de passe  
 
 ## 📏 Validation
@@ -42,17 +38,25 @@
 
 ## 📦 Packages NuGet principaux
 
-### 🪄 Couche Backend (API et logique métier)
-- `Microsoft.AspNetCore.Authentication.JwtBearer`  
-- `FluentValidation.AspNetCore`  
-- `BCrypt.Net-Next`  
+### 🪄 Couche API
+- MediatR  
+- Microsoft.EntityFrameworkCore.SqlServer  
+- Microsoft.VisualStudio.Azure.Containers.Tools.Targets  
+- Swashbuckle.AspNetCore  
+- Microsoft.AspNetCore.Authentication.JwtBearer  
+- FluentValidation.AspNetCore  
+- BCrypt.Net-Next  
 
-### 🗃️ Couche Infrastructure (Base de données et ORM)
-- `Microsoft.EntityFrameworkCore.SqlServer`  
+### 🧠 Couche Application
+- MediatR  
+
+### 🗃️ Couche Infrastructure
+- Microsoft.EntityFrameworkCore  
+- Microsoft.EntityFrameworkCore.SqlServer  
 
 ### 🎨 Couche Frontend (Blazor)
-- `Microsoft.AspNetCore.Components.WebAssembly`  
+- Microsoft.AspNetCore.Components.WebAssembly  
 
 ### 🧪 Couche Tests
-- `xUnit.net`
+- xUnit.net  
 
