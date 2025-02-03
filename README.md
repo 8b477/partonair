@@ -18,7 +18,7 @@
 - **SQL Server**  
 - **Entity Framework Core (ORM)**  
 - **T-SQL**
-- **Modélisation** : [Looping](https://www.looping-mcd.fr) 
+- **Modélisation : [Looping](https://www.looping-mcd.fr)** 
 
 ## 🔒 Sécurité
 - **JWT**
