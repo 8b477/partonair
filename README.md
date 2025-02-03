@@ -8,33 +8,28 @@
 - **ASP.NET Core API**
 - **Framework** : .NET 8  
 - **Langage** : C# 12  
-- **MediatR** pour l'implémentation du pattern Mediator  
-- **Problem Details RFC 9457** pour la gestion standardisée des erreurs  
+- **MediatR**
+- **CQRS**
+- **UnitOfWork**
+- **Problem Details : [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457)**
+- **FluentValidation**
 
 ## 🗃️ Base de données
 - **SQL Server**  
 - **Entity Framework Core (ORM)**  
-- **T-SQL** pour la création des tables et scripts de départ  
-- **Modélisation** : Looping  
+- **T-SQL**
+- **Modélisation** : [Looping](https://www.looping-mcd.fr) 
 
 ## 🔒 Sécurité
-- **JWT + OAuth 2.0** pour l'authentification  
-- **BCrypt** pour le hachage des mots de passe  
-
-## 📏 Validation
-- **FluentValidation** pour la validation des données  
+- **JWT**
+- **OAuth 2.0** 
+- **BCrypt**
 
 ## 🧪 Tests
-- **xUnit** pour les tests unitaires et d'intégration  
-
-## 🎨 Frontend
-- **Blazor**  
+- **xUnit**
 
 ## 🐳 Conteneurisation
-- **Docker** pour la gestion des conteneurs  
-
-## 🔄 Contrôle de version
-- **GitHub** pour le versioning du code  
+- **Docker** 
 
 ## 📦 Packages NuGet principaux
 
@@ -53,9 +48,6 @@
 ### 🗃️ Couche Infrastructure
 - Microsoft.EntityFrameworkCore  
 - Microsoft.EntityFrameworkCore.SqlServer  
-
-### 🎨 Couche Frontend (Blazor)
-- Microsoft.AspNetCore.Components.WebAssembly  
 
 ### 🧪 Couche Tests
 - xUnit.net  
