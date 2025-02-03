@@ -1,54 +1,31 @@
 ﻿using DomainLayer.partonair.Contracts;
 using DomainLayer.partonair.Entities;
-using DomainLayer.partonair.Enums;
 
-using Infrastructure.partonair.Enums;
+using InfrastructureLayer.partonair.Enums;
 using InfrastructureLayer.partonair.Exceptions;
 using InfrastructureLayer.partonair.Persistence;
 
 using Microsoft.EntityFrameworkCore;
 
+using System.Data;
+
+
 namespace InfrastructureLayer.partonair.Repositories
 {
-    public class UserRepository : IUser
+    public class UserRepository(AppDbContext ctx) : GenericRepository<User>(ctx), IUserRepository
     {
-
-        // <--------------------------------> TODO <-------------------------------->
-        // 
-        // <--------------------------------> **** <-------------------------------->
-
-
-
-        #region DI
-
-        private readonly AppDbContext _ctx;
-        public UserRepository(AppDbContext ctx) => _ctx = ctx;
-
-        #endregion
-
-
-
-        #region <-------------> CREATE <------------->
-
-        public Task InsertAsync(User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-
 
         #region <-------------> GET <------------->
 
-        public Task<ICollection<User>> GetAllAsync()
+        public async Task<User> GetByEmailAsync(string email)
         {
-            throw new NotImplementedException();
-        }
+            var result = await _ctx.Users.Where(u  => u.Email == email)
+                                         .FirstOrDefaultAsync();
 
-        public Task<User?> GetByEmailAsync(string email)
-        {
-            throw new NotImplementedException();
+            return 
+                result
+                ??
+                throw new InfrastructureException(InfrastructureErrorType.ResourceNotFound, $"The mail : {email} - no match");
         }
 
         public async Task<User> GetByIdAsync(Guid id)
@@ -67,42 +44,32 @@ namespace InfrastructureLayer.partonair.Repositories
                             })
                             .FirstOrDefaultAsync(u => u.Id == id);
 
-            if (user is null)
+            return 
+                user 
+                ??
                 throw new InfrastructureException(InfrastructureErrorType.ResourceNotFound, $"Identifier User: {id} - no match");
-
-            return user;
         }
 
-        public Task<ICollection<User>> GetByNameAsync(string name)
+        public async Task<ICollection<User>> GetByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            var result = await _ctx.Users.Where(u => u.UserName == name)
+                                         .ToListAsync();
+
+            return 
+                result
+                ??
+                throw new InfrastructureException(InfrastructureErrorType.ResourceNotFound, $"The name : {name} - no match");
         }
 
-        public Task<ICollection<User>> GetByRoleAsync(Roles role)
+        public async Task<ICollection<User>> GetByRoleAsync(string role)
         {
-            throw new NotImplementedException();
-        }
+            var result = await _ctx.Users.Where(u => u.Role.ToString() == role)
+                                         .ToListAsync();
 
-        #endregion
-
-
-
-        #region <-------------> UPDATE <------------->
-
-        public Task UpdateAsync(User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-
-
-        #region <-------------> DELETE <------------->
-
-        public Task DeleteAsync(Guid id)
-        {
-            throw new NotImplementedException();
+            return 
+                result
+                ??
+                throw new InfrastructureException(InfrastructureErrorType.ResourceNotFound, $"The role : {role} - no match");
         }
 
         #endregion

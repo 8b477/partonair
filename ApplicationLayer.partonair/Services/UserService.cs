@@ -7,20 +7,13 @@ using MediatR;
 
 namespace ApplicationLayer.partonair.Services
 {
-    public class UserService : IUserService
+    public class UserService(IMediator mediator) : IUserService
     {
-        private readonly IMediator _mediator;
-
-        public UserService(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        private readonly IMediator _mediator = mediator;
 
         public async Task<UserViewDTO> GetUserByIdAsync(Guid id)
         {
             return await _mediator.Send(new GetUserByIdQuery(id));
         }
-    }
-
-    
+    }    
 }

@@ -1,4 +1,4 @@
-﻿using Infrastructure.partonair.Enums;
+﻿using InfrastructureLayer.partonair.Enums;
 
 
 namespace InfrastructureLayer.partonair.Exceptions
@@ -11,7 +11,12 @@ namespace InfrastructureLayer.partonair.Exceptions
         private static readonly Dictionary<InfrastructureErrorType, string> Messages = new()
     {
         { InfrastructureErrorType.ResourceNotFound, "The requested resource was not found." },
-        // .. Other messages here ..
+        { InfrastructureErrorType.DatabaseConnectionError, "Database connection failed" },
+        { InfrastructureErrorType.ConcurrencyDatabaseException, "A concurrency conflict occurred while saving changes" },
+        { InfrastructureErrorType.UpdateDatabaseException, "A database update error occurred while saving changes" },
+        { InfrastructureErrorType.CancelationDatabaseException, "The operation was canceled" },
+        { InfrastructureErrorType.UnexpectedDatabaseException, "An unexpected error occurred while saving changes" },
+
     };
 
         /// <summary>

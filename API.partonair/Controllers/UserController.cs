@@ -1,9 +1,6 @@
 ﻿using ApplicationLayer.partonair.Interfaces;
-using ApplicationLayer.partonair.Queries.Users;
 
 using InfrastructureLayer.partonair.Exceptions;
-
-using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +9,7 @@ namespace API.partonair.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController(IUserService userService) : ControllerBase
     {
 
         // <--------------------------------> TODO <-------------------------------->
@@ -23,11 +20,7 @@ namespace API.partonair.Controllers
 
         #region DI
 
-        private readonly IUserService _userService;
-        public UserController(IUserService userService)
-        {
-            _userService = userService;
-        }
+        private readonly IUserService _userService = userService;
 
         #endregion
 
