@@ -5,5 +5,6 @@ namespace ApplicationLayer.partonair.Interfaces
     public interface IUserService
     {
        Task<UserViewDTO> GetUserByIdAsync(Guid id);
+       Task<ICollection<UserViewDTO>> GetAllAsync();
     }
 }

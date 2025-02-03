@@ -16,6 +16,7 @@ namespace InfrastructureLayer.partonair.Exceptions
         { InfrastructureErrorType.UpdateDatabaseException, "A database update error occurred while saving changes" },
         { InfrastructureErrorType.CancelationDatabaseException, "The operation was canceled" },
         { InfrastructureErrorType.UnexpectedDatabaseException, "An unexpected error occurred while saving changes" },
+        { InfrastructureErrorType.NoActiveTransactionException, "Attempted to commit a transaction when no transaction was active." },
 
     };
 

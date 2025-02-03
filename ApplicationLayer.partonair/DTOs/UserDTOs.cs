@@ -11,7 +11,6 @@ namespace ApplicationLayer.partonair.DTOs
         DateTime UserCreatedAt,
         DateTime LastConnection,
         string Role,
-        Guid FK_Profile,
-        Profile? Profile
+        Guid? FK_Profile
     );
 }

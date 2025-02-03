@@ -22,8 +22,7 @@ namespace ApplicationLayer.partonair.Queries.Users
                  user.UserCreatedAt,
                  user.LastConnection,
                  user.Role.ToString(),
-                 user.FK_Profile,
-                 null
+                 user.FK_Profile
             );
         }
     }

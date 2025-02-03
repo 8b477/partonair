@@ -50,6 +50,30 @@ namespace API.partonair.Controllers
                 throw;
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            try
+            {
+                var users = await _userService.GetAllAsync();
+
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        /*
+        [HttpGet]
+        public IActionResult GetAllAsync()
+        {
+            var users = Task.FromResult(_userService.GetAllAsync());
+            return Ok();
+        }
+         */
         #endregion
 
 

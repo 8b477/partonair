@@ -18,7 +18,7 @@ namespace DomainLayer.partonair.Entities
         public Roles Role { get; set; }
 
         // Navigation Property
-        public Guid FK_Profile { get; set; }
+        public Guid? FK_Profile { get; set; }
         public Profile? Profile { get; set; }
     }
 }

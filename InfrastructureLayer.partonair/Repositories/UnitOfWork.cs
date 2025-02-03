@@ -55,7 +55,7 @@ namespace InfrastructureLayer.partonair.Repositories
             try
             {
                 if (_transaction is null)
-                    throw new InfrastructureException(InfrastructureErrorType.NoActiveTransactionException, "Attempted to commit a transaction when no transaction was active.");
+                    throw new InfrastructureException(InfrastructureErrorType.NoActiveTransactionException);
 
                 await _transaction.CommitAsync();             
             }
@@ -74,7 +74,7 @@ namespace InfrastructureLayer.partonair.Repositories
             try
             {
                 if (_transaction is null)
-                    throw new InfrastructureException(InfrastructureErrorType.NoActiveTransactionException, "Attempted to commit a transaction when no transaction was active.");
+                    throw new InfrastructureException(InfrastructureErrorType.NoActiveTransactionException);
 
                 await _transaction.RollbackAsync();
             }

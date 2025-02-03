@@ -5,6 +5,6 @@ namespace DomainLayer.partonair.Enums
     {
         Visitor = 0,
         Employee = 1,
-        Compagny = 2
+        Company = 2
     }
 }

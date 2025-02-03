@@ -1,5 +1,7 @@
 ﻿using DomainLayer.partonair.Entities;
 
+using InfrastructureLayer.partonair.Persistence.Configuration;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace InfrastructureLayer.partonair.Persistence
@@ -10,10 +12,7 @@ namespace InfrastructureLayer.partonair.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Allows cast property 'Enum' into 'string'
-            modelBuilder.Entity<User>()
-                        .Property(u => u.Role)
-                        .HasConversion<string>(); 
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
     }
 }
