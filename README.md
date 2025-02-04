@@ -39,12 +39,12 @@
 - Microsoft.VisualStudio.Azure.Containers.Tools.Targets  
 - Swashbuckle.AspNetCore  
 - Microsoft.AspNetCore.Authentication.JwtBearer  
-- FluentValidation.AspNetCore  
-- BCrypt.Net-Next  
 
 ### 🧠 Couche Application
 - MediatR  
-
+- FluentValidation.AspNetCore  
+- BCrypt.Net-Next
+  
 ### 🗃️ Couche Infrastructure
 - Microsoft.EntityFrameworkCore  
 - Microsoft.EntityFrameworkCore.SqlServer  
