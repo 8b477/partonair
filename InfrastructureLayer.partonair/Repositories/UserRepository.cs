@@ -1,8 +1,8 @@
 ﻿using DomainLayer.partonair.Contracts;
 using DomainLayer.partonair.Entities;
 
-using InfrastructureLayer.partonair.Enums;
 using InfrastructureLayer.partonair.Exceptions;
+using InfrastructureLayer.partonair.Exceptions.Enums;
 using InfrastructureLayer.partonair.Persistence;
 
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +25,7 @@ namespace InfrastructureLayer.partonair.Repositories
             return 
                 result
                 ??
-                throw new InfrastructureException(InfrastructureErrorType.ResourceNotFound, $"The mail : {email} - no match");
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFound, $"The mail : {email} - no match");
         }
 
         public async Task<User> GetByIdAsync(Guid id)
@@ -47,7 +47,7 @@ namespace InfrastructureLayer.partonair.Repositories
             return 
                 user 
                 ??
-                throw new InfrastructureException(InfrastructureErrorType.ResourceNotFound, $"Identifier User: {id} - no match");
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFound, $"Identifier User: {id} - no match");
         }
 
         public async Task<ICollection<User>> GetByNameAsync(string name)
@@ -58,7 +58,7 @@ namespace InfrastructureLayer.partonair.Repositories
             return 
                 result
                 ??
-                throw new InfrastructureException(InfrastructureErrorType.ResourceNotFound, $"The name : {name} - no match");
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFound, $"The name : {name} - no match");
         }
 
         public async Task<ICollection<User>> GetByRoleAsync(string role)
@@ -69,10 +69,18 @@ namespace InfrastructureLayer.partonair.Repositories
             return 
                 result
                 ??
-                throw new InfrastructureException(InfrastructureErrorType.ResourceNotFound, $"The role : {role} - no match");
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFound, $"The role : {role} - no match");
         }
 
         #endregion
 
+
+        public async Task<bool> IsEmailAvailable(string email)
+        {
+            var result = await _ctx.Users.Where(u => u.Email == email)
+                                         .AnyAsync();
+
+            return !result ;
+        }
     }
 }

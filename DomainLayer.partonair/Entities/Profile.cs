@@ -8,6 +8,6 @@ namespace DomainLayer.partonair.Entities
 
         // Prop nav
         public Guid FK_User { get; set; }
-        public User User { get; set; }
+        public User User { get; set; } = new();
     }
 }

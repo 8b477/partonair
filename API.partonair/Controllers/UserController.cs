@@ -1,4 +1,6 @@
-﻿using ApplicationLayer.partonair.Interfaces;
+﻿using ApplicationLayer.partonair.DTOs;
+using ApplicationLayer.partonair.Exceptions;
+using ApplicationLayer.partonair.Interfaces;
 
 using InfrastructureLayer.partonair.Exceptions;
 
@@ -28,7 +30,18 @@ namespace API.partonair.Controllers
 
         #region <-------------> CREATE <------------->
 
+        [HttpPost]
+        public async Task<IActionResult> AddAsync(UserCreateDTO user)
+        {
+            try
+            {
+                var result = await _userService.CreateAsync(user);
 
+                return Ok(result);
+            }
+            catch (ApplicationLayerException){ throw; }
+            catch (Exception){ throw; }
+        }
 
         #endregion
 
@@ -45,10 +58,8 @@ namespace API.partonair.Controllers
 
                 return Ok(user);
             }
-            catch (InfrastructureException)
-            {
-                throw;
-            }
+            catch (InfrastructureLayerException){ throw; }
+            catch (Exception) { throw; }
         }
 
         [HttpGet]
@@ -60,20 +71,9 @@ namespace API.partonair.Controllers
 
                 return Ok(users);
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            catch (Exception){ throw; }
         }
 
-        /*
-        [HttpGet]
-        public IActionResult GetAllAsync()
-        {
-            var users = Task.FromResult(_userService.GetAllAsync());
-            return Ok();
-        }
-         */
         #endregion
 
 

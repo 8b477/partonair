@@ -1,11 +1,10 @@
 ﻿using DomainLayer.partonair.Contracts;
-
-using InfrastructureLayer.partonair.Enums;
 using InfrastructureLayer.partonair.Exceptions;
 
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore;
 using InfrastructureLayer.partonair.Persistence;
+using InfrastructureLayer.partonair.Exceptions.Enums;
 
 
 namespace InfrastructureLayer.partonair.Repositories
@@ -29,19 +28,19 @@ namespace InfrastructureLayer.partonair.Repositories
             }
             catch (DbUpdateConcurrencyException)
             {
-                throw new InfrastructureException(InfrastructureErrorType.ConcurrencyDatabaseException);
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.ConcurrencyDatabaseException);
             }
             catch (DbUpdateException)
             {
-                throw new InfrastructureException(InfrastructureErrorType.UpdateDatabaseException);
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.UpdateDatabaseException);
             }
             catch (OperationCanceledException)
             {
-                throw new InfrastructureException(InfrastructureErrorType.CancelationDatabaseException);
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.CancelationDatabaseException);
             }
             catch (Exception)
             {
-                throw new InfrastructureException(InfrastructureErrorType.UnexpectedDatabaseException);
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.UnexpectedDatabaseException);
             }
         }
 
@@ -55,7 +54,7 @@ namespace InfrastructureLayer.partonair.Repositories
             try
             {
                 if (_transaction is null)
-                    throw new InfrastructureException(InfrastructureErrorType.NoActiveTransactionException);
+                    throw new InfrastructureLayerException(InfrastructureLayerErrorType.NoActiveTransactionException);
 
                 await _transaction.CommitAsync();             
             }
@@ -74,7 +73,7 @@ namespace InfrastructureLayer.partonair.Repositories
             try
             {
                 if (_transaction is null)
-                    throw new InfrastructureException(InfrastructureErrorType.NoActiveTransactionException);
+                    throw new InfrastructureLayerException(InfrastructureLayerErrorType.NoActiveTransactionException);
 
                 await _transaction.RollbackAsync();
             }

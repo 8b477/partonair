@@ -1,7 +1,7 @@
 ﻿using DomainLayer.partonair.Contracts;
 
-using InfrastructureLayer.partonair.Enums;
 using InfrastructureLayer.partonair.Exceptions;
+using InfrastructureLayer.partonair.Exceptions.Enums;
 using InfrastructureLayer.partonair.Persistence;
 
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +16,7 @@ namespace InfrastructureLayer.partonair.Repositories
         protected GenericRepository(AppDbContext ctx)
         {
             _ctx = ctx 
-                ?? throw new InfrastructureException(InfrastructureErrorType.DatabaseConnectionError, $"- Context name : {nameof(_ctx)}");
+                ?? throw new InfrastructureLayerException(InfrastructureLayerErrorType.DatabaseConnectionError, $"- Context name : {nameof(_ctx)}");
 
             _dbSet = _ctx.Set<T>();
         }

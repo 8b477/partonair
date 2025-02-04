@@ -2,7 +2,7 @@
 
 using MediatR;
 
-namespace ApplicationLayer.partonair.Queries.Users
+namespace ApplicationLayer.partonair.MediatR.Queries.Users
 {
     public record GetUserByIdQuery(Guid Id) : IRequest<UserViewDTO>;
 }

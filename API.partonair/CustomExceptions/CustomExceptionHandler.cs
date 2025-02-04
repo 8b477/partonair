@@ -1,4 +1,6 @@
-﻿using InfrastructureLayer.partonair.Exceptions;
+﻿using ApplicationLayer.partonair.Exceptions;
+
+using InfrastructureLayer.partonair.Exceptions;
 
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
@@ -17,7 +19,8 @@ namespace API.partonair.CustomExceptions
         {
             httpContext.Response.StatusCode = exception switch
             {
-                InfrastructureException => StatusCodes.Status400BadRequest,
+                InfrastructureLayerException => StatusCodes.Status400BadRequest,
+                ApplicationLayerException => StatusCodes.Status400BadRequest,
                 _ => StatusCodes.Status500InternalServerError
             };
 

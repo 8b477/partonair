@@ -1,7 +1,7 @@
 ﻿using API.partonair.CustomExceptions;
 
 using ApplicationLayer.partonair.Interfaces;
-using ApplicationLayer.partonair.Queries.Users;
+using ApplicationLayer.partonair.MediatR.Queries.Users;
 using ApplicationLayer.partonair.Services;
 
 using DomainLayer.partonair.Contracts;
@@ -23,6 +23,8 @@ namespace API.partonair.GlobalManager
             // UNIT OF WORK
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            // BCrypt
+            services.AddScoped<IBCryptService, BCryptService>();
 
             return services;
         }
@@ -50,6 +52,7 @@ namespace API.partonair.GlobalManager
             // Swagger/OpenAPI, more at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
 
             return services;
         }

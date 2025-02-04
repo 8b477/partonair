@@ -6,5 +6,6 @@ namespace ApplicationLayer.partonair.Interfaces
     {
        Task<UserViewDTO> GetUserByIdAsync(Guid id);
        Task<ICollection<UserViewDTO>> GetAllAsync();
+       Task<UserViewDTO> CreateAsync(UserCreateDTO entity);
     }
 }

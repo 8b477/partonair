@@ -1,6 +1,6 @@
-﻿namespace InfrastructureLayer.partonair.Enums
+﻿namespace InfrastructureLayer.partonair.Exceptions.Enums
 {
-    public enum InfrastructureErrorType
+    public enum InfrastructureLayerErrorType
     {
         ResourceNotFound,
         DatabaseConnectionError,

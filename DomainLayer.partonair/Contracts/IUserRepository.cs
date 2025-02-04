@@ -33,5 +33,13 @@ namespace DomainLayer.partonair.Contracts
         /// <returns>Returns an asynchronous task list of User wich matched by Role</returns>
         Task<ICollection<User>> GetByRoleAsync(string role);
 
+        /// <summary>
+        /// Checks if the specified email already exists in the database.
+        /// </summary>
+        /// <param name="email">The email address to check.</param>
+        /// <returns>
+        /// <c>true</c> if the email does not exist in the database; otherwise, <c>false</c>.
+        /// </returns>
+        Task<bool> IsEmailAvailable(string email);
     }
 }
