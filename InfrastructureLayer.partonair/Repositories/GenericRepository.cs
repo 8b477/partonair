@@ -1,4 +1,6 @@
-﻿using DomainLayer.partonair.Contracts;
+﻿using AutoMapper;
+
+using DomainLayer.partonair.Contracts;
 
 using InfrastructureLayer.partonair.Exceptions;
 using InfrastructureLayer.partonair.Exceptions.Enums;
@@ -12,6 +14,7 @@ namespace InfrastructureLayer.partonair.Repositories
     {
         protected readonly AppDbContext _ctx;
         protected readonly DbSet<T> _dbSet;
+        protected readonly IMapper _mapper;
 
         protected GenericRepository(AppDbContext ctx)
         {
@@ -24,17 +27,20 @@ namespace InfrastructureLayer.partonair.Repositories
         public virtual async Task<T> CreateAsync(T entity)
         {
            var result = await _dbSet.AddAsync(entity);
+
            return result.Entity;
         }
 
-        public virtual void DeleteAsync(T entity)
+        public virtual void Delete(T entity)
         {
             _dbSet.Remove(entity);
         }
 
-        public virtual void UpdateAsync(T entity)
+        public virtual T Update(T entity)
         {
-            _dbSet.Update(entity);
+            var result = _dbSet.Update(entity);
+
+            return result.Entity;
         }
 
         public virtual async Task<ICollection<T>> GetAllAsync()

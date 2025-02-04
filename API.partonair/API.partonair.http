@@ -1,6 +1,0 @@
-@API.partonair_HostAddress = https://localhost:32770
-
-GET {{API.partonair_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

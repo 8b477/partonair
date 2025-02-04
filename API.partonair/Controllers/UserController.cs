@@ -54,7 +54,7 @@ namespace API.partonair.Controllers
         {
             try
             {
-                var user = await _userService.GetUserByIdAsync(id);
+                var user = await _userService.GetByIdAsyncService(id);
 
                 return Ok(user);
             }

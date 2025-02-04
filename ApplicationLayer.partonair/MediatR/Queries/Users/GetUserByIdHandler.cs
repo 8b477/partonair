@@ -11,7 +11,7 @@ namespace ApplicationLayer.partonair.MediatR.Queries.Users
 
         public async Task<UserViewDTO> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _userService.GetUserByIdAsync(request.Id);
+            return await _userService.GetByIdAsyncService(request.Id);
         }
     }
 

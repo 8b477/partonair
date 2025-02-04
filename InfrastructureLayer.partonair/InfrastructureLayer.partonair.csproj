@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ApplicationLayer.partonair\ApplicationLayer.partonair.csproj" />
     <ProjectReference Include="..\DomainLayer.partonair\DomainLayer.partonair.csproj" />
   </ItemGroup>
 
