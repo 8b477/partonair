@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Diagnostics;
 
-namespace API.partonair.CustomExceptions
+namespace API.partonair.MiddlewareCustomExceptions
 {
     public class CustomExceptionHandler(IProblemDetailsService problemDetailsService) : IExceptionHandler
     {
@@ -24,10 +24,10 @@ namespace API.partonair.CustomExceptions
                     InfrastructureLayerErrorType.DatabaseConnectionError => 503,
                     InfrastructureLayerErrorType.ConcurrencyDatabaseException => 409,
                     InfrastructureLayerErrorType.CancelationDatabaseException => 499, // ou 400
-                    _ => 500           
+                    _ => 500
                 },
                 ApplicationLayerException ex => ex.ErrorType switch
-                { 
+                {
                     ApplicationLayerErrorType.ConstraintViolationError => 409,
                     _ => 500
                 },
@@ -61,7 +61,7 @@ namespace API.partonair.CustomExceptions
                 }
             });
         }
-        
+
     }
 
 }
