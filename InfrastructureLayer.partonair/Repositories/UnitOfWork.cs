@@ -1,10 +1,10 @@
 ﻿using DomainLayer.partonair.Contracts;
-using InfrastructureLayer.partonair.Exceptions;
+using DomainLayer.partonair.Exceptions;
 
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore;
 using InfrastructureLayer.partonair.Persistence;
-using InfrastructureLayer.partonair.Exceptions.Enums;
+using DomainLayer.partonair.Exceptions.Enums;
 
 
 namespace InfrastructureLayer.partonair.Repositories

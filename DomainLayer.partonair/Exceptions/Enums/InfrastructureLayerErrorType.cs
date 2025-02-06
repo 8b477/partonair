@@ -1,4 +1,4 @@
-﻿namespace InfrastructureLayer.partonair.Exceptions.Enums
+﻿namespace DomainLayer.partonair.Exceptions.Enums
 {
     public enum InfrastructureLayerErrorType
     {

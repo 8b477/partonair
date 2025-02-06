@@ -1,12 +1,13 @@
 ﻿using API.partonair.CustomExceptions;
 
+using DomainLayer.partonair.Contracts;
+
 using ApplicationLayer.partonair.Interfaces;
 using ApplicationLayer.partonair.MediatR.Queries.Users;
 using ApplicationLayer.partonair.Services;
 
-using DomainLayer.partonair.Contracts;
-
 using InfrastructureLayer.partonair.Repositories;
+
 
 namespace API.partonair.GlobalManager
 {

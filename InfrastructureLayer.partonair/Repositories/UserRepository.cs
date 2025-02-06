@@ -1,8 +1,8 @@
 ﻿using DomainLayer.partonair.Contracts;
 using DomainLayer.partonair.Entities;
 
-using InfrastructureLayer.partonair.Exceptions;
-using InfrastructureLayer.partonair.Exceptions.Enums;
+using DomainLayer.partonair.Exceptions;
+using DomainLayer.partonair.Exceptions.Enums;
 using InfrastructureLayer.partonair.Persistence;
 
 using Microsoft.EntityFrameworkCore;

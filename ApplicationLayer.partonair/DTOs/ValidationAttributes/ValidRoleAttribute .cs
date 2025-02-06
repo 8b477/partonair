@@ -9,12 +9,12 @@ namespace ApplicationLayer.partonair.DTOs.ValidationAttributes
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            if(value == null || string.IsNullOrWhiteSpace(value.ToString()))
+            if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
             {
                 return new ValidationResult("Le rôle est requis");
             }
 
-            if(Enum.TryParse<Roles>(value.ToString(), out _))
+            if (Enum.TryParse<Roles>(value.ToString(), out _))
             {
                 return ValidationResult.Success;
             }

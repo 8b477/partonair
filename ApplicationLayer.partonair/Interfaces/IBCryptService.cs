@@ -1,5 +1,4 @@
-﻿
-namespace ApplicationLayer.partonair.Interfaces
+﻿namespace ApplicationLayer.partonair.Interfaces
 {
     public interface IBCryptService
     {

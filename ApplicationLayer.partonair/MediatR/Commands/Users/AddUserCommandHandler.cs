@@ -1,5 +1,5 @@
-﻿using ApplicationLayer.partonair.DTOs;
-using ApplicationLayer.partonair.Interfaces;
+﻿using ApplicationLayer.partonair.Interfaces;
+using ApplicationLayer.partonair.DTOs;
 
 using MediatR;
 

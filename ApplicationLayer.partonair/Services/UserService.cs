@@ -1,11 +1,11 @@
 ﻿using ApplicationLayer.partonair.DTOs;
-using ApplicationLayer.partonair.Exceptions.Enums;
-using ApplicationLayer.partonair.Exceptions;
-using ApplicationLayer.partonair.Interfaces;
-using ApplicationLayer.partonair.Mappers;
+using DomainLayer.partonair.Exceptions.Enums;
+using DomainLayer.partonair.Exceptions;
 
 using DomainLayer.partonair.Entities;
 using DomainLayer.partonair.Contracts;
+using ApplicationLayer.partonair.Interfaces;
+using ApplicationLayer.partonair.Mappers;
 
 
 namespace ApplicationLayer.partonair.Services

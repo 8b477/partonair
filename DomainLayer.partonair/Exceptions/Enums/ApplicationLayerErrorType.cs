@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.partonair.Exceptions.Enums
+﻿namespace DomainLayer.partonair.Exceptions.Enums
 {
     public enum ApplicationLayerErrorType
     {

@@ -1,6 +1,5 @@
-﻿using ApplicationLayer.partonair.Exceptions;
-
-using InfrastructureLayer.partonair.Exceptions;
+﻿using DomainLayer.partonair.Exceptions;
+using DomainLayer.partonair.Exceptions.Enums;
 
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
@@ -19,8 +18,19 @@ namespace API.partonair.CustomExceptions
         {
             httpContext.Response.StatusCode = exception switch
             {
-                InfrastructureLayerException => StatusCodes.Status400BadRequest,
-                ApplicationLayerException => StatusCodes.Status400BadRequest,
+                InfrastructureLayerException ex => ex.ErrorType switch
+                {
+                    InfrastructureLayerErrorType.ResourceNotFound => 404,
+                    InfrastructureLayerErrorType.DatabaseConnectionError => 503,
+                    InfrastructureLayerErrorType.ConcurrencyDatabaseException => 409,
+                    InfrastructureLayerErrorType.CancelationDatabaseException => 499, // ou 400
+                    _ => 500           
+                },
+                ApplicationLayerException ex => ex.ErrorType switch
+                { 
+                    ApplicationLayerErrorType.ConstraintViolationError => 409,
+                    _ => 500
+                },
                 _ => StatusCodes.Status500InternalServerError
             };
 
@@ -32,8 +42,15 @@ namespace API.partonair.CustomExceptions
                 Exception = exception,
                 ProblemDetails = new ProblemDetails
                 {
-                    Type = exception.GetType().Name,
-                    Title = "An error occurred",
+                    Type = $"https://httpstatuses.io/{httpContext.Response.StatusCode}",
+                    Title = httpContext.Response.StatusCode switch
+                    {
+                        404 => "Resource not found",
+                        503 => "Database unavailable",
+                        409 => "Concurrency conflict",
+                        499 => "Request canceled",
+                        _ => "Internal error"
+                    },
                     Detail = exception.Message,
                     Instance = $"{httpContext.Request.Method} {httpContext.Request.Path}",
                     Extensions = new Dictionary<string, object?>

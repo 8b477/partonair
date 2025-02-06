@@ -1,9 +1,7 @@
-﻿using AutoMapper;
+﻿using DomainLayer.partonair.Contracts;
 
-using DomainLayer.partonair.Contracts;
-
-using InfrastructureLayer.partonair.Exceptions;
-using InfrastructureLayer.partonair.Exceptions.Enums;
+using DomainLayer.partonair.Exceptions;
+using DomainLayer.partonair.Exceptions.Enums;
 using InfrastructureLayer.partonair.Persistence;
 
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +12,6 @@ namespace InfrastructureLayer.partonair.Repositories
     {
         protected readonly AppDbContext _ctx;
         protected readonly DbSet<T> _dbSet;
-        protected readonly IMapper _mapper;
 
         protected GenericRepository(AppDbContext ctx)
         {

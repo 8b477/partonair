@@ -1,8 +1,7 @@
 ﻿using ApplicationLayer.partonair.DTOs;
-using ApplicationLayer.partonair.Exceptions;
 using ApplicationLayer.partonair.Interfaces;
 
-using InfrastructureLayer.partonair.Exceptions;
+using DomainLayer.partonair.Exceptions;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,26 +51,17 @@ namespace API.partonair.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
-            try
-            {
                 var user = await _userService.GetByIdAsyncService(id);
 
-                return Ok(user);
-            }
-            catch (InfrastructureLayerException){ throw; }
-            catch (Exception) { throw; }
+                return Ok(new { user });        
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            try
-            {
                 var users = await _userService.GetAllAsync();
 
-                return Ok(users);
-            }
-            catch (Exception){ throw; }
+                return Ok(new { users });
         }
 
         #endregion
