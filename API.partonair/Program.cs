@@ -1,7 +1,22 @@
 using API.partonair.GlobalManager;
 
+using InfrastructureLayer.partonair.Persistence;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddEnvironmentVariables();
+
+// Si vous voulez désactiver HTTPS en développement
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddHttpsRedirection(options =>
+    {
+        options.HttpsPort = null;
+    });
+}
+
 
 builder.Services
                 .SqlServerConnectionManager(builder.Configuration)

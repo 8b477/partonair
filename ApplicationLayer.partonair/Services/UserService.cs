@@ -6,11 +6,12 @@ using DomainLayer.partonair.Entities;
 using DomainLayer.partonair.Contracts;
 using ApplicationLayer.partonair.Interfaces;
 using ApplicationLayer.partonair.Mappers;
+using Microsoft.Extensions.Logging;
 
 
 namespace ApplicationLayer.partonair.Services
 {
-    public class UserService(IUnitOfWork UOW, IBCryptService bCryptService) : IUserService
+    public class UserService(IUnitOfWork UOW, IBCryptService bCryptService, ILogger<UserService> logger) : IUserService
     {
         // <--------------------------------> TODO <-------------------------------->
         // Order By name A->Z : 'GetById()'
@@ -18,7 +19,7 @@ namespace ApplicationLayer.partonair.Services
 
         private readonly IUnitOfWork _UOW = UOW;
         private readonly IBCryptService _bCryptService = bCryptService;
-
+        private readonly ILogger<UserService> _logger = logger;
 
         #region Commands
         public async Task<UserViewDTO> CreateAsync(UserCreateDTO user)
@@ -63,6 +64,7 @@ namespace ApplicationLayer.partonair.Services
 
             return result.Select(user => user.ToView())
                                                      .ToList();
+
         }
 
         public Task<User> GetByEmailAsyncService(string email)
