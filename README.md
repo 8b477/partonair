@@ -64,3 +64,5 @@
 - **Remove all ☣️**: `docker system prune -f`
 - **Remove containers**: `docker rm {ID_Container1} {ID_Container2}`
 - **Remove images**: `docker rmi {ID_Image1} {ID_Image2}`
+- **Check logs**: `docker-compose logs -f`
+- **Check target container logs**: `docker logs {ID_Container}`
