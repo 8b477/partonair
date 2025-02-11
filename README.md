@@ -50,6 +50,17 @@
 - Microsoft.EntityFrameworkCore.SqlServer  
 
 ### 🧪 Couche Tests
-- xUnit.net  
+- xUnit.net
 
-<a name="docker">**Cheat Sheet**</a>
+--------
+--------
+
+# Cheat Sheet
+
+- **First build**: `docker-compose up --build`
+- **Start (background)**: `docker-compose up -d`
+- **Check active containers**: `docker ps`
+- **Stop containers**: `docker-compose down` (ou `docker stop {ID_Container}`)
+- **Remove all ☣️**: `docker system prune -f`
+- **Remove containers**: `docker rm {ID_Container1} {ID_Container2}`
+- **Remove images**: `docker rmi {ID_Image1} {ID_Image2}`
