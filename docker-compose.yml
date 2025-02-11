@@ -8,16 +8,18 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80 
-      - ConnectionStrings__DefaultConnection=Server=db;Database=partonair;User=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True
+      - ConnectionStrings__DefaultConnection=Server=db;Database=partonair;User=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=True
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - partonair-network
+    restart: unless-stopped
 
   db:
     build:
-        context: ./Database.partonair
-        dockerfile: Dockerfile
+      context: ./Database.partonair
+      dockerfile: Dockerfile
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=YourStrong@Passw0rd
@@ -27,9 +29,15 @@ services:
     volumes:
       - db-data:/var/opt/mssql
       - ./Database.partonair/Scripts:/scripts
-      - ./init.sh:/docker-entrypoint-initdb.d/init.sh
     networks:
       - partonair-network
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "YourStrong@Passw0rd" -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
 
 networks:
   partonair-network:

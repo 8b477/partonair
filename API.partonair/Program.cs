@@ -7,19 +7,13 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables();
-
-// Si vous voulez désactiver HTTPS en développement
-if (builder.Environment.IsDevelopment())
-{
-    builder.Services.AddHttpsRedirection(options =>
-    {
-        options.HttpsPort = null;
-    });
-}
+// Temporaire pour Docker
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer("Server=db;Database=partonair;User=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=True"));
 
 
 builder.Services
-                .SqlServerConnectionManager(builder.Configuration)
+                //.SqlServerConnectionManager(builder.Configuration)
                 .AddInfrastructureLayer()
                 .AddApplicationLayer()
                 .AddPresentationAPILayer();
