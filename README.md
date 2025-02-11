@@ -55,7 +55,7 @@
 --------
 --------
 
-# Cheat Sheet
+# <a name="docker">Cheat Sheet</a>
 
 - **First build**: `docker-compose up --build`
 - **Start (background)**: `docker-compose up -d`
