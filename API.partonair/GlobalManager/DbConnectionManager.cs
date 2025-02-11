@@ -7,7 +7,7 @@ namespace API.partonair.GlobalManager
     {
         public static IServiceCollection SqlServerConnectionManager(this IServiceCollection service, IConfiguration config)
         {
-            string connectionString = config["ConnectionString:SqlServer"]
+            string connectionString = config["ConnectionStrings:SqlServer"]
                           ?? throw new InvalidOperationException("'ConnectionString:SqlServer' is empty.");
 
             service.AddDbContext<AppDbContext>(o => o.UseSqlServer(connectionString));
