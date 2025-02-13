@@ -12,7 +12,7 @@ namespace ApplicationLayer.partonair.MediatR.Commands.Users
 
         public async Task<UserViewDTO> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
-            return await _userService.CreateAsync(request.User);
+            return await _userService.CreateAsyncService(request.User);
         }
     }
 }

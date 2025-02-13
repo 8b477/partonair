@@ -5,5 +5,5 @@ using MediatR;
 
 namespace ApplicationLayer.partonair.MediatR.Commands.Users
 {
-    public record UpdateUserCommand(UserUpdateDTO User) : IRequest<UserViewDTO>;
+    public record UpdateUserCommand(Guid Id, UserUpdateNameOrMailOrPasswordDTO User) : IRequest<UserViewDTO>;
 }

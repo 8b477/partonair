@@ -1,23 +1,20 @@
 ﻿using ApplicationLayer.partonair.DTOs;
 
-using DomainLayer.partonair.Entities;
-
 
 namespace ApplicationLayer.partonair.Interfaces
 {
     public interface IUserService
     {
         // Commands
-        Task<UserViewDTO> CreateAsync(UserCreateDTO entity);
-        void Update(UserUpdateDTO entity);
-        void Delete(Guid id);
+        Task<UserViewDTO> CreateAsyncService(UserCreateDTO entity);
+        Task<UserViewDTO> UpdateService(Guid id, UserUpdateNameOrMailOrPasswordDTO entity);
+        Task DeleteService(Guid id);
 
         // Queries
-        Task<ICollection<UserViewDTO>> GetAllAsync();
+        Task<ICollection<UserViewDTO>> GetAllAsyncService();
         Task<UserViewDTO> GetByIdAsyncService(Guid id);
-        Task<ICollection<User>> GetByNameAsyncService(string name);
-        Task<User> GetByEmailAsyncService(string email);
-        Task<ICollection<User>> GetByRoleAsyncService(string role);
-        Task<bool> IsEmailAvailableService(string email);
+        Task<ICollection<UserViewDTO>> GetByNameAsyncService(string name);
+        Task<UserViewDTO> GetByEmailAsyncService(string email);
+        Task<ICollection<UserViewDTO>> GetByRoleAsyncService(string role);
     }
 }

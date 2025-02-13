@@ -2,7 +2,9 @@
 {
     public enum ApplicationLayerErrorType
     {
-        ConstraintViolationError,
-        UnexpectedError
+        ConstraintViolationErrorException,
+        EntityIsNotExistingException,
+        SaltParseBCryptException,
+        UnexpectedErrorException
     }
 }

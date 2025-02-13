@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InfrastructureLayer.partonair.Repositories
 {
-    public abstract class GenericRepository<T> : IGenericRepository<T> where T : class
+    public abstract class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
     {
         protected readonly AppDbContext _ctx;
         protected readonly DbSet<T> _dbSet;
@@ -16,34 +16,96 @@ namespace InfrastructureLayer.partonair.Repositories
         protected GenericRepository(AppDbContext ctx)
         {
             _ctx = ctx 
-                ?? throw new InfrastructureLayerException(InfrastructureLayerErrorType.DatabaseConnectionError, $"- Context name : {nameof(_ctx)}");
+                ?? throw new InfrastructureLayerException(InfrastructureLayerErrorType.DatabaseConnectionErrorException, $"- Context name : {nameof(_ctx)}");
 
             _dbSet = _ctx.Set<T>();
         }
 
         public virtual async Task<T> CreateAsync(T entity)
         {
-           var result = await _dbSet.AddAsync(entity);
+            try
+            {
+                var result = await _dbSet.AddAsync(entity);
 
-           return result.Entity;
+                return result.Entity;
+            }
+            catch (OperationCanceledException ex)
+            {
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.CancelationDatabaseException,$"{ex.Message}");
+            }
         }
 
-        public virtual void Delete(T entity)
+        public virtual async Task Delete(Guid id)
         {
-            _dbSet.Remove(entity);
+            try
+            {               
+                var existingEntity = await GetByGuidAsync(id);
+
+                bool isNotTracked = _ctx.Entry(existingEntity).State == EntityState.Detached;
+
+                if (isNotTracked)
+                    _ctx.Attach(existingEntity);
+
+                _dbSet.Remove(existingEntity);
+            }
+            catch (OperationCanceledException ex)
+            {
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.CancelationDatabaseException, $"{ex.Message}");
+            }
         }
 
-        public virtual T Update(T entity)
+        public virtual async Task<T> Update(T entity)
         {
-            var result = _dbSet.Update(entity);
+            try
+            {
+                var existingEntity = await GetByGuidAsync(entity.Id);
 
-            return result.Entity;
+                _ctx.Entry(existingEntity).CurrentValues.SetValues(entity);
+
+                _ctx.Entry(existingEntity).State = EntityState.Modified;
+
+                return existingEntity;
+            }
+            catch (OperationCanceledException ex)
+            {
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.CancelationDatabaseException, $"{ex.Message}");
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.UpdateDatabaseException, $"{ex.Message}");
+            }
         }
 
         public virtual async Task<ICollection<T>> GetAllAsync()
         {
-            return await _dbSet.ToListAsync();
+            try
+            {
+                var entityList = await _dbSet.ToListAsync();
+                return entityList;
+            }
+            catch (OperationCanceledException ex)
+            {
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.CancelationDatabaseException, $"{ex.Message}");
+            }
         }
 
-    }
+        public async Task<T> GetByGuidAsync(Guid id)
+        {
+            try
+            {
+                var entity = await _dbSet.FindAsync(id);
+
+                return
+                    entity
+                    ??
+                    throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFoundException, $"Identifier : {id} - no match");
+            }
+            catch (OperationCanceledException ex)
+            {
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.CancelationDatabaseException, $"{ex.Message}");
+            }
+        }
+
+
+    } 
 }

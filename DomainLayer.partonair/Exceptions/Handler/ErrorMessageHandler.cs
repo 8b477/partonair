@@ -19,16 +19,20 @@ namespace DomainLayer.partonair.Exceptions.Handler
         private static void InitializeErrorMessages()
         {
             // ApplicationLayerErrorType
-            AddErrorMessage(ApplicationLayerErrorType.ConstraintViolationError, "The request conflicted with a constraint.");
+            AddErrorMessage(ApplicationLayerErrorType.ConstraintViolationErrorException, "The request conflicted with a constraint.");
+            AddErrorMessage(ApplicationLayerErrorType.SaltParseBCryptException, "Some thing was wrong with the cryptage.");
+            AddErrorMessage(ApplicationLayerErrorType.EntityIsNotExistingException, "The entity don't match.");
 
             // InfrastructureLayerErrorType
-            AddErrorMessage(InfrastructureLayerErrorType.ResourceNotFound, "The requested resource was not found.");
-            AddErrorMessage(InfrastructureLayerErrorType.DatabaseConnectionError, "Database connection failed");
+            AddErrorMessage(InfrastructureLayerErrorType.ResourceNotFoundException, "The requested resource was not found.");
+            AddErrorMessage(InfrastructureLayerErrorType.EntityIsNullException, "Entity is null.");
+            AddErrorMessage(InfrastructureLayerErrorType.DatabaseConnectionErrorException, "Database connection failed");
             AddErrorMessage(InfrastructureLayerErrorType.ConcurrencyDatabaseException, "A concurrency conflict occurred while saving changes");
             AddErrorMessage(InfrastructureLayerErrorType.UpdateDatabaseException, "A database update error occurred while saving changes");
             AddErrorMessage(InfrastructureLayerErrorType.CancelationDatabaseException, "The operation was canceled");
             AddErrorMessage(InfrastructureLayerErrorType.UnexpectedDatabaseException, "An unexpected error occurred while saving changes");
             AddErrorMessage(InfrastructureLayerErrorType.NoActiveTransactionException, "Attempted to commit a transaction when no transaction was active.");
+            AddErrorMessage(InfrastructureLayerErrorType.CreateDatabaseException, "The add request is failed.");
         }
 
         /// <summary>

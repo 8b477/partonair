@@ -2,8 +2,9 @@
 {
     public enum InfrastructureLayerErrorType
     {
-        ResourceNotFound,
-        DatabaseConnectionError,
+        ResourceNotFoundException,
+        EntityIsNullException,
+        DatabaseConnectionErrorException,
         CreateDatabaseException,
         ConcurrencyDatabaseException,
         UpdateDatabaseException,

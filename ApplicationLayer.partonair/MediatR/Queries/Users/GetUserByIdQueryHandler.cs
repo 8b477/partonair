@@ -5,7 +5,7 @@ using MediatR;
 
 namespace ApplicationLayer.partonair.MediatR.Queries.Users
 {
-    public class GetUserByIdHandler(IUserService userService) : IRequestHandler<GetUserByIdQuery, UserViewDTO?>
+    public class GetUserByIdQueryHandler(IUserService userService) : IRequestHandler<GetUserByIdQuery, UserViewDTO?>
     {
         private readonly IUserService _userService = userService;
 

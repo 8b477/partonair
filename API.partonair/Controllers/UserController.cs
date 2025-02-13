@@ -30,16 +30,14 @@ namespace API.partonair.Controllers
         #region <-------------> CREATE <------------->
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync(UserCreateDTO user)
+        public async Task<IActionResult> AddAsync(UserCreateDTO u)
         {
-            try
-            {
-                var result = await _userService.CreateAsync(user);
+            var user = await _userService.CreateAsyncService(u);
 
-                return Ok(result);
-            }
-            catch (ApplicationLayerException){ throw; }
-            catch (Exception){ throw; }
+            return
+                user is not null
+                ? Ok(new { user })
+                : BadRequest();
         }
 
         #endregion
@@ -59,9 +57,42 @@ namespace API.partonair.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-                var users = await _userService.GetAllAsync();
+            var users = await _userService.GetAllAsyncService();
 
-                return Ok(new { users });
+            return Ok(new { users });
+        }
+
+        [HttpGet("Name")]
+        public async Task<IActionResult> GetByNameAsync(string name)
+        {
+            var users = await _userService.GetByNameAsyncService(name);
+
+            return 
+                users is null 
+                ? NoContent()
+                : Ok(new { users } );
+        }
+
+        [HttpGet("Role")]
+        public async Task<IActionResult> GetByRoleAsync(string role)
+        {
+            var users = await _userService.GetByRoleAsyncService(role);
+
+            return
+                users is null
+                ? NoContent()
+                : Ok(new { users });
+        }
+
+        [HttpGet("Email")]
+        public async Task<IActionResult> GetByEmailAsync(string email)
+        {
+            var user = await _userService.GetByEmailAsyncService(email);
+
+            return
+                user is null
+                ? NoContent()
+                : Ok(new { user });
         }
 
         #endregion
@@ -70,7 +101,16 @@ namespace API.partonair.Controllers
 
         #region <-------------> UPDATE <------------->
 
+        [HttpPatch("{id:guid}")]
+        public async Task<IActionResult> Update(Guid id, UserUpdateNameOrMailOrPasswordDTO u)
+        {
+            var user = await _userService.UpdateService(id, u);
 
+            return
+                user is null
+                ? BadRequest()
+                : Ok(new { user });
+        }
 
         #endregion
 
@@ -78,7 +118,12 @@ namespace API.partonair.Controllers
 
         #region <-------------> DELETE <------------->
 
-
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _userService.DeleteService(id);
+            return NoContent();
+        }
 
         #endregion
     }

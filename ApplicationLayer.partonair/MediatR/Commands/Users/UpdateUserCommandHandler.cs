@@ -8,10 +8,10 @@ namespace ApplicationLayer.partonair.MediatR.Commands.Users
 {
     public class UpdateUserCommandHandler(IUserService userService) : IRequestHandler<UpdateUserCommand, UserViewDTO>
     {
-        private readonly IUserService _userService;
-        public Task<UserViewDTO> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        private readonly IUserService _userService = userService;
+        public async Task<UserViewDTO> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _userService.UpdateService(request.Id, request.User);
         }
     }
 }

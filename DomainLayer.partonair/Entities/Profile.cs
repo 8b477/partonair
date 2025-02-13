@@ -1,7 +1,8 @@
-﻿
+﻿using DomainLayer.partonair.Contracts;
+
 namespace DomainLayer.partonair.Entities
 {
-    public class Profile
+    public class Profile : IEntity
     {
         public Guid Id { get; set; }
         public string ProfilDescription { get; set; } = string.Empty;

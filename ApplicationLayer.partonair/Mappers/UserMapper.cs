@@ -39,5 +39,24 @@ namespace ApplicationLayer.partonair.Mappers
                 );
         }
 
+
+        internal static User ToEntity(this UserUpdateNameOrMailOrPasswordDTO u, User existingUser)
+        {
+            return new User
+            {
+                Id = existingUser.Id,
+                FK_Profile = existingUser.FK_Profile,
+                Profile = existingUser.Profile,
+                IsPublic = existingUser.IsPublic,
+                LastConnection = existingUser.LastConnection,
+                Role = existingUser.Role,
+                UserCreatedAt = existingUser.UserCreatedAt,
+
+                Email = u.Email ?? existingUser.Email,
+                UserName = u.UserName ?? existingUser.UserName,
+                PasswordHashed = u.NewPassword ?? existingUser.PasswordHashed
+            };
+        }
+
     }
 }

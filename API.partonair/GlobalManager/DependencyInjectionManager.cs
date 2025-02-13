@@ -5,6 +5,7 @@ using ApplicationLayer.partonair.MediatR.Queries.Users;
 using ApplicationLayer.partonair.Services;
 
 using InfrastructureLayer.partonair.Repositories;
+
 using API.partonair.MiddlewareCustomExceptions;
 
 
@@ -15,10 +16,7 @@ namespace API.partonair.GlobalManager
         public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
         {
             // MEDIATR
-            services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(GetUserByIdHandler).Assembly));
-
-            // SERILOG
-            services.AddScoped(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
+            services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(GetUserByIdQueryHandler).Assembly));
 
             // USER
             services.AddScoped<IUserService, UserService>();
@@ -26,10 +24,8 @@ namespace API.partonair.GlobalManager
             // UNIT OF WORK
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-
             // BCrypt
             services.AddScoped<IBCryptService, BCryptService>();
-
 
             return services;
         }

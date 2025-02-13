@@ -1,17 +1,10 @@
 ﻿using DomainLayer.partonair.Entities;
+using DomainLayer.partonair.Enums;
 
 namespace DomainLayer.partonair.Contracts
 {
     public interface IUserRepository : IGenericRepository<User>
     {
-
-        /// <summary>
-        /// Fetch one User by identifier.
-        /// </summary>
-        /// <param name="id">User identifier</param>
-        /// <returns>Returns an asynchronous task with the existing User in database</returns>
-        Task<User> GetByIdAsync(Guid id);
-
         /// <summary>
         /// Fetch a list of User by Name. 
         /// </summary>

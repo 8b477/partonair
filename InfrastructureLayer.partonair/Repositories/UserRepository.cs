@@ -1,6 +1,6 @@
 ﻿using DomainLayer.partonair.Contracts;
 using DomainLayer.partonair.Entities;
-
+using DomainLayer.partonair.Enums;
 using DomainLayer.partonair.Exceptions;
 using DomainLayer.partonair.Exceptions.Enums;
 using InfrastructureLayer.partonair.Persistence;
@@ -25,29 +25,7 @@ namespace InfrastructureLayer.partonair.Repositories
             return 
                 result
                 ??
-                throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFound, $"The mail : {email} - no match");
-        }
-
-        public async Task<User> GetByIdAsync(Guid id)
-        {
-            var user = await _ctx.Users
-                            .Select(u => new User
-                            {
-                                Id = u.Id,
-                                UserName = u.UserName,
-                                Email = u.Email,
-                                IsPublic = u.IsPublic,
-                                UserCreatedAt = u.UserCreatedAt,
-                                LastConnection = u.LastConnection,
-                                Role = u.Role,
-                                FK_Profile = u.FK_Profile
-                            })
-                            .FirstOrDefaultAsync(u => u.Id == id);
-
-            return 
-                user 
-                ??
-                throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFound, $"Identifier User: {id} - no match");
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFoundException, $"The mail : {email} - no match");
         }
 
         public async Task<ICollection<User>> GetByNameAsync(string name)
@@ -58,7 +36,7 @@ namespace InfrastructureLayer.partonair.Repositories
             return 
                 result
                 ??
-                throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFound, $"The name : {name} - no match");
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFoundException, $"The name : {name} - no match");
         }
 
         public async Task<ICollection<User>> GetByRoleAsync(string role)
@@ -69,7 +47,7 @@ namespace InfrastructureLayer.partonair.Repositories
             return 
                 result
                 ??
-                throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFound, $"The role : {role} - no match");
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFoundException, $"The role : {role} - no match");
         }
 
         #endregion

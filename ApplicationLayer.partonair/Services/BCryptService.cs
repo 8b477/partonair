@@ -1,5 +1,10 @@
 ﻿using ApplicationLayer.partonair.Interfaces;
 
+using BCrypt.Net;
+
+using DomainLayer.partonair.Exceptions;
+using DomainLayer.partonair.Exceptions.Enums;
+
 
 namespace ApplicationLayer.partonair.Services
 {
@@ -7,16 +12,23 @@ namespace ApplicationLayer.partonair.Services
     {
         public string HashPass(string passToHash, int workFactor)
         {
-            string passwordHashed = BCrypt.Net.BCrypt.EnhancedHashPassword(passToHash, workFactor);
+            try
+            {
+                string passwordHashed = BCrypt.Net.BCrypt.EnhancedHashPassword(passToHash, workFactor);
 
-            return passwordHashed;
+                return passwordHashed;
+            }
+            catch (SaltParseException ex)
+            {
+                throw new ApplicationLayerException(ApplicationLayerErrorType.SaltParseBCryptException, $"{ex.Message}");
+            }
         }
 
         public bool VerifyPasswordMatch(string actualPass, string passHashed)
         {
             bool check = BCrypt.Net.BCrypt.EnhancedVerify(actualPass, passHashed);
 
-            return check;
+            return check;          
         }
     }
 }

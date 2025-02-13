@@ -20,15 +20,24 @@ namespace API.partonair.MiddlewareCustomExceptions
             {
                 InfrastructureLayerException ex => ex.ErrorType switch
                 {
-                    InfrastructureLayerErrorType.ResourceNotFound => 404,
-                    InfrastructureLayerErrorType.DatabaseConnectionError => 503,
+                    InfrastructureLayerErrorType.CancelationDatabaseException => 400,
+                    InfrastructureLayerErrorType.EntityIsNullException => 400,
+                    InfrastructureLayerErrorType.ResourceNotFoundException => 404,
                     InfrastructureLayerErrorType.ConcurrencyDatabaseException => 409,
-                    InfrastructureLayerErrorType.CancelationDatabaseException => 499, // ou 400
+                    InfrastructureLayerErrorType.CreateDatabaseException => 500,
+                    InfrastructureLayerErrorType.NoActiveTransactionException => 500,
+                    InfrastructureLayerErrorType.UpdateDatabaseException => 500,
+                    InfrastructureLayerErrorType.UnexpectedDatabaseException => 500,
+                    InfrastructureLayerErrorType.DatabaseConnectionErrorException => 503,
                     _ => 500
                 },
                 ApplicationLayerException ex => ex.ErrorType switch
                 {
-                    ApplicationLayerErrorType.ConstraintViolationError => 409,
+                    ApplicationLayerErrorType.EntityIsNotExistingException => 404,
+                    ApplicationLayerErrorType.ConstraintViolationErrorException => 409,
+                    ApplicationLayerErrorType.SaltParseBCryptException => 500,
+                    ApplicationLayerErrorType.UnexpectedErrorException => 500,
+                    
                     _ => 500
                 },
                 _ => StatusCodes.Status500InternalServerError
