@@ -63,6 +63,25 @@ namespace ApplicationLayer.partonair.Services
             return userUpdated.ToView();
         }
 
+        public async Task<bool> ChangeRoleService(Guid id, UserChangeRoleDTO user)
+        {
+            const string visitorTest = "VISITOR";
+
+            if (user.Role.ToString().Equals(visitorTest, StringComparison.CurrentCultureIgnoreCase))
+            {
+                var authorizeVisitorRole = await _UOW.Users.IsUserWithoutProfil(id);
+
+                if (!authorizeVisitorRole)
+                    throw new ApplicationLayerException(ApplicationLayerErrorType.ConstraintViolationErrorException, "The 'visitor' role is not allowed, only user without a profile can be authorized");
+            }
+
+            var result = await _UOW.Users.ChangeRoleAsync(id, user.Role);
+
+            await _UOW.SaveChangesAsync();
+
+            return result;
+        }
+
         public async Task DeleteService(Guid id)
         {
             await _UOW.Users.Delete(id);
@@ -110,8 +129,7 @@ namespace ApplicationLayer.partonair.Services
             return userList.Select(x => x.ToView())
                            .ToList();
         }
-
-      
+    
         public async Task<ICollection<UserViewDTO>> GetAllAsyncService()
         {
             var result = await _UOW.Users.GetAllAsync();
@@ -184,25 +202,6 @@ namespace ApplicationLayer.partonair.Services
                 throw new ApplicationLayerException(ApplicationLayerErrorType.ConstraintViolationErrorException, $"Mail supplied : {newUserData.Email}");
             }
             return;
-        }
-
-        public async Task<bool> ChangeRoleService(Guid id, UserChangeRoleDTO user)
-        {
-            const string visitorTest = "VISITOR";
-
-            if(user.Role.ToString().Equals(visitorTest, StringComparison.CurrentCultureIgnoreCase))
-            {
-                var authorizeVisitorRole = await _UOW.Users.IsUserWithoutProfil(id);
-
-                if(!authorizeVisitorRole)
-                    throw new ApplicationLayerException(ApplicationLayerErrorType.ConstraintViolationErrorException, "The 'visitor' role is not allowed, only user without a profile can be authorized");
-            }
-
-            var result = await _UOW.Users.ChangeRoleAsync(id, user.Role);
-
-            await _UOW.SaveChangesAsync();
-
-            return result;
         }
 
         #endregion
