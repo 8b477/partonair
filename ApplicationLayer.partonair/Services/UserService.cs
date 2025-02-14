@@ -16,7 +16,6 @@ namespace ApplicationLayer.partonair.Services
     {
         // <--------------------------------> TODO <-------------------------------->
         // Order By name A->Z : 'GetById()'
-        // Update role : The role Visitor is available to user without profil !!
         // ** Check when I retrieve user data, is it tracked by ef core ? **
         // <--------------------------------> **** <-------------------------------->
 
