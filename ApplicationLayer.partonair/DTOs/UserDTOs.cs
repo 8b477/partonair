@@ -53,7 +53,7 @@ namespace ApplicationLayer.partonair.DTOs
         public string? NewPasswordConfirm { get; init; }
     }
 
-    public record UserUpdateRoleDTO
+    public record UserChangeRoleDTO
     (
         [Required]
         [ValidRole]      

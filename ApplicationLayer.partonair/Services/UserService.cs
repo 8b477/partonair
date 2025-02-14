@@ -8,7 +8,6 @@ using ApplicationLayer.partonair.Interfaces;
 using ApplicationLayer.partonair.Mappers;
 using Microsoft.Extensions.Logging;
 using DomainLayer.partonair.Enums;
-using System.Collections;
 
 
 namespace ApplicationLayer.partonair.Services
@@ -28,7 +27,7 @@ namespace ApplicationLayer.partonair.Services
         #region Commands
         public async Task<UserViewDTO> CreateAsyncService(UserCreateDTO u)
         {
-            bool isValidMail = await _UOW.Users.IsEmailAvailable(u.Email);
+            bool isValidMail = await _UOW.Users.IsEmailAvailableAsync(u.Email);
 
             if (!isValidMail)
                 throw new ApplicationLayerException(ApplicationLayerErrorType.ConstraintViolationErrorException);
@@ -176,7 +175,7 @@ namespace ApplicationLayer.partonair.Services
         {
             if (!string.IsNullOrWhiteSpace(newUserData.Email))
             {
-                if (await _UOW.Users.IsEmailAvailable(newUserData.Email))
+                if (await _UOW.Users.IsEmailAvailableAsync(newUserData.Email))
                 {
                     userData.Email = newUserData.Email;
                     return;
@@ -185,6 +184,25 @@ namespace ApplicationLayer.partonair.Services
                 throw new ApplicationLayerException(ApplicationLayerErrorType.ConstraintViolationErrorException, $"Mail supplied : {newUserData.Email}");
             }
             return;
+        }
+
+        public async Task<bool> ChangeRoleService(Guid id, UserChangeRoleDTO user)
+        {
+            const string visitorTest = "VISITOR";
+
+            if(user.Role.ToString().Equals(visitorTest, StringComparison.CurrentCultureIgnoreCase))
+            {
+                var authorizeVisitorRole = await _UOW.Users.IsUserWithoutProfil(id);
+
+                if(!authorizeVisitorRole)
+                    throw new ApplicationLayerException(ApplicationLayerErrorType.ConstraintViolationErrorException, "The 'visitor' role is not allowed, only user without a profile can be authorized");
+            }
+
+            var result = await _UOW.Users.ChangeRoleAsync(id, user.Role);
+
+            await _UOW.SaveChangesAsync();
+
+            return result;
         }
 
         #endregion

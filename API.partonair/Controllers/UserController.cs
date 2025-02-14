@@ -110,6 +110,16 @@ namespace API.partonair.Controllers
                 : Ok(new { user });
         }
 
+        [HttpPut("Role")]
+        public async Task<IActionResult> Role(UserChangeRoleDTO user)
+        {
+            // Retrieve id by header (token)
+            Guid id = new Guid("e7f614c8-6b60-4f91-8038-017bea60ccec"); // Temporary !!
+            await _userService.ChangeRoleService(id,user);
+
+            return Ok(new { Message = "Successful role update !" });
+        }
+
         #endregion
 
 

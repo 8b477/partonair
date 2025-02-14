@@ -1,5 +1,4 @@
 ﻿using DomainLayer.partonair.Entities;
-using DomainLayer.partonair.Enums;
 
 namespace DomainLayer.partonair.Contracts
 {
@@ -33,6 +32,23 @@ namespace DomainLayer.partonair.Contracts
         /// <returns>
         /// <c>true</c> if the email does not exist in the database; otherwise, <c>false</c>.
         /// </returns>
-        Task<bool> IsEmailAvailable(string email);
+        Task<bool> IsEmailAvailableAsync(string email);
+
+        /// <summary>
+        /// Modify the User role.
+        /// </summary>
+        /// <param name="id">User identifier <c>'Guid'</c></param>
+        /// <param name="role">The new role <c>'String'</c></param>
+        /// <returns>Returns <c>True</c> if update is successful</returns>
+        /// <exception cref="InfrastructureLayerException">Thrown when the user with the specified ID is not found</exception>
+        Task<bool> ChangeRoleAsync(Guid id, string role);
+
+        /// <summary>
+        /// Check if the specified user has a profile.
+        /// </summary>
+        /// <param name="id">User identifier <c>'Guid'</c></param>
+        /// <returns>Returns <c>True</c> if the user has no associated profile; otherwise <c>False</c>.</returns>
+        /// <exception cref="InfrastructureLayerException">Thrown when the user with the specified ID is not found</exception>
+        Task<bool> IsUserWithoutProfil(Guid id);
     }
 }

@@ -19,7 +19,7 @@ namespace InfrastructureLayer.partonair.Repositories
 
         public async Task<User> GetByEmailAsync(string email)
         {
-            var result = await _ctx.Users.Where(u  => u.Email == email)
+            var result = await _dbSet.Where(u  => u.Email == email)
                                          .FirstOrDefaultAsync();
 
             return 
@@ -30,7 +30,7 @@ namespace InfrastructureLayer.partonair.Repositories
 
         public async Task<ICollection<User>> GetByNameAsync(string name)
         {
-            var result = await _ctx.Users.Where(u => u.UserName == name)
+            var result = await _dbSet.Where(u => u.UserName == name)
                                          .ToListAsync();
 
             return 
@@ -41,7 +41,7 @@ namespace InfrastructureLayer.partonair.Repositories
 
         public async Task<ICollection<User>> GetByRoleAsync(string role)
         {
-            var result = await _ctx.Users.Where(u => u.Role.ToString() == role)
+            var result = await _dbSet.Where(u => u.Role.ToString() == role)
                                          .ToListAsync();
 
             return 
@@ -53,12 +53,49 @@ namespace InfrastructureLayer.partonair.Repositories
         #endregion
 
 
-        public async Task<bool> IsEmailAvailable(string email)
+
+        #region CHECK
+
+        public async Task<bool> IsEmailAvailableAsync(string email)
         {
-            var result = await _ctx.Users.Where(u => u.Email == email)
+            var result = await _dbSet.Where(u => u.Email == email)
                                          .AnyAsync();
 
             return !result ;
         }
+
+
+        public async Task<bool> IsUserWithoutProfil(Guid id)
+        {
+            var existingUser = await _dbSet.Include(u => u.Profile).FirstOrDefaultAsync(u => u.Id == id)
+                ?? throw new InfrastructureLayerException(InfrastructureLayerErrorType.EntityIsNullException, $"Identifier : {id} - No match");
+
+            var dbg = existingUser.Profile;
+
+            return 
+                existingUser.Profile is null
+                ? true
+                : false; 
+        }
+        #endregion
+
+
+
+        #region Update
+
+        public async Task<bool> ChangeRoleAsync(Guid id, string role)
+        {
+            var existingUser = await _dbSet.FindAsync(id)
+                ?? throw new InfrastructureLayerException(InfrastructureLayerErrorType.EntityIsNullException, $"Identifier : {id} - No match");
+
+            Enum.TryParse<Roles>(role,true,out var roleToAdd);
+
+            existingUser.Role = roleToAdd;
+
+            return true;
+        }
+
+        #endregion
+
     }
 }

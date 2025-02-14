@@ -5,7 +5,7 @@ namespace DomainLayer.partonair.Entities
     public class Profile : IEntity
     {
         public Guid Id { get; set; }
-        public string ProfilDescription { get; set; } = string.Empty;
+        public string ProfileDescription { get; set; } = string.Empty;
 
         // Prop nav
         public Guid FK_User { get; set; }
