@@ -1,13 +1,15 @@
 ﻿using ApplicationLayer.partonair.DTOs;
-using DomainLayer.partonair.Exceptions.Enums;
-using DomainLayer.partonair.Exceptions;
-
-using DomainLayer.partonair.Entities;
-using DomainLayer.partonair.Contracts;
 using ApplicationLayer.partonair.Interfaces;
 using ApplicationLayer.partonair.Mappers;
-using Microsoft.Extensions.Logging;
+
+using DomainLayer.partonair.Exceptions.Enums;
+using DomainLayer.partonair.Exceptions;
+using DomainLayer.partonair.Entities;
+using DomainLayer.partonair.Contracts;
 using DomainLayer.partonair.Enums;
+
+
+using Microsoft.Extensions.Logging;
 
 
 namespace ApplicationLayer.partonair.Services
