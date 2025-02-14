@@ -14,7 +14,7 @@ namespace ApplicationLayer.partonair.DTOs.ValidationAttributes
                 return new ValidationResult("Le rôle est requis");
             }
 
-            if (Enum.TryParse<Roles>(value.ToString(), out _))
+            if (Enum.TryParse<Roles>(value.ToString(),true, out _))
             {
                 return ValidationResult.Success;
             }

@@ -53,17 +53,10 @@ namespace ApplicationLayer.partonair.DTOs
         public string? NewPasswordConfirm { get; init; }
     }
 
-    public record UserUpdateMailDTO
-    (
-        [EmailAddress(ErrorMessage = "Adresse email non valide")]
-        [MaxLength(250, ErrorMessage = "Le champ 'Email' doit contenir au maximum 250 caractères")]
-        string Email
-    );
-
     public record UserUpdateRoleDTO
     (
         [Required]
-        [ValidRole]
+        [ValidRole]      
         string Role
     );
 
