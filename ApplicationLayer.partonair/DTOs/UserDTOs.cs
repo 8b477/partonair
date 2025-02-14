@@ -47,7 +47,7 @@ namespace ApplicationLayer.partonair.DTOs
         public string? OldPassword { get; init; }
 
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$", ErrorMessage = "Le mot de passe doit avoir au moins 8 caractères avec 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial")]
-        public string? NewPassword { get; init; }
+        public string? NewPassword { get; set; }
 
         [Compare(nameof(NewPassword), ErrorMessage = "Le nouveau mot de passe et la confirmation de celui-ci ne corresponde pas")]
         public string? NewPasswordConfirm { get; init; }

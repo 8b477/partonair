@@ -141,7 +141,7 @@ namespace ApplicationLayer.partonair.Services
                 {
                     string newPassHashed = _bCryptService.HashPass(newUserData.NewPassword);
 
-                    userData.PasswordHashed = newPassHashed;
+                    newUserData.NewPassword = newPassHashed;
 
                     return;
                 }

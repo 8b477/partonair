@@ -26,9 +26,17 @@ namespace ApplicationLayer.partonair.Services
 
         public bool VerifyPasswordMatch(string actualPass, string passHashed)
         {
-            bool check = BCrypt.Net.BCrypt.EnhancedVerify(actualPass, passHashed);
+            try
+            {
+                bool check = BCrypt.Net.BCrypt.EnhancedVerify(actualPass, passHashed);
 
-            return check;          
+                return check;
+            }
+            catch (SaltParseException)
+            {
+                throw new ApplicationLayerException(ApplicationLayerErrorType.SaltParseBCryptException);
+            }         
         }
+        //e118f45e-a2db-47e1-846c-7a3250da8020
     }
 }

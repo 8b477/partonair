@@ -20,7 +20,7 @@ namespace DomainLayer.partonair.Exceptions.Handler
         {
             // ApplicationLayerErrorType
             AddErrorMessage(ApplicationLayerErrorType.ConstraintViolationErrorException, "The request conflicted with a constraint.");
-            AddErrorMessage(ApplicationLayerErrorType.SaltParseBCryptException, "Some thing was wrong with the cryptage.");
+            AddErrorMessage(ApplicationLayerErrorType.SaltParseBCryptException, "Some thing was wrong with the cryptage, check the password supplied.");
             AddErrorMessage(ApplicationLayerErrorType.EntityIsNotExistingException, "The entity don't match.");
 
             // InfrastructureLayerErrorType
