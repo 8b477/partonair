@@ -1,8 +1,6 @@
 ﻿using ApplicationLayer.partonair.DTOs;
 using ApplicationLayer.partonair.Interfaces;
 
-using DomainLayer.partonair.Exceptions;
-
 using Microsoft.AspNetCore.Mvc;
 
 
