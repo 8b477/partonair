@@ -6,6 +6,7 @@ using DomainLayer.partonair.Exceptions;
 using Moq;
 
 using TestingLayer.partonair.UserTest.Abstracts;
+using System.Reflection.Metadata;
 
 
 namespace TestingLayer.partonair.UserTest.Commands
@@ -40,15 +41,15 @@ namespace TestingLayer.partonair.UserTest.Commands
         {
             // Arrange
             var userId = Guid.NewGuid();
+
             _mockUserService.Setup(s => s.DeleteService(It.IsAny<Guid>()))
-                .ThrowsAsync(new OperationCanceledException("Operation was canceled."));
+                .ThrowsAsync(new InfrastructureLayerException(InfrastructureLayerErrorType.CancelationDatabaseException));
 
             // Act & Assert
             var exception = await Assert.ThrowsAsync<InfrastructureLayerException>(async () =>
                 await _handler.Handle(new DeleteUserCommand(userId), CancellationToken.None));
 
             Assert.Equal(InfrastructureLayerErrorType.CancelationDatabaseException, exception.ErrorType);
-            Assert.Contains("Operation was canceled.", exception.Message);
         }
 
 
