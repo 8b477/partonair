@@ -1,9 +1,8 @@
 ﻿using ApplicationLayer.partonair.DTOs;
-using ApplicationLayer.partonair.Interfaces;
 using ApplicationLayer.partonair.MediatR.Commands.Users;
 
-using DomainLayer.partonair.Entities;
-using DomainLayer.partonair.Enums;
+using DomainLayer.partonair.Exceptions.Enums;
+using DomainLayer.partonair.Exceptions;
 
 using Moq;
 
@@ -16,17 +15,16 @@ namespace TestingLayer.partonair.UserTest.Commands
     public class AddUserCommandTest : UserBaseClassTest
     {
         private readonly AddUserCommandHandler _handler;
-        private readonly Mock<IBCryptService> _mockBCrypt;
         public AddUserCommandTest() : base()
         {
             _handler = new AddUserCommandHandler(_mockUserService.Object);
-            _mockBCrypt = new Mock<IBCryptService>();
         }
+
 
         [Fact]
         public async Task AddUserCommandHandler_ShouldReturnsCreatedUser()
         {
-
+            // Arrange
             var userCreateDto = new UserCreateDTO
                 (
                 UserConstants.Name,
@@ -46,6 +44,7 @@ namespace TestingLayer.partonair.UserTest.Commands
                    null
                 );
 
+            // Act
             _mockUserService.Setup(s => s.CreateAsyncService(It.Is<UserCreateDTO>
                                       (p => p.UserName == UserConstants.Name &&
                                                   p.Email == UserConstants.Email
@@ -54,72 +53,51 @@ namespace TestingLayer.partonair.UserTest.Commands
 
             var result = await _handler.Handle(new AddUserCommand(userCreateDto),CancellationToken.None);
 
+            // Assert
             Assert.NotNull(result);
             Assert.IsType<UserViewDTO>(result);
             Assert.Equal(expectedUser.UserName, result.UserName);
             Assert.Equal(expectedUser.Email, result.Email);
 
-            _mockUserService.Verify(v => v.CreateAsyncService(It.IsAny<UserCreateDTO>()), Times.Once());
+            _mockUserService.Verify(v => v.CreateAsyncService(It.Is<UserCreateDTO>(dto =>
+                dto.UserName == UserConstants.Name &&
+                dto.Email == UserConstants.Email)), Times.Once());
+
         }
+
+        [Fact]
+        public async Task AddUserCommandHandler_WhenEmailNotAvailable_ShouldThrowApplicationLayerException()
+        {
+            // Arrange
+            var userCreateDto = new UserCreateDTO(UserConstants.Name, UserConstants.Email, UserConstants.Password);
+
+            _mockUserService.Setup(s => s.CreateAsyncService(It.IsAny<UserCreateDTO>()))
+                .ThrowsAsync(new ApplicationLayerException(ApplicationLayerErrorType.ConstraintViolationErrorException));
+
+            // Act && Assert
+            var exception = await Assert.ThrowsAsync<ApplicationLayerException>(() =>
+                _handler.Handle(new AddUserCommand(userCreateDto), CancellationToken.None));
+
+            Assert.Equal(ApplicationLayerErrorType.ConstraintViolationErrorException, exception.ErrorType);
+        }
+
+        [Fact]
+        public async Task AddUserCommandHandler_WhenDatabaseOperationCanceled_ShouldThrowInfrastructureLayerException()
+        {
+            // Arrange
+            var userCreateDto = new UserCreateDTO(UserConstants.Name, UserConstants.Email, UserConstants.Password);
+
+            _mockUserService.Setup(s => s.CreateAsyncService(It.IsAny<UserCreateDTO>()))
+                .ThrowsAsync(new InfrastructureLayerException(InfrastructureLayerErrorType.CancelationDatabaseException, "Database operation canceled"));
+
+            // Act && Assert
+            var exception = await Assert.ThrowsAsync<InfrastructureLayerException>(() =>
+                _handler.Handle(new AddUserCommand(userCreateDto), CancellationToken.None));
+
+            Assert.Equal(InfrastructureLayerErrorType.CancelationDatabaseException, exception.ErrorType);
+        }
+
+
     }
 }
 
-
-/*
-         public async Task CreateAsyncService_ShouldReturnsCreatedUser()
-        {
-
-            // ---------------> Arrange <---------------
-
-            var userCreateDto = new UserCreateDTO
-                (
-                UserConstants.Name,
-                UserConstants.Email,
-                UserConstants.Password
-                );
-            _mockUoW.Setup(s => s.Users.IsEmailAvailableAsync(userCreateDto.Email))
-                    .ReturnsAsync(true);
-
-            _mockUoW.Verify(v => v.Users.IsEmailAvailableAsync(userCreateDto.Email),Times.Once);
-
-            var user = new User
-            {
-                Id = Guid.NewGuid(), // In real case Id is generate by Database
-                UserName = userCreateDto.UserName,
-                Email = userCreateDto.Email,
-                PasswordHashed = userCreateDto.Password,
-                Role = Roles.Visitor,
-                UserCreatedAt = DateTime.UtcNow,
-                LastConnection = DateTime.UtcNow,
-                IsPublic = false,
-                FK_Profile = null,
-                Profile = null
-            };
-
-
-            _mockBCrypt.Setup(s => s.HashPass(userCreateDto.Password,13))
-                       .Returns(UserConstants.PasswordHashed);
-
-            user.PasswordHashed = UserConstants.PasswordHashed;
-
-
-            var expectedUser = new UserViewDTO
-                (
-                    user.Id,
-                   user.UserName,
-                   user.Email,
-                   user.IsPublic,
-                   user.UserCreatedAt,
-                   user.LastConnection,
-                   user.Role.ToString(),
-                   user.FK_Profile
-                );
-
-            var command = new AddUserCommand(userCreateDto);
-
-            _mockUserService.Setup(s => s.CreateAsyncService(It.IsAny<UserCreateDTO>()))
-                            .ReturnsAsync(expectedUser);
-
-            _mockUserService.Verify<UserViewDTO>(v => v.CreateAsyncService(userCreateDto).Result, Times.Once);
-        }
- */
