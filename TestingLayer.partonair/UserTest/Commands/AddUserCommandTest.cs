@@ -27,9 +27,9 @@ namespace TestingLayer.partonair.UserTest.Commands
             // Arrange
             var userCreateDto = new UserCreateDTO
                 (
-                UserConstants.Name,
-                UserConstants.Email,
-                UserConstants.Password
+                UserConstants.NAME,
+                UserConstants.EMAIL,
+                UserConstants.PASSWORD
                 );
 
             var expectedUser = new UserViewDTO
@@ -46,8 +46,8 @@ namespace TestingLayer.partonair.UserTest.Commands
 
             // Act
             _mockUserService.Setup(s => s.CreateAsyncService(It.Is<UserCreateDTO>
-                                      (p => p.UserName == UserConstants.Name &&
-                                                  p.Email == UserConstants.Email
+                                      (p => p.UserName == UserConstants.NAME &&
+                                                  p.Email == UserConstants.EMAIL
                                       ))
                                   ).ReturnsAsync(expectedUser);
 
@@ -60,8 +60,8 @@ namespace TestingLayer.partonair.UserTest.Commands
             Assert.Equal(expectedUser.Email, result.Email);
 
             _mockUserService.Verify(v => v.CreateAsyncService(It.Is<UserCreateDTO>(dto =>
-                dto.UserName == UserConstants.Name &&
-                dto.Email == UserConstants.Email)), Times.Once());
+                dto.UserName == UserConstants.NAME &&
+                dto.Email == UserConstants.EMAIL)), Times.Once());
 
         }
 
@@ -69,7 +69,7 @@ namespace TestingLayer.partonair.UserTest.Commands
         public async Task AddUserCommandHandler_WhenEmailNotAvailable_ShouldThrowApplicationLayerException()
         {
             // Arrange
-            var userCreateDto = new UserCreateDTO(UserConstants.Name, UserConstants.Email, UserConstants.Password);
+            var userCreateDto = new UserCreateDTO(UserConstants.NAME, UserConstants.EMAIL, UserConstants.PASSWORD);
 
             _mockUserService.Setup(s => s.CreateAsyncService(It.IsAny<UserCreateDTO>()))
                 .ThrowsAsync(new ApplicationLayerException(ApplicationLayerErrorType.ConstraintViolationErrorException));
@@ -85,7 +85,7 @@ namespace TestingLayer.partonair.UserTest.Commands
         public async Task AddUserCommandHandler_WhenDatabaseOperationCanceled_ShouldThrowInfrastructureLayerException()
         {
             // Arrange
-            var userCreateDto = new UserCreateDTO(UserConstants.Name, UserConstants.Email, UserConstants.Password);
+            var userCreateDto = new UserCreateDTO(UserConstants.NAME, UserConstants.EMAIL, UserConstants.PASSWORD);
 
             _mockUserService.Setup(s => s.CreateAsyncService(It.IsAny<UserCreateDTO>()))
                 .ThrowsAsync(new InfrastructureLayerException(InfrastructureLayerErrorType.CancelationDatabaseException, "Database operation canceled"));

@@ -68,10 +68,9 @@
     <Build Include="Tables\Friendly.sql" />
     <Build Include="Tables\Evaluations.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <PostDeploy Include="Scripts\schema.sql" />
-    <PostDeploy Include="Scripts\seed-data.sql" />
-  </ItemGroup>
+<ItemGroup>
+    <PostDeploy Include="Scripts\post-deploy-main.sql" />
+</ItemGroup>
   <ItemGroup>
     <None Include="Profiles\Database.partonair.publish.xml" />
   </ItemGroup>
