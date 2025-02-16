@@ -69,7 +69,8 @@
     <Build Include="Tables\Evaluations.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Scripts\Starter.PostDeployment.sql" />
+    <PostDeploy Include="Scripts\schema.sql" />
+    <PostDeploy Include="Scripts\seed-data.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Profiles\Database.partonair.publish.xml" />
