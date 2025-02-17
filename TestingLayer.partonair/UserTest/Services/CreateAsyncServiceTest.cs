@@ -1,18 +1,10 @@
 ﻿using ApplicationLayer.partonair.DTOs;
-using ApplicationLayer.partonair.Interfaces;
-using ApplicationLayer.partonair.MediatR.Commands.Users;
-using ApplicationLayer.partonair.Services;
 
-using DomainLayer.partonair.Contracts;
 using DomainLayer.partonair.Entities;
 using DomainLayer.partonair.Exceptions;
 using DomainLayer.partonair.Exceptions.Enums;
 
-using Microsoft.Extensions.Logging;
-
 using Moq;
-
-using System.Reflection.Metadata;
 
 using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
@@ -20,23 +12,11 @@ using TestingLayer.partonair.UserTest.Constants;
 
 namespace TestingLayer.partonair.UserTest.Services
 {
-    public class CreateAsyncServiceTest : UserBaseClassTest
+    public class CreateAsyncServiceTest : ExtendUserServiceTest
     {
-        private readonly Mock<IUserRepository> _mockUserRepo;
-        private readonly Mock<IBCryptService> _mockBCrypt;
-        private readonly Mock<ILogger<UserService>> _mockLogger;
-        private readonly UserService _userService;
-
-        public CreateAsyncServiceTest():base()
-        {
-            _mockUserRepo = new ();
-            _mockBCrypt = new();
-            _mockLogger = new();
-            _mockUoW.Setup(uow => uow.Users).Returns(_mockUserRepo.Object);
-            _userService = new UserService(_mockUoW.Object, _mockBCrypt.Object, _mockLogger.Object);
-
+        public CreateAsyncServiceTest():base() {
+            
         }
-
 
         [Fact]
         public async Task CreateAsyncService_ShouldCreateUser_WhenEmailIsAvailable()
@@ -60,7 +40,7 @@ namespace TestingLayer.partonair.UserTest.Services
                 UserConstants.ROLE_VISITOR,
                 null
             );
-
+            
             _mockUserRepo.Setup(repo => repo.IsEmailAvailableAsync(userDto.Email)).ReturnsAsync(true);
             _mockBCrypt.Setup(bc => bc.HashPass(userDto.Password, 13)).Returns(UserConstants.PASSWORD_HASHED);
             _mockUserRepo.Setup(repo => repo.CreateAsync(It.IsAny<User>())).ReturnsAsync(userEntity);
