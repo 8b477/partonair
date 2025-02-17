@@ -10,7 +10,7 @@ using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
 
 
-namespace TestingLayer.partonair.UserTest.Commands
+namespace TestingLayer.partonair.UserTest.MediatR.Commands
 {
     public class AddUserCommandTest : UserBaseClassTest
     {
@@ -51,7 +51,7 @@ namespace TestingLayer.partonair.UserTest.Commands
                                       ))
                                   ).ReturnsAsync(expectedUser);
 
-            var result = await _handler.Handle(new AddUserCommand(userCreateDto),CancellationToken.None);
+            var result = await _handler.Handle(new AddUserCommand(userCreateDto), CancellationToken.None);
 
             // Assert
             Assert.NotNull(result);

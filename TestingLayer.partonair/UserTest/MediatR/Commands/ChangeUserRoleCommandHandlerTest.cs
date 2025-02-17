@@ -10,7 +10,7 @@ using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
 
 
-namespace TestingLayer.partonair.UserTest.Commands
+namespace TestingLayer.partonair.UserTest.MediatR.Commands
 {
     public class ChangeUserRoleCommandHandlerTest : UserBaseClassTest
     {
@@ -37,7 +37,7 @@ namespace TestingLayer.partonair.UserTest.Commands
             Assert.IsType<bool>(result);
             Assert.True(result);
 
-            _mockUserService.Verify(s => s.ChangeRoleService(It.Is<Guid>(p => p != Guid.Empty), It.IsAny<UserChangeRoleDTO>()),Times.Once);
+            _mockUserService.Verify(s => s.ChangeRoleService(It.Is<Guid>(p => p != Guid.Empty), It.IsAny<UserChangeRoleDTO>()), Times.Once);
         }
 
         [Fact]
@@ -71,12 +71,12 @@ namespace TestingLayer.partonair.UserTest.Commands
                            .ThrowsAsync(new InfrastructureLayerException(InfrastructureLayerErrorType.EntityIsNullException));
 
             // Act && Assert
-            var exception = await Assert.ThrowsAsync<InfrastructureLayerException>(() => 
+            var exception = await Assert.ThrowsAsync<InfrastructureLayerException>(() =>
             _handler.Handle(new ChangeUserRoleCommand(id, newUserRole), CancellationToken.None));
 
             Assert.Equal(InfrastructureLayerErrorType.EntityIsNullException, exception.ErrorType);
 
-            _mockUserService.Verify(v => v.ChangeRoleService(It.Is<Guid>(p => p != Guid.Empty), It.IsAny<UserChangeRoleDTO>()),Times.Once);
+            _mockUserService.Verify(v => v.ChangeRoleService(It.Is<Guid>(p => p != Guid.Empty), It.IsAny<UserChangeRoleDTO>()), Times.Once);
         }
 
         [Fact]

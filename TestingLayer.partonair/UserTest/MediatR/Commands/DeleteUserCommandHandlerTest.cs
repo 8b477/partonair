@@ -9,7 +9,7 @@ using TestingLayer.partonair.UserTest.Abstracts;
 using System.Reflection.Metadata;
 
 
-namespace TestingLayer.partonair.UserTest.Commands
+namespace TestingLayer.partonair.UserTest.MediatR.Commands
 {
     public class DeleteUserCommandHandlerTest : UserBaseClassTest
     {
