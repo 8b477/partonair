@@ -14,11 +14,11 @@ namespace TestingLayer.partonair.UserTest.Queries
 {
     public class GetByIdUserQueryHandlerTest : UserBaseClassTest
     {
-        private readonly GetUserByIdQueryHandler _handler;
+        private readonly GetByIdUserQueryHandler _handler;
         private readonly UserViewDTO _user;
         public GetByIdUserQueryHandlerTest() :base()
         {
-            _handler = new GetUserByIdQueryHandler(_mockUserService.Object);
+            _handler = new GetByIdUserQueryHandler(_mockUserService.Object);
             _user = new UserViewDTO
                 (
                     new Guid(),
@@ -37,7 +37,7 @@ namespace TestingLayer.partonair.UserTest.Queries
         {
             _mockUserService.Setup(s => s.GetByIdAsyncService(_user.Id)).ReturnsAsync(_user);
 
-            var result = await _handler.Handle(new GetUserByIdQuery(_user.Id), CancellationToken.None);
+            var result = await _handler.Handle(new GetByIdUserQuery(_user.Id), CancellationToken.None);
 
             Assert.NotNull(result);
             Assert.IsType<UserViewDTO>(result);
@@ -54,7 +54,7 @@ namespace TestingLayer.partonair.UserTest.Queries
                 .ThrowsAsync(new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFoundException));
 
             var exception = await Assert.ThrowsAsync<InfrastructureLayerException>(() =>
-                _handler.Handle(new GetUserByIdQuery(Guid.Empty), CancellationToken.None));
+                _handler.Handle(new GetByIdUserQuery(Guid.Empty), CancellationToken.None));
 
             Assert.Equal(InfrastructureLayerErrorType.ResourceNotFoundException, exception.ErrorType);
 
@@ -68,7 +68,7 @@ namespace TestingLayer.partonair.UserTest.Queries
                 .ThrowsAsync(new InfrastructureLayerException(InfrastructureLayerErrorType.CancelationDatabaseException));
 
             var exception = await Assert.ThrowsAsync<InfrastructureLayerException>(() =>
-                _handler.Handle(new GetUserByIdQuery(Guid.Empty), CancellationToken.None));
+                _handler.Handle(new GetByIdUserQuery(Guid.Empty), CancellationToken.None));
 
             Assert.Equal(InfrastructureLayerErrorType.CancelationDatabaseException, exception.ErrorType);
 

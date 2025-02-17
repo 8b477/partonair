@@ -16,7 +16,7 @@ namespace API.partonair.GlobalManager
         public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
         {
             // MEDIATR
-            services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(GetUserByIdQueryHandler).Assembly));
+            services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(GetByIdUserQueryHandler).Assembly));
 
             // USER
             services.AddScoped<IUserService, UserService>();
