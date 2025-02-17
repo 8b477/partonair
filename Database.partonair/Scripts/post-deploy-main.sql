@@ -15,11 +15,11 @@ DECLARE @User5Id UNIQUEIDENTIFIER = NEWID();
 INSERT INTO [dbo].[Users] 
     ([Id], [UserName], [Email], [PasswordHashed], [Role], [UserCreatedAt], [IsPublic], [LastConnection])
 VALUES
-    (@User1Id, 'Jean Dupont', 'jean.dupont@email.com', 'hash123456', 'User', '2024-01-15', 1, '2024-02-15'),
-    (@User2Id, 'Marie Martin', 'marie.martin@email.com', 'hash234567', 'Admin', '2024-01-16', 1, '2024-02-16'),
-    (@User3Id, 'Pierre Bernard', 'pierre.bernard@email.com', 'hash345678', 'User', '2024-01-17', 0, '2024-02-14'),
-    (@User4Id, 'Sophie Dubois', 'sophie.dubois@email.com', 'hash456789', 'User', '2024-01-18', 1, '2024-02-17'),
-    (@User5Id, 'Lucas Petit', 'lucas.petit@email.com', 'hash567890', 'User', '2024-01-19', 1, '2024-02-15');
+    (@User1Id, 'Jean Dupont', 'jean.dupont@email.com', 'hash123456', 'Visitor', '2024-01-15', 1, '2024-02-15'),
+    (@User2Id, 'Marie Martin', 'marie.martin@email.com', 'hash234567', 'Company', '2024-01-16', 1, '2024-02-16'),
+    (@User3Id, 'Pierre Bernard', 'pierre.bernard@email.com', 'hash345678', 'Employee', '2024-01-17', 0, '2024-02-14'),
+    (@User4Id, 'Sophie Dubois', 'sophie.dubois@email.com', 'hash456789', 'Visitor', '2024-01-18', 1, '2024-02-17'),
+    (@User5Id, 'Lucas Petit', 'lucas.petit@email.com', 'hash567890', 'Employee', '2024-01-19', 1, '2024-02-15');
 
 -- Insertion des profils
 DECLARE @Profile1Id UNIQUEIDENTIFIER = NEWID();
