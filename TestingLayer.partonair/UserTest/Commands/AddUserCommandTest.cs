@@ -22,7 +22,7 @@ namespace TestingLayer.partonair.UserTest.Commands
 
 
         [Fact]
-        public async Task AddUserCommandHandler_ShouldReturnsCreatedUser()
+        public async Task AddUserCommandHandler_ShouldReturnCreatedUser()
         {
             // Arrange
             var userCreateDto = new UserCreateDTO

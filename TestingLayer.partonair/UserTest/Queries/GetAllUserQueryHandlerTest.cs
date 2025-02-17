@@ -62,7 +62,7 @@ namespace TestingLayer.partonair.UserTest.Queries
         }
 
         [Fact]
-        public async Task GetAllUserQueryHandler_WhenUserCanceledOperation_ShouldThrow_InfrastructureOperationCanceledException()
+        public async Task GetAllUserQueryHandler_WhenDatabaseOperationCanceled_ShouldThrow_InfrastructureOperationCanceledException()
         {
             // Arrange
             _mockUserService.Setup(s => s.GetAllAsyncService())

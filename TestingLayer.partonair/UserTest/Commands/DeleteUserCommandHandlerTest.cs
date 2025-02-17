@@ -22,7 +22,7 @@ namespace TestingLayer.partonair.UserTest.Commands
 
 
         [Fact]
-        public async Task DeleteUserCommandHandler_ShouldCallDeleteService()
+        public async Task DeleteUserCommandHandler_ShouldReturnVoid()
         {
             // Arrange
             var userId = Guid.NewGuid();

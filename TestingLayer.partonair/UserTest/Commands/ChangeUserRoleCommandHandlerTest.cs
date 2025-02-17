@@ -21,7 +21,7 @@ namespace TestingLayer.partonair.UserTest.Commands
         }
 
         [Fact]
-        public async Task ChangeUserRoleCommandHandler_ShouldReturns_True()
+        public async Task ChangeUserRoleCommandHandler_ShouldReturn_True()
         {
             // Arrange
             Guid id = Guid.NewGuid();
@@ -41,7 +41,7 @@ namespace TestingLayer.partonair.UserTest.Commands
         }
 
         [Fact]
-        public async Task ChangeUserRoleCommandHandler_ShouldReturns_False()
+        public async Task ChangeUserRoleCommandHandler_ShouldReturn_False()
         {
             // Arrange
             Guid id = Guid.NewGuid();

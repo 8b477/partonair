@@ -27,7 +27,7 @@ namespace TestingLayer.partonair.UserTest.Commands
         }
 
         [Fact]
-        public async Task UpdateUserCommandHandler_ShouldReturns_UserViewDTO()
+        public async Task UpdateUserCommandHandler_ShouldReturn_UserViewDTO()
         {
             // Arrange
             var expectedUser = new UserViewDTO
@@ -72,7 +72,7 @@ namespace TestingLayer.partonair.UserTest.Commands
         }
 
         [Fact]
-        public async Task UpdateUserCommandHandler_WhenUserIsNotFoundById_ShouldThrow_InfrastructureOperationCanceledException()
+        public async Task UpdateUserCommandHandler_WhenDatabaseOperationCanceled_ShouldThrow_InfrastructureOperationCanceledException()
         {
             // Arrange
             _mockUserService.Setup(s => s.UpdateService(It.Is<Guid>(p => p != Guid.Empty), It.IsAny<UserUpdateNameOrMailOrPasswordDTO>()))
