@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ApplicationLayer.partonair\ApplicationLayer.partonair.csproj" />
     <ProjectReference Include="..\DomainLayer.partonair\DomainLayer.partonair.csproj" />
+    <ProjectReference Include="..\InfrastructureLayer.partonair\InfrastructureLayer.partonair.csproj" />
   </ItemGroup>
 
   <ItemGroup>
