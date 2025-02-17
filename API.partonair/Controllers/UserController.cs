@@ -50,7 +50,7 @@ namespace API.partonair.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
-            var user = await _mediator.Send(new GetUserByIdQuery(id));
+            var user = await _mediator.Send(new GetByIdUserQuery(id));
 
             return Ok(new { user });        
         }

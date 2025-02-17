@@ -4,5 +4,5 @@ using MediatR;
 
 namespace ApplicationLayer.partonair.MediatR.Queries.Users
 {
-    public record GetUserByIdQuery(Guid Id) : IRequest<UserViewDTO>;
+    public record GetByIdUserQuery(Guid Id) : IRequest<UserViewDTO>;
 }

@@ -32,8 +32,4 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UserTest\Queries\" />
-  </ItemGroup>
-
 </Project>
