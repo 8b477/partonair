@@ -71,6 +71,15 @@ namespace TestingLayer.partonair.UserTest.Services
             _mockUserRepo.Setup(r => r.Update(It.IsAny<User>())).ReturnsAsync(_updatedUser);
         }
 
+        private void VerifyAllMockIsCalled()
+        {
+            _mockUserRepo.Verify(r => r.GetByGuidAsync(It.IsAny<Guid>()),Times.Once);
+            _mockUserRepo.Verify(r => r.IsEmailAvailableAsync(_updateDto.Email!), Times.Once);
+            _mockBCrypt.Verify(b => b.VerifyPasswordMatch(_updateDto.OldPassword!, _existingUser.PasswordHashed), Times.Once);
+            _mockBCrypt.Verify(b => b.HashPass(_updateDto.NewPassword!, 13), Times.Once);
+            _mockUserRepo.Verify(r => r.Update(It.IsAny<User>()), Times.Once);
+        }
+
         [Fact]
         public async Task UpdateService_ShouldUpdateUser_Correctly()
         {
@@ -89,6 +98,8 @@ namespace TestingLayer.partonair.UserTest.Services
             Assert.NotEqual(_existingUser.UserName, result.UserName);
             Assert.False(result.IsPublic);
             Assert.Null(result.FK_Profile);
+
+            VerifyAllMockIsCalled();
         }
 
         [Fact]
@@ -101,6 +112,8 @@ namespace TestingLayer.partonair.UserTest.Services
             // Act & Assert
             var exception = await Assert.ThrowsAsync<ApplicationLayerException>(() => _userService.UpdateService(Guid.NewGuid(), userDto));
             Assert.Equal(ApplicationLayerErrorType.ConstraintViolationErrorException, exception.ErrorType);
+
+            _mockUserRepo.Verify(v => v.IsEmailAvailableAsync(userDto.Email),Times.Once);
         }
 
         [Fact]
@@ -113,6 +126,9 @@ namespace TestingLayer.partonair.UserTest.Services
             // Act & Assert
             var exception = await Assert.ThrowsAsync<ApplicationLayerException>(() => _userService.UpdateService(It.Is<Guid>(p => p != Guid.Empty), _updateDto));
             Assert.Equal(ApplicationLayerErrorType.SaltParseBCryptException, exception.ErrorType);
+
+            _mockUserRepo.Verify(v => v.GetByGuidAsync(It.IsAny<Guid>()), Times.Once);
+            _mockBCrypt.Verify(v => v.VerifyPasswordMatch(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
     }
 }
