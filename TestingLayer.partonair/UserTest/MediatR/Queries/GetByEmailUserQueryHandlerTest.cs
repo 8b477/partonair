@@ -10,13 +10,13 @@ using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
 
 
-namespace TestingLayer.partonair.UserTest.Queries
+namespace TestingLayer.partonair.UserTest.MediatR.Queries
 {
     public class GetByEmailUserQueryHandlerTest : UserBaseClassTest
     {
         private readonly GetByEmailUserQueryHandler _handler;
         private readonly UserViewDTO _user;
-        public GetByEmailUserQueryHandlerTest():base()
+        public GetByEmailUserQueryHandlerTest() : base()
         {
             _handler = new GetByEmailUserQueryHandler(_mockUserService.Object);
 
@@ -46,7 +46,7 @@ namespace TestingLayer.partonair.UserTest.Queries
             Assert.Equal(UserConstants.EMAIL, result.Email);
             Assert.Equal(UserConstants.NAME, result.UserName);
 
-            _mockUserService.Verify(v => v.GetByEmailAsyncService(UserConstants.EMAIL),Times.Once);
+            _mockUserService.Verify(v => v.GetByEmailAsyncService(UserConstants.EMAIL), Times.Once);
         }
 
         [Fact]

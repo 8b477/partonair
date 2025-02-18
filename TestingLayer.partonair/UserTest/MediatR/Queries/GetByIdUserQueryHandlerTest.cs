@@ -10,13 +10,13 @@ using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
 
 
-namespace TestingLayer.partonair.UserTest.Queries
+namespace TestingLayer.partonair.UserTest.MediatR.Queries
 {
     public class GetByIdUserQueryHandlerTest : UserBaseClassTest
     {
         private readonly GetByIdUserQueryHandler _handler;
         private readonly UserViewDTO _user;
-        public GetByIdUserQueryHandlerTest() :base()
+        public GetByIdUserQueryHandlerTest() : base()
         {
             _handler = new GetByIdUserQueryHandler(_mockUserService.Object);
             _user = new UserViewDTO

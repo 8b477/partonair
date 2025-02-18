@@ -9,7 +9,7 @@ using Moq;
 using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
 
-namespace TestingLayer.partonair.UserTest.Queries
+namespace TestingLayer.partonair.UserTest.MediatR.Queries
 {
     public class GetByRoleUserQueryHandlerTest : UserBaseClassTest
     {
@@ -17,7 +17,7 @@ namespace TestingLayer.partonair.UserTest.Queries
         private readonly ICollection<UserViewDTO> _usersListRoleVisitor;
         private readonly ICollection<UserViewDTO> _usersListRoleEmployee;
         private readonly ICollection<UserViewDTO> _usersListRoleCompany;
-        public GetByRoleUserQueryHandlerTest():base()
+        public GetByRoleUserQueryHandlerTest() : base()
         {
             _handler = new GetByRoleUserQueryHandler(_mockUserService.Object);
             _usersListRoleVisitor =
@@ -48,7 +48,7 @@ new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,D
             Assert.Equal(2, _usersListRoleVisitor.Count);
             Assert.IsType<List<UserViewDTO>>(result);
 
-            _mockUserService.Verify(v => v.GetByRoleAsyncService(UserConstants.ROLE_VISITOR),Times.Once);
+            _mockUserService.Verify(v => v.GetByRoleAsyncService(UserConstants.ROLE_VISITOR), Times.Once);
         }
 
         [Fact]

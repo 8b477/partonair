@@ -9,14 +9,14 @@ using Moq;
 using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
 
-namespace TestingLayer.partonair.UserTest.Queries
+namespace TestingLayer.partonair.UserTest.MediatR.Queries
 {
     public class GetByNameUserQueryHandlerTest : UserBaseClassTest
     {
         private readonly GetByNameUserQueryHandler _handler;
         private readonly ICollection<UserViewDTO> _usersList;
 
-        public GetByNameUserQueryHandlerTest():base()
+        public GetByNameUserQueryHandlerTest() : base()
         {
             _handler = new GetByNameUserQueryHandler(_mockUserService.Object);
             _usersList =
@@ -38,7 +38,7 @@ new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,D
             Assert.Equal(2, result.Count);
             Assert.IsType<List<UserViewDTO>>(result);
 
-            _mockUserService.Verify(v => v.GetByNameAsyncService(UserConstants.NAME),Times.Once);
+            _mockUserService.Verify(v => v.GetByNameAsyncService(UserConstants.NAME), Times.Once);
         }
 
         [Fact]

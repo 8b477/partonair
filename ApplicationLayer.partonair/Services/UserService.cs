@@ -56,6 +56,7 @@ namespace ApplicationLayer.partonair.Services
             await UpdateEmail(existingUser, entity);
 
             User userEntity = entity.ToEntity(existingUser);
+            userEntity.PasswordHashed = _bCryptService.HashPass(userEntity.PasswordHashed);
 
             var userUpdated = await _UOW.Users.Update(userEntity);
 
@@ -64,7 +65,7 @@ namespace ApplicationLayer.partonair.Services
             return userUpdated.ToView();
         }
 
-        public async Task<bool> ChangeRoleService(Guid id, UserChangeRoleDTO user)
+        public async Task<bool> ChangeRoleAsyncService(Guid id, UserChangeRoleDTO user)
         {
             const string visitorTest = "VISITOR";
 
