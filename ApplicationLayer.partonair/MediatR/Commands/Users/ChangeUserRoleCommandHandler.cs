@@ -10,7 +10,7 @@ namespace ApplicationLayer.partonair.MediatR.Commands.Users
         private readonly IUserService _userService = userService;
         public async Task<bool> Handle(ChangeUserRoleCommand request, CancellationToken cancellationToken)
         {
-            return await _userService.ChangeRoleService(request.id, request.NewRole);
+            return await _userService.ChangeRoleAsyncService(request.id, request.NewRole);
         }
     }
 }

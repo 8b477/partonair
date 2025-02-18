@@ -10,7 +10,7 @@ namespace ApplicationLayer.partonair.Interfaces
         Task<UserViewDTO> UpdateService(Guid id, UserUpdateNameOrMailOrPasswordDTO entity);
         Task DeleteService(Guid id);
 
-        Task<bool> ChangeRoleService(Guid id, UserChangeRoleDTO role);
+        Task<bool> ChangeRoleAsyncService(Guid id, UserChangeRoleDTO role);
 
         // Queries
         Task<ICollection<UserViewDTO>> GetAllAsyncService();
