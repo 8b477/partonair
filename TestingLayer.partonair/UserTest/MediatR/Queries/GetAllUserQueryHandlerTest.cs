@@ -1,5 +1,4 @@
 ﻿using ApplicationLayer.partonair.DTOs;
-using ApplicationLayer.partonair.MediatR.Commands.Users;
 using ApplicationLayer.partonair.MediatR.Queries.Users;
 
 using DomainLayer.partonair.Exceptions.Enums;
@@ -8,18 +7,17 @@ using DomainLayer.partonair.Exceptions;
 
 using Moq;
 
-using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
 
 
 namespace TestingLayer.partonair.UserTest.MediatR.Queries
 {
-    public class GetAllUserQueryHandlerTest : UserBaseClassTest
+    public class GetAllUserQueryHandlerTest : BaseUserApplicationTestFixture
     {
         private readonly GetAllUserQueryHandler _handler;
         private readonly ICollection<UserViewDTO> _usersList;
 
-        public GetAllUserQueryHandlerTest() : base()
+        public GetAllUserQueryHandlerTest()
         {
             _handler = new GetAllUserQueryHandler(_mockUserService.Object);
             _usersList =

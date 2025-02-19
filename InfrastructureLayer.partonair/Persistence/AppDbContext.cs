@@ -9,8 +9,8 @@ namespace InfrastructureLayer.partonair.Persistence
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
-        public required DbSet<User> Users {get; set;}
-        public required DbSet<Profile> Profiles {get; set;}
+        public DbSet<User> Users {get; set;}
+        public DbSet<Profile> Profiles {get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

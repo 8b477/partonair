@@ -6,24 +6,21 @@ using DomainLayer.partonair.Exceptions.Enums;
 
 using Moq;
 
-using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
 
 
 namespace TestingLayer.partonair.UserTest.Services
 {
-    public class CreateAsyncServiceTest : ExtendUserServiceTest
+    public class CreateAsyncServiceTest : ExtendBaseUserApplicationServiceTestFixture
     {
         private readonly Guid _id;
         private readonly User _userEntity;
         private readonly UserCreateDTO _userCreateDTO;
-        private readonly UserViewDTO _userViewDTO;
-        public CreateAsyncServiceTest():base()
+        public CreateAsyncServiceTest()
         {
             _id = Guid.NewGuid();
             _userEntity = CreateUserEntity(_id);
             _userCreateDTO = CreateUserCreateDTO();
-            _userViewDTO = CreateUserViewDTO(_id);
         }
 
         private static User CreateUserEntity(Guid id) => new User
@@ -39,18 +36,6 @@ namespace TestingLayer.partonair.UserTest.Services
             UserConstants.NAME,
             UserConstants.EMAIL,
             UserConstants.PASSWORD
-        );
-
-        private static UserViewDTO CreateUserViewDTO(Guid id) => new UserViewDTO
-        (
-            id,
-            UserConstants.NAME,
-            UserConstants.EMAIL,
-            false,
-            DateTime.Now,
-            DateTime.Now,
-            UserConstants.ROLE_VISITOR,
-            null
         );
 
         private void SetupMocksForSuccessfulCreateUser()

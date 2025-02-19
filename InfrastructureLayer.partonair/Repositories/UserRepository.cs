@@ -33,10 +33,10 @@ namespace InfrastructureLayer.partonair.Repositories
             var result = await _dbSet.Where(u => u.UserName == name)
                                          .ToListAsync();
 
-            return 
-                result
-                ??
+            if(result.Count == 0)
                 throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFoundException, $"The name : {name} - no match");
+
+            return result;
         }
 
         public async Task<ICollection<User>> GetByRoleAsync(string role)
@@ -44,10 +44,10 @@ namespace InfrastructureLayer.partonair.Repositories
             var result = await _dbSet.Where(u => u.Role.ToString() == role)
                                          .ToListAsync();
 
-            return 
-                result
-                ??
+            if (result.Count == 0)
                 throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFoundException, $"The role : {role} - no match");
+
+            return result;
         }
 
         #endregion
@@ -67,10 +67,8 @@ namespace InfrastructureLayer.partonair.Repositories
 
         public async Task<bool> IsUserWithoutProfil(Guid id)
         {
-            var existingUser = await _dbSet.Include(u => u.Profile).FirstOrDefaultAsync(u => u.Id == id)
+            var existingUser = await _dbSet.FirstOrDefaultAsync(u => u.Id == id)
                 ?? throw new InfrastructureLayerException(InfrastructureLayerErrorType.EntityIsNullException, $"Identifier : {id} - No match");
-
-            var dbg = existingUser.Profile;
 
             return 
                 existingUser.Profile is null
@@ -88,7 +86,10 @@ namespace InfrastructureLayer.partonair.Repositories
             var existingUser = await _dbSet.FindAsync(id)
                 ?? throw new InfrastructureLayerException(InfrastructureLayerErrorType.EntityIsNullException, $"Identifier : {id} - No match");
 
-            Enum.TryParse<Roles>(role,true,out var roleToAdd);
+            bool validRole = Enum.TryParse<Roles>(role,true,out var roleToAdd);
+
+            if (!validRole)
+                return false;
 
             existingUser.Role = roleToAdd;
 

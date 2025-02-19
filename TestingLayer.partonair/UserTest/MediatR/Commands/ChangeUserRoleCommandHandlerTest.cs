@@ -6,19 +6,16 @@ using DomainLayer.partonair.Exceptions;
 
 using Moq;
 
-using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
 
 
 namespace TestingLayer.partonair.UserTest.MediatR.Commands
 {
-    public class ChangeUserRoleCommandHandlerTest : UserBaseClassTest
+    public class ChangeUserRoleCommandHandlerTest : BaseUserApplicationTestFixture
     {
         private readonly ChangeUserRoleCommandHandler _handler;
-        public ChangeUserRoleCommandHandlerTest() : base()
-        {
-            _handler = new ChangeUserRoleCommandHandler(_mockUserService.Object);
-        }
+        public ChangeUserRoleCommandHandlerTest() => _handler = new ChangeUserRoleCommandHandler(_mockUserService.Object);
+
 
         [Fact]
         public async Task ChangeUserRoleCommandHandler_ShouldReturn_True()

@@ -5,20 +5,15 @@ using DomainLayer.partonair.Exceptions;
 
 using Moq;
 
-using TestingLayer.partonair.UserTest.Abstracts;
-using System.Reflection.Metadata;
-
 
 namespace TestingLayer.partonair.UserTest.MediatR.Commands
 {
-    public class DeleteUserCommandHandlerTest : UserBaseClassTest
+    public class DeleteUserCommandHandlerTest : BaseUserApplicationTestFixture
     {
         private readonly DeleteUserCommandHandler _handler;
 
-        public DeleteUserCommandHandlerTest() : base()
-        {
-            _handler = new DeleteUserCommandHandler(_mockUserService.Object);
-        }
+        public DeleteUserCommandHandlerTest() => _handler = new DeleteUserCommandHandler(_mockUserService.Object);
+
 
 
         [Fact]

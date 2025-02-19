@@ -79,9 +79,12 @@ namespace ApplicationLayer.partonair.Services
 
             var result = await _UOW.Users.ChangeRoleAsync(id, user.Role);
 
+            if (!result)
+                return false;
+
             await _UOW.SaveChangesAsync();
 
-            return result;
+            return true;
         }
 
         public async Task DeleteService(Guid id)
