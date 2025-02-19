@@ -6,17 +6,16 @@ using DomainLayer.partonair.Exceptions;
 
 using Moq;
 
-using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
 
 
 namespace TestingLayer.partonair.UserTest.MediatR.Queries
 {
-    public class GetByIdUserQueryHandlerTest : UserBaseClassTest
+    public class GetByIdUserQueryHandlerTest : BaseUserApplicationTestFixture
     {
         private readonly GetByIdUserQueryHandler _handler;
         private readonly UserViewDTO _user;
-        public GetByIdUserQueryHandlerTest() : base()
+        public GetByIdUserQueryHandlerTest()
         {
             _handler = new GetByIdUserQueryHandler(_mockUserService.Object);
             _user = new UserViewDTO

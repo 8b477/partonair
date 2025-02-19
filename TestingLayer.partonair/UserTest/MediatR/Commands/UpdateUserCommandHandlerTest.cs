@@ -6,17 +6,16 @@ using DomainLayer.partonair.Exceptions;
 
 using Moq;
 
-using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
 
 
 namespace TestingLayer.partonair.UserTest.MediatR.Commands
 {
-    public class UpdateUserCommandHandlerTest : UserBaseClassTest
+    public class UpdateUserCommandHandlerTest : BaseUserApplicationTestFixture
     {
         private readonly UpdateUserCommandHandler _handler;
         private readonly UserUpdateNameOrMailOrPasswordDTO _userToUpdate;
-        public UpdateUserCommandHandlerTest() : base()
+        public UpdateUserCommandHandlerTest()
         {
             _handler = new UpdateUserCommandHandler(_mockUserService.Object);
             _userToUpdate = new UserUpdateNameOrMailOrPasswordDTO

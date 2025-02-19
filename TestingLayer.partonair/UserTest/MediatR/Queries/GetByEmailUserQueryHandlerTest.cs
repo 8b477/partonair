@@ -6,17 +6,16 @@ using DomainLayer.partonair.Exceptions.Enums;
 
 using Moq;
 
-using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
 
 
 namespace TestingLayer.partonair.UserTest.MediatR.Queries
 {
-    public class GetByEmailUserQueryHandlerTest : UserBaseClassTest
+    public class GetByEmailUserQueryHandlerTest : BaseUserApplicationTestFixture
     {
         private readonly GetByEmailUserQueryHandler _handler;
         private readonly UserViewDTO _user;
-        public GetByEmailUserQueryHandlerTest() : base()
+        public GetByEmailUserQueryHandlerTest()
         {
             _handler = new GetByEmailUserQueryHandler(_mockUserService.Object);
 

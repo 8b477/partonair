@@ -6,18 +6,18 @@ using DomainLayer.partonair.Exceptions;
 
 using Moq;
 
-using TestingLayer.partonair.UserTest.Abstracts;
+
 using TestingLayer.partonair.UserTest.Constants;
 
 namespace TestingLayer.partonair.UserTest.MediatR.Queries
 {
-    public class GetByRoleUserQueryHandlerTest : UserBaseClassTest
+    public class GetByRoleUserQueryHandlerTest : BaseUserApplicationTestFixture
     {
         private readonly GetByRoleUserQueryHandler _handler;
         private readonly ICollection<UserViewDTO> _usersListRoleVisitor;
         private readonly ICollection<UserViewDTO> _usersListRoleEmployee;
         private readonly ICollection<UserViewDTO> _usersListRoleCompany;
-        public GetByRoleUserQueryHandlerTest() : base()
+        public GetByRoleUserQueryHandlerTest()
         {
             _handler = new GetByRoleUserQueryHandler(_mockUserService.Object);
             _usersListRoleVisitor =

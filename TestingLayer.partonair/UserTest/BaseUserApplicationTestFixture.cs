@@ -4,13 +4,14 @@ using DomainLayer.partonair.Contracts;
 
 using Moq;
 
-namespace TestingLayer.partonair.UserTest.Abstracts
+
+namespace TestingLayer.partonair.UserTest
 {
-    public abstract class UserBaseClassTest
+    public class BaseUserApplicationTestFixture
     {
         protected readonly Mock<IUnitOfWork> _mockUoW;
         protected readonly Mock<IUserService> _mockUserService;
-        protected UserBaseClassTest()
+        protected BaseUserApplicationTestFixture()
         {
             _mockUoW = new();
             _mockUserService = new();

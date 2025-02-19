@@ -3,18 +3,14 @@ using DomainLayer.partonair.Exceptions.Enums;
 
 using Moq;
 
-using TestingLayer.partonair.UserTest.Abstracts;
-
 
 namespace TestingLayer.partonair.UserTest.Services
 {
-    public class DeleteServiceTest : ExtendUserServiceTest
+    public class DeleteServiceTest : ExtendBaseUserApplicationServiceTestFixture
     {
         private readonly Guid _id;
-        public DeleteServiceTest():base()
-        {
-            _id = Guid.NewGuid();
-        }
+        public DeleteServiceTest() => _id = Guid.NewGuid();
+
 
         [Fact]
         public async Task DeleteService_ShouldReturn_SuccessVoid()

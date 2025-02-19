@@ -1,14 +1,13 @@
 ﻿using DomainLayer.partonair.Exceptions.Enums;
 using DomainLayer.partonair.Exceptions;
-
-using TestingLayer.partonair.UserTest.Abstracts;
 using ApplicationLayer.partonair.DTOs;
+
 using Moq;
 
 
 namespace TestingLayer.partonair.UserTest.Services
 {
-    public class ChangeRoleAsyncServiceTest : ExtendUserServiceTest
+    public class ChangeRoleAsyncServiceTest : ExtendBaseUserApplicationServiceTestFixture
     {
         private readonly Guid _id;
         private readonly UserChangeRoleDTO _userVisitor;

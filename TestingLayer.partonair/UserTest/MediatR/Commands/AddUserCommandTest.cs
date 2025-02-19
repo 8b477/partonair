@@ -6,19 +6,15 @@ using DomainLayer.partonair.Exceptions;
 
 using Moq;
 
-using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
 
 
 namespace TestingLayer.partonair.UserTest.MediatR.Commands
 {
-    public class AddUserCommandTest : UserBaseClassTest
+    public class AddUserCommandTest : BaseUserApplicationTestFixture
     {
         private readonly AddUserCommandHandler _handler;
-        public AddUserCommandTest() : base()
-        {
-            _handler = new AddUserCommandHandler(_mockUserService.Object);
-        }
+        public AddUserCommandTest() => _handler = new AddUserCommandHandler(_mockUserService.Object);
 
 
         [Fact]

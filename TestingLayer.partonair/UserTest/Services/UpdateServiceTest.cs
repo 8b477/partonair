@@ -7,13 +7,12 @@ using DomainLayer.partonair.Exceptions;
 
 using Moq;
 
-using TestingLayer.partonair.UserTest.Abstracts;
 using TestingLayer.partonair.UserTest.Constants;
 
 
 namespace TestingLayer.partonair.UserTest.Services
 {
-    public class UpdateServiceTest : ExtendUserServiceTest
+    public class UpdateServiceTest : ExtendBaseUserApplicationServiceTestFixture
     {
         private readonly Guid _id;
         private readonly User _existingUser;
