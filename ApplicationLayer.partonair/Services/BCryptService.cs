@@ -37,6 +37,5 @@ namespace ApplicationLayer.partonair.Services
                 throw new ApplicationLayerException(ApplicationLayerErrorType.SaltParseBCryptException);
             }         
         }
-        //e118f45e-a2db-47e1-846c-7a3250da8020
     }
 }
