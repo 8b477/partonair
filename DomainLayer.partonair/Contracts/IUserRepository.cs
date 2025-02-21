@@ -26,6 +26,20 @@ namespace DomainLayer.partonair.Contracts
         Task<ICollection<User>> GetByRoleAsync(string role);
 
         /// <summary>
+        /// Retrieve users and their profiles using a Roles enumerator..
+        /// </summary>
+        /// <param name="role">The role searched</param>
+        /// <returns>Returns a list of asynchronous tasks for users whose profile matches the role.</returns>
+        Task<ICollection<User>> GetByRoleIncludeProfilAsync(string role);
+
+        /// <summary>
+        /// Fetch a User by Foreign Key profile. 
+        /// </summary>
+        /// <param name="idProfile">Represent the identifier to find</param>
+        /// <returns>Returns an asynchronous Entity <c>User</c> based on Foreign key Profile</returns>
+        Task<User> GetByForeignKeyProfilAsync(Guid idProfile);
+
+        /// <summary>
         /// Checks if the specified email already exists in the database.
         /// </summary>
         /// <param name="email">The email address to check.</param>
@@ -50,5 +64,6 @@ namespace DomainLayer.partonair.Contracts
         /// <returns>Returns <c>True</c> if the user has no associated profile; otherwise <c>False</c>.</returns>
         /// <exception cref="InfrastructureLayerException">Thrown when the user with the specified ID is not found</exception>
         Task<bool> IsUserWithoutProfil(Guid id);
+
     }
 }

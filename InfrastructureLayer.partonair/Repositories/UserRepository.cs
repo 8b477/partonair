@@ -50,6 +50,31 @@ namespace InfrastructureLayer.partonair.Repositories
             return result;
         }
 
+        public async Task<ICollection<User>> GetByRoleIncludeProfilAsync(string role)
+        {
+            var result = await _dbSet
+                                     .Where(u => u.Role.ToString() == role)
+                                     .Include(u => u.Profile)
+                                     .ToListAsync();
+
+            if (result.Count == 0)
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFoundException, $"The role : {role} - no match");
+
+            return result;
+        }
+
+        public async Task<User> GetByForeignKeyProfilAsync(Guid idProfile)
+        {
+            var result = await _dbSet
+                                     .Where(u => u.FK_Profile == idProfile)
+                                     .FirstOrDefaultAsync();
+
+            if (result is null)
+                throw new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFoundException, $"The identifier : {idProfile} - no match");
+
+            return result;
+        }
+
         #endregion
 
 

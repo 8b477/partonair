@@ -58,13 +58,11 @@ namespace InfrastructureLayer.partonair.Repositories
         {
             try
             {
-                var existingEntity = await GetByGuidAsync(entity.Id);
+                _ctx.Update(entity);
 
-                _ctx.Entry(existingEntity).CurrentValues.SetValues(entity);
+                _ctx.Entry(entity).State = EntityState.Modified;
 
-                _ctx.Entry(existingEntity).State = EntityState.Modified;
-
-                return existingEntity;
+                return entity;
             }
             catch (OperationCanceledException ex)
             {

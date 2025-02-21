@@ -21,6 +21,9 @@ namespace API.partonair.GlobalManager
             // USER
             services.AddScoped<IUserService, UserService>();
 
+            // PROFILE
+            services.AddScoped<IProfileService, ProfileService>();
+
             // UNIT OF WORK
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -36,7 +39,8 @@ namespace API.partonair.GlobalManager
             // USER
             services.AddScoped<IUserRepository, UserRepository>();
 
-
+            //PROFILE
+            services.AddScoped<IProfileRepository, ProfileRepository>();
             return services;
         }
 

@@ -5,7 +5,7 @@ namespace DomainLayer.partonair.Contracts
     {
         // Repo
         IUserRepository Users { get; }
-
+        IProfileRepository Profiles { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         Task BeginTransactionAsync();

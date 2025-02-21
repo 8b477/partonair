@@ -40,22 +40,11 @@ namespace ApplicationLayer.partonair.Mappers
         }
 
 
-        internal static User ToEntity(this UserUpdateNameOrMailOrPasswordDTO u, User existingUser)
+        internal static void ToEntity(this UserUpdateNameOrMailOrPasswordDTO u, User e)
         {
-            return new User
-            {
-                Id = existingUser.Id,
-                FK_Profile = existingUser.FK_Profile,
-                Profile = existingUser.Profile,
-                IsPublic = existingUser.IsPublic,
-                LastConnection = existingUser.LastConnection,
-                Role = existingUser.Role,
-                UserCreatedAt = existingUser.UserCreatedAt,
-
-                Email = u.Email ?? existingUser.Email,
-                UserName = u.UserName ?? existingUser.UserName,
-                PasswordHashed = u.NewPassword ?? existingUser.PasswordHashed
-            };
+            e.Email = u.Email ?? e.Email;
+            e.UserName = u.UserName ?? e.UserName;
+            e.PasswordHashed = u.NewPassword ?? e.PasswordHashed;         
         }
 
     }

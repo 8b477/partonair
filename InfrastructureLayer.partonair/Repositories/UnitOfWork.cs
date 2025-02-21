@@ -18,6 +18,9 @@ namespace InfrastructureLayer.partonair.Repositories
         // I_REPO + LAZY LOAD
         private IUserRepository? _userRepository;
         public IUserRepository Users => _userRepository ??= new UserRepository(_context);
+
+        private IProfileRepository? _profileRepository;
+        public IProfileRepository Profiles => _profileRepository ??= new ProfileRepository(_context);
         // ---
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

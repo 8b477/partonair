@@ -55,10 +55,9 @@ namespace ApplicationLayer.partonair.Services
 
             await UpdateEmail(existingUser, entity);
 
-            User userEntity = entity.ToEntity(existingUser);
-            userEntity.PasswordHashed = _bCryptService.HashPass(userEntity.PasswordHashed);
+            entity.ToEntity(existingUser);
 
-            var userUpdated = await _UOW.Users.Update(userEntity);
+            var userUpdated = await _UOW.Users.Update(existingUser);
 
             await _UOW.SaveChangesAsync();
 
