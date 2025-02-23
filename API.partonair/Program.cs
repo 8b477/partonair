@@ -9,12 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 
 // Temporaire pour Docker
-//builder.Services.AddDbContext<AppDbContext>(options =>
-//    options.UseSqlServer("Server=db;Database=partonair;User=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=True"));
+var useDockerConfig = Environment.GetEnvironmentVariable("USE_DOCKER_CONFIG");
 
+if (useDockerConfig == "true")
+{
+	builder.Services.AddDbContext<AppDbContext>(options =>
+		options.UseSqlServer("Server=db;Database=partonair;User=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=True"));
+}else{
+    builder.Services.SqlServerConnectionManager(builder.Configuration);
+}
 
-builder.Services
-                .SqlServerConnectionManager(builder.Configuration)
+builder.Services           
                 .AddInfrastructureLayer()
                 .AddApplicationLayer()
                 .AddPresentationAPILayer();
