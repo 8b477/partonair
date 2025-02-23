@@ -71,7 +71,7 @@ namespace ApplicationLayer.partonair.Services
             return finalView;
         }
 
-        public async Task<ProfileViewDTO> UpdateService(Guid id, ProfileUpdateDTO entity)
+        public async Task<ProfileViewDTO> UpdateAsyncService(Guid id, ProfileUpdateDTO entity)
         {
             var existingProfil = await _UOW.Profiles.GetByGuidAsync(id);
 
@@ -84,7 +84,7 @@ namespace ApplicationLayer.partonair.Services
             return result.ToView();
         }
 
-        public async Task DeleteService(Guid id)
+        public async Task DeleteAsyncService(Guid id)
         {
             try
             {

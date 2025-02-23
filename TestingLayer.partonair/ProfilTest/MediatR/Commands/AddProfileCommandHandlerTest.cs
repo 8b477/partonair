@@ -9,7 +9,7 @@ using Moq;
 
 namespace TestingLayer.partonair.ProfilTest.MediatR.Commands
 {
-    public class AddProfileCommandHandlerTest : BaseProfileApplicationTestFixture<AddProfileCommandHandler>
+    public class AddProfileCommandHandlerTest : BaseProfileApplicationMediatRTestFixture<AddProfileCommandHandler>
     {
         [Fact]
         public async Task AddProfileCommandHandler_ShouldReturn_ProfileViewDTO()

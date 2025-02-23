@@ -8,20 +8,20 @@ using Moq;
 
 namespace TestingLayer.partonair.ProfilTest.MediatR.Commands
 {
-    public class DeleteProfileCommandHandlerTest : BaseProfileApplicationTestFixture<DeleteProfileCommandHandler>
+    public class DeleteProfileCommandHandlerTest : BaseProfileApplicationMediatRTestFixture<DeleteProfileCommandHandler>
     {
         [Fact]
         public async Task DeleteProfileCommand_ShouldReturn_void()
         {
             // Arrange
             Guid id = Guid.NewGuid();
-            _mockProfileService.Setup(s => s.DeleteService(id)).Returns(Task.CompletedTask);
+            _mockProfileService.Setup(s => s.DeleteAsyncService(id)).Returns(Task.CompletedTask);
 
             // Act
             await _handler.Handle(new DeleteProfileCommand(id),CancellationToken.None);
 
             // Assert
-            _mockProfileService.Verify(v => v.DeleteService(id),Times.Once);
+            _mockProfileService.Verify(v => v.DeleteAsyncService(id),Times.Once);
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace TestingLayer.partonair.ProfilTest.MediatR.Commands
         {
             // Arrange
             Guid id = Guid.NewGuid();
-            _mockProfileService.Setup(s => s.DeleteService(id))
+            _mockProfileService.Setup(s => s.DeleteAsyncService(id))
                 .Throws(new InfrastructureLayerException(InfrastructureLayerErrorType.CancelationDatabaseException));
 
             // Act
@@ -37,7 +37,7 @@ namespace TestingLayer.partonair.ProfilTest.MediatR.Commands
                 => _handler.Handle(new DeleteProfileCommand(id), CancellationToken.None));
 
             // Assert
-            _mockProfileService.Verify(v => v.DeleteService(id), Times.Once);
+            _mockProfileService.Verify(v => v.DeleteAsyncService(id), Times.Once);
         }
 
     }

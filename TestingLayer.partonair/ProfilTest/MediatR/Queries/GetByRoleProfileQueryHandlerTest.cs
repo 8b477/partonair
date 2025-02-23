@@ -9,7 +9,7 @@ using Moq;
 
 namespace TestingLayer.partonair.ProfilTest.MediatR.Queries
 {
-    public class GetByRoleProfileQueryHandlerTest : BaseProfileApplicationTestFixture<GetByRoleProfileQueryHandler>
+    public class GetByRoleProfileQueryHandlerTest : BaseProfileApplicationMediatRTestFixture<GetByRoleProfileQueryHandler>
     {
         [Fact]
         public async Task GetByRoleProfileQueryHandler_ShouldReturn_Success_CollectionProfileAndUserViewDTO()

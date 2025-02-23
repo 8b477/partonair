@@ -9,7 +9,7 @@ using Moq;
 
 namespace TestingLayer.partonair.ProfilTest.MediatR.Commands
 {
-    public class UpdateProfileCommandHandlerTest : BaseProfileApplicationTestFixture<UpdateProfileCommandHandler>
+    public class UpdateProfileCommandHandlerTest : BaseProfileApplicationMediatRTestFixture<UpdateProfileCommandHandler>
     {
         [Fact]
         public async Task UpdateProfileCommandHandler_ShouldReturn_Success_ProfileViewDTO()
@@ -22,14 +22,14 @@ namespace TestingLayer.partonair.ProfilTest.MediatR.Commands
             var view = new ProfileViewDTO(idProfile, profileDescription, idUser);
 
             // Act
-            _mockProfileService.Setup(s => s.UpdateService(idProfile, dto)).ReturnsAsync(view);
+            _mockProfileService.Setup(s => s.UpdateAsyncService(idProfile, dto)).ReturnsAsync(view);
             var result = await _handler.Handle(new UpdateProfileCommand(idProfile, dto), CancellationToken.None);
 
             // Assert
             Assert.NotNull(result);
             Assert.IsType<ProfileViewDTO>(result);
 
-            _mockProfileService.Verify(v => v.UpdateService(idProfile, dto),Times.Once);
+            _mockProfileService.Verify(v => v.UpdateAsyncService(idProfile, dto),Times.Once);
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace TestingLayer.partonair.ProfilTest.MediatR.Commands
             var view = new ProfileViewDTO(idProfile, profileDescription, idUser);
 
             // Act
-            _mockProfileService.Setup(s => s.UpdateService(idProfile, dto))
+            _mockProfileService.Setup(s => s.UpdateAsyncService(idProfile, dto))
                 .ThrowsAsync(new InfrastructureLayerException(InfrastructureLayerErrorType.UpdateDatabaseException));
 
             var exception = await Assert.ThrowsAsync<InfrastructureLayerException>(() 
@@ -52,7 +52,7 @@ namespace TestingLayer.partonair.ProfilTest.MediatR.Commands
             // Assert
             Assert.Equal(InfrastructureLayerErrorType.UpdateDatabaseException, exception.ErrorType);
 
-            _mockProfileService.Verify(v => v.UpdateService(idProfile, dto), Times.Once);
+            _mockProfileService.Verify(v => v.UpdateAsyncService(idProfile, dto), Times.Once);
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace TestingLayer.partonair.ProfilTest.MediatR.Commands
             var view = new ProfileViewDTO(idProfile, profileDescription, idUser);
 
             // Act
-            _mockProfileService.Setup(s => s.UpdateService(idProfile, dto))
+            _mockProfileService.Setup(s => s.UpdateAsyncService(idProfile, dto))
                 .ThrowsAsync(new InfrastructureLayerException(InfrastructureLayerErrorType.ConcurrencyDatabaseException));
 
             var exception = await Assert.ThrowsAsync<InfrastructureLayerException>(()
@@ -75,7 +75,7 @@ namespace TestingLayer.partonair.ProfilTest.MediatR.Commands
             // Assert
             Assert.Equal(InfrastructureLayerErrorType.ConcurrencyDatabaseException, exception.ErrorType);
 
-            _mockProfileService.Verify(v => v.UpdateService(idProfile, dto), Times.Once);
+            _mockProfileService.Verify(v => v.UpdateAsyncService(idProfile, dto), Times.Once);
         }
 
     }

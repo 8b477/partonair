@@ -9,7 +9,7 @@ using Moq;
 
 namespace TestingLayer.partonair.ProfilTest.MediatR.Queries
 {
-    public class GetByIdProfileQueryHandlerTest() : BaseProfileApplicationTestFixture<GetByIdProfileQueryHandler>
+    public class GetByIdProfileQueryHandlerTest() : BaseProfileApplicationMediatRTestFixture<GetByIdProfileQueryHandler>
     {
         private readonly Guid _idProfile = Guid.NewGuid();    
 
