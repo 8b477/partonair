@@ -16,11 +16,6 @@ namespace ApplicationLayer.partonair.Services
 {
     public class UserService(IUnitOfWork UOW, IBCryptService bCryptService, ILogger<UserService> logger) : IUserService
     {
-        // <--------------------------------> TODO <-------------------------------->
-        // Order By name A->Z : 'GetById()'
-        // ** Check when I retrieve user data, is it tracked by ef core ? **
-        // <--------------------------------> **** <-------------------------------->
-
         private readonly IUnitOfWork _UOW = UOW;
         private readonly IBCryptService _bCryptService = bCryptService;
         private readonly ILogger<UserService> _logger = logger;
