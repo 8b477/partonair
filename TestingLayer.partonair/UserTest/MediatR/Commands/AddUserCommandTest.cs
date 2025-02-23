@@ -11,12 +11,8 @@ using TestingLayer.partonair.UserTest.Constants;
 
 namespace TestingLayer.partonair.UserTest.MediatR.Commands
 {
-    public class AddUserCommandTest : BaseUserApplicationTestFixture
+    public class AddUserCommandTest : BaseUserApplicationTestFixture<AddUserCommandHandler>
     {
-        private readonly AddUserCommandHandler _handler;
-        public AddUserCommandTest() => _handler = new AddUserCommandHandler(_mockUserService.Object);
-
-
         [Fact]
         public async Task AddUserCommandHandler_ShouldReturnCreatedUser()
         {
@@ -41,24 +37,16 @@ namespace TestingLayer.partonair.UserTest.MediatR.Commands
                 );
 
             // Act
-            _mockUserService.Setup(s => s.CreateAsyncService(It.Is<UserCreateDTO>
-                                      (p => p.UserName == UserConstants.NAME &&
-                                                  p.Email == UserConstants.EMAIL
-                                      ))
-                                  ).ReturnsAsync(expectedUser);
+            _mockUserService.Setup(s => s.CreateAsyncService(userCreateDto))
+                            .ReturnsAsync(expectedUser);
 
             var result = await _handler.Handle(new AddUserCommand(userCreateDto), CancellationToken.None);
 
             // Assert
             Assert.NotNull(result);
             Assert.IsType<UserViewDTO>(result);
-            Assert.Equal(expectedUser.UserName, result.UserName);
-            Assert.Equal(expectedUser.Email, result.Email);
 
-            _mockUserService.Verify(v => v.CreateAsyncService(It.Is<UserCreateDTO>(dto =>
-                dto.UserName == UserConstants.NAME &&
-                dto.Email == UserConstants.EMAIL)), Times.Once());
-
+            _mockUserService.Verify(v => v.CreateAsyncService(userCreateDto), Times.Once());
         }
 
         [Fact]

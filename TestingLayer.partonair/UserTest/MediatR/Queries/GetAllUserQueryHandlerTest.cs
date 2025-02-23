@@ -12,14 +12,12 @@ using TestingLayer.partonair.UserTest.Constants;
 
 namespace TestingLayer.partonair.UserTest.MediatR.Queries
 {
-    public class GetAllUserQueryHandlerTest : BaseUserApplicationTestFixture
+    public class GetAllUserQueryHandlerTest : BaseUserApplicationTestFixture<GetAllUserQueryHandler>
     {
-        private readonly GetAllUserQueryHandler _handler;
         private readonly ICollection<UserViewDTO> _usersList;
 
         public GetAllUserQueryHandlerTest()
         {
-            _handler = new GetAllUserQueryHandler(_mockUserService.Object);
             _usersList =
             [
     new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_VISITOR,null),

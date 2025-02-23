@@ -10,31 +10,24 @@ using TestingLayer.partonair.UserTest.Constants;
 
 namespace TestingLayer.partonair.UserTest.MediatR.Queries
 {
-    public class GetByNameUserQueryHandlerTest : BaseUserApplicationTestFixture
+    public class GetByNameUserQueryHandlerTest : BaseUserApplicationTestFixture<GetByNameUserQueryHandler>
     {
-        private readonly GetByNameUserQueryHandler _handler;
-        private readonly ICollection<UserViewDTO> _usersList;
-
-        public GetByNameUserQueryHandlerTest()
-        {
-            _handler = new GetByNameUserQueryHandler(_mockUserService.Object);
-            _usersList =
-[
-new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_VISITOR,null),
-                new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_VISITOR,null),
-            ];
-        }
-
-
         [Fact]
         public async Task GetByNameUserQueryHandler_ShouldReturn_UsersList()
         {
-            _mockUserService.Setup(s => s.GetByNameAsyncService(UserConstants.NAME)).ReturnsAsync(_usersList);
+
+            ICollection<UserViewDTO> usersList =
+            [
+            new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_VISITOR,null),
+            new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_VISITOR,null),
+            ];
+
+            _mockUserService.Setup(s => s.GetByNameAsyncService(UserConstants.NAME)).ReturnsAsync(usersList);
 
             var result = await _handler.Handle(new GetByNameUserQuery(UserConstants.NAME), CancellationToken.None);
 
             Assert.NotNull(result);
-            Assert.Equal(2, result.Count);
+            Assert.Equal(usersList.Count, result.Count);
             Assert.IsType<List<UserViewDTO>>(result);
 
             _mockUserService.Verify(v => v.GetByNameAsyncService(UserConstants.NAME), Times.Once);

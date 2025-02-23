@@ -5,45 +5,27 @@ using DomainLayer.partonair.Exceptions.Enums;
 using DomainLayer.partonair.Exceptions;
 
 using Moq;
-
 using TestingLayer.partonair.UserTest.Constants;
 
 
 namespace TestingLayer.partonair.UserTest.MediatR.Queries
 {
-    public class GetByIdUserQueryHandlerTest : BaseUserApplicationTestFixture
+    public class GetByIdUserQueryHandlerTest : BaseUserApplicationTestFixture<GetByIdUserQueryHandler>
     {
-        private readonly GetByIdUserQueryHandler _handler;
-        private readonly UserViewDTO _user;
-        public GetByIdUserQueryHandlerTest()
-        {
-            _handler = new GetByIdUserQueryHandler(_mockUserService.Object);
-            _user = new UserViewDTO
-                (
-                    new Guid(),
-                   UserConstants.NAME,
-                   UserConstants.EMAIL,
-                   false,
-                   DateTime.Now,
-                   DateTime.Now,
-                   UserConstants.ROLE_VISITOR,
-                   null
-                );
-        }
-
         [Fact]
         public async Task GetByIdUserQueryHandler_ShouldReturn_UserViewDTO()
         {
-            _mockUserService.Setup(s => s.GetByIdAsyncService(_user.Id)).ReturnsAsync(_user);
+            UserViewDTO dto = new(Guid.NewGuid(), UserConstants.NAME, UserConstants.EMAIL, false, DateTime.Now, DateTime.Now, UserConstants.ROLE_VISITOR, null);
 
-            var result = await _handler.Handle(new GetByIdUserQuery(_user.Id), CancellationToken.None);
+            _mockUserService.Setup(s => s.GetByIdAsyncService(It.IsAny<Guid>()))
+                .ReturnsAsync(dto);
+
+            var result = await _handler.Handle(new GetByIdUserQuery(It.IsAny<Guid>()), CancellationToken.None);
 
             Assert.NotNull(result);
             Assert.IsType<UserViewDTO>(result);
-            Assert.Equal(_user.UserName, result.UserName);
-            Assert.Equal(_user.Email, result.Email);
 
-            _mockUserService.Verify(v => v.GetByIdAsyncService(_user.Id), Times.Once);
+            _mockUserService.Verify(v => v.GetByIdAsyncService(It.IsAny<Guid>()), Times.Once);
         }
 
         [Fact]

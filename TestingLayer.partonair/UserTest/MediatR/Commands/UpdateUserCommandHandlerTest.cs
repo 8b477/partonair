@@ -11,13 +11,11 @@ using TestingLayer.partonair.UserTest.Constants;
 
 namespace TestingLayer.partonair.UserTest.MediatR.Commands
 {
-    public class UpdateUserCommandHandlerTest : BaseUserApplicationTestFixture
+    public class UpdateUserCommandHandlerTest : BaseUserApplicationTestFixture<UpdateUserCommandHandler>
     {
-        private readonly UpdateUserCommandHandler _handler;
         private readonly UserUpdateNameOrMailOrPasswordDTO _userToUpdate;
         public UpdateUserCommandHandlerTest()
         {
-            _handler = new UpdateUserCommandHandler(_mockUserService.Object);
             _userToUpdate = new UserUpdateNameOrMailOrPasswordDTO
             {
                 UserName = UserConstants.NAME,
@@ -40,7 +38,7 @@ namespace TestingLayer.partonair.UserTest.MediatR.Commands
                    UserConstants.ROLE_VISITOR,
                    null
                 );
-
+            
             _mockUserService.Setup(s => s.UpdateService(It.Is<Guid>(p => p != Guid.Empty), It.IsAny<UserUpdateNameOrMailOrPasswordDTO>()))
                 .ReturnsAsync(expectedUser);
 

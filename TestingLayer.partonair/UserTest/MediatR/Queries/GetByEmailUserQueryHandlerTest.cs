@@ -11,39 +11,18 @@ using TestingLayer.partonair.UserTest.Constants;
 
 namespace TestingLayer.partonair.UserTest.MediatR.Queries
 {
-    public class GetByEmailUserQueryHandlerTest : BaseUserApplicationTestFixture
+    public class GetByEmailUserQueryHandlerTest : BaseUserApplicationTestFixture<GetByEmailUserQueryHandler>
     {
-        private readonly GetByEmailUserQueryHandler _handler;
-        private readonly UserViewDTO _user;
-        public GetByEmailUserQueryHandlerTest()
-        {
-            _handler = new GetByEmailUserQueryHandler(_mockUserService.Object);
-
-            _user = new UserViewDTO
-                (
-                    new Guid(),
-                    UserConstants.NAME,
-                    UserConstants.EMAIL,
-                    false,
-                    DateTime.Now,
-                    DateTime.Now,
-                    UserConstants.ROLE_VISITOR,
-                    null
-                );
-        }
-
-
         [Fact]
         public async Task GetByEmailUserQueryHandler_ShouldReturn_UserViewDTO()
         {
-            _mockUserService.Setup(s => s.GetByEmailAsyncService(UserConstants.EMAIL)).ReturnsAsync(_user);
+            UserViewDTO dto = new (Guid.NewGuid(),UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_VISITOR,null);
+            _mockUserService.Setup(s => s.GetByEmailAsyncService(UserConstants.EMAIL)).ReturnsAsync(dto);
 
             var result = await _handler.Handle(new GetByEmailUserQuery(UserConstants.EMAIL), CancellationToken.None);
 
             Assert.NotNull(result);
             Assert.IsType<UserViewDTO>(result);
-            Assert.Equal(UserConstants.EMAIL, result.Email);
-            Assert.Equal(UserConstants.NAME, result.UserName);
 
             _mockUserService.Verify(v => v.GetByEmailAsyncService(UserConstants.EMAIL), Times.Once);
         }

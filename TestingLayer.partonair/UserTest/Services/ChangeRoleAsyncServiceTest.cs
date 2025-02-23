@@ -11,15 +11,11 @@ namespace TestingLayer.partonair.UserTest.Services
     {
         private readonly Guid _id;
         private readonly UserChangeRoleDTO _userVisitor;
-        private readonly UserChangeRoleDTO _userEmployee;
-        private readonly UserChangeRoleDTO _userCompany;
 
-        public ChangeRoleAsyncServiceTest():base()
+        public ChangeRoleAsyncServiceTest()
         {
             _id = Guid.NewGuid();
             _userVisitor = new UserChangeRoleDTO("Visitor");
-            _userEmployee = new UserChangeRoleDTO("Employee");
-            _userCompany = new UserChangeRoleDTO("Company");
         }
 
 

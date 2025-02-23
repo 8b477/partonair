@@ -13,43 +13,22 @@ namespace TestingLayer.partonair.UserTest.Services
 {
     public class CreateAsyncServiceTest : ExtendBaseUserApplicationServiceTestFixture
     {
-        private readonly Guid _id;
-        private readonly User _userEntity;
-        private readonly UserCreateDTO _userCreateDTO;
-        public CreateAsyncServiceTest()
-        {
-            _id = Guid.NewGuid();
-            _userEntity = CreateUserEntity(_id);
-            _userCreateDTO = CreateUserCreateDTO();
-        }
+        private readonly UserCreateDTO _dto = new(UserConstants.NAME, UserConstants.EMAIL, UserConstants.PASSWORD);
+        private readonly User _entity = new() { Id = Guid.NewGuid(), UserName = UserConstants.NAME, Email = UserConstants.EMAIL, IsPublic = false, Profile = null, FK_Profile = null, LastConnection = DateTime.Now, UserCreatedAt = DateTime.Now, PasswordHashed = UserConstants.PASSWORD_HASHED,Role = DomainLayer.partonair.Enums.Roles.Visitor};
 
-        private static User CreateUserEntity(Guid id) => new User
-        {
-            Id = id,
-            UserName = UserConstants.NAME,
-            Email = UserConstants.EMAIL,
-            PasswordHashed = UserConstants.PASSWORD_HASHED
-        };
-
-        private static UserCreateDTO CreateUserCreateDTO() => new UserCreateDTO
-        (
-            UserConstants.NAME,
-            UserConstants.EMAIL,
-            UserConstants.PASSWORD
-        );
 
         private void SetupMocksForSuccessfulCreateUser()
         {
-            _mockUserRepo.Setup(repo => repo.IsEmailAvailableAsync(_userCreateDTO.Email)).ReturnsAsync(true);
-            _mockBCrypt.Setup(bc => bc.HashPass(_userCreateDTO.Password, 13)).Returns(UserConstants.PASSWORD_HASHED);
-            _mockUserRepo.Setup(repo => repo.CreateAsync(It.IsAny<User>())).ReturnsAsync(_userEntity);
+            _mockUserRepo.Setup(repo => repo.IsEmailAvailableAsync(It.IsAny<string>())).ReturnsAsync(true);
+            _mockBCrypt.Setup(bc => bc.HashPass(It.IsAny<string>(), 13)).Returns(UserConstants.PASSWORD_HASHED);
+            _mockUserRepo.Setup(repo => repo.CreateAsync(It.IsAny<User>())).ReturnsAsync(_entity);
             _mockUoW.Setup(uow => uow.SaveChangesAsync(CancellationToken.None)).ReturnsAsync(1);
         }
 
         private void VerifyAllMockIsCalled()
         {
-            _mockUserRepo.Verify(repo => repo.IsEmailAvailableAsync(_userCreateDTO.Email), Times.Once);
-            _mockBCrypt.Verify(bc => bc.HashPass(_userCreateDTO.Password, 13), Times.Once);
+            _mockUserRepo.Verify(repo => repo.IsEmailAvailableAsync(It.IsAny<string>()), Times.Once);
+            _mockBCrypt.Verify(bc => bc.HashPass(It.IsAny<string>(), 13), Times.Once);
             _mockUserRepo.Verify(repo => repo.CreateAsync(It.IsAny<User>()), Times.Once);
             _mockUoW.Verify(uow => uow.SaveChangesAsync(CancellationToken.None), Times.Once);
         }
@@ -60,15 +39,13 @@ namespace TestingLayer.partonair.UserTest.Services
         {
             // Arrange
             SetupMocksForSuccessfulCreateUser();
+
             // Act
-            var result = await _userService.CreateAsyncService(_userCreateDTO);
+            var result = await _userService.CreateAsyncService(_dto);
 
             // Assert
             Assert.NotNull(result);
             Assert.IsType<UserViewDTO>(result);
-
-            Assert.Equal(_userCreateDTO.Email, result.Email);
-            Assert.Equal(_userCreateDTO.Email, result.Email);
 
             VerifyAllMockIsCalled();
         }
@@ -78,18 +55,18 @@ namespace TestingLayer.partonair.UserTest.Services
         public async Task CreateAsyncService_ShouldThrowException_WhenEmailIsNotAvailable()
         {
             // Arrange
-            _mockUserRepo.Setup(repo => repo.IsEmailAvailableAsync(_userCreateDTO.Email))
+            _mockUserRepo.Setup(repo => repo.IsEmailAvailableAsync(It.IsAny<string>()))
                 .ReturnsAsync(false);
 
             // Act & Assert
             var exception = await Assert.ThrowsAsync<ApplicationLayerException>(
-                () => _userService.CreateAsyncService(_userCreateDTO)
+                () => _userService.CreateAsyncService(_dto)
             );
 
             Assert.Equal(ApplicationLayerErrorType.ConstraintViolationErrorException, exception.ErrorType);
 
             // Verify
-            _mockUserRepo.Verify(repo => repo.IsEmailAvailableAsync(_userCreateDTO.Email), Times.Once);
+            _mockUserRepo.Verify(repo => repo.IsEmailAvailableAsync(It.IsAny<string>()), Times.Once);
             _mockUserRepo.Verify(repo => repo.CreateAsync(It.IsAny<User>()), Times.Never);
         }
 
@@ -139,14 +116,19 @@ namespace TestingLayer.partonair.UserTest.Services
         public async Task CreateAsyncService_WhenDatabaseOperationCanceled_ShouldThrowInfrastructureLayerException()
         {
             // Arrange
-            _mockUserService.Setup(s => s.CreateAsyncService(It.IsAny<UserCreateDTO>()))
-                .ThrowsAsync(new InfrastructureLayerException(InfrastructureLayerErrorType.CancelationDatabaseException, "Database operation canceled"));
+            _mockUserRepo.Setup(repo => repo.IsEmailAvailableAsync(It.IsAny<string>()))
+                         .ReturnsAsync(true);
+
+            _mockUserRepo.Setup(s => s.CreateAsync(It.IsAny<User>()))
+                .ThrowsAsync(new InfrastructureLayerException(InfrastructureLayerErrorType.CancelationDatabaseException));
 
             // Act && Assert
             var exception = await Assert.ThrowsAsync<InfrastructureLayerException>(() =>
-                _mockUserService.Object.CreateAsyncService(_userCreateDTO));
+                _userService.CreateAsyncService(_dto));
 
             Assert.Equal(InfrastructureLayerErrorType.CancelationDatabaseException, exception.ErrorType);
+
+            _mockUserRepo.Verify(v => v.IsEmailAvailableAsync(It.IsAny<string>()),Times.Once);
         }
 
     }

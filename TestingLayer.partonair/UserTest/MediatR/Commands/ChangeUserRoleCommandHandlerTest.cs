@@ -11,12 +11,8 @@ using TestingLayer.partonair.UserTest.Constants;
 
 namespace TestingLayer.partonair.UserTest.MediatR.Commands
 {
-    public class ChangeUserRoleCommandHandlerTest : BaseUserApplicationTestFixture
+    public class ChangeUserRoleCommandHandlerTest : BaseUserApplicationTestFixture<ChangeUserRoleCommandHandler>
     {
-        private readonly ChangeUserRoleCommandHandler _handler;
-        public ChangeUserRoleCommandHandlerTest() => _handler = new ChangeUserRoleCommandHandler(_mockUserService.Object);
-
-
         [Fact]
         public async Task ChangeUserRoleCommandHandler_ShouldReturn_True()
         {

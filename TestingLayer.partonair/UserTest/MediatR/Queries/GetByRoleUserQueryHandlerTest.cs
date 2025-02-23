@@ -6,46 +6,28 @@ using DomainLayer.partonair.Exceptions;
 
 using Moq;
 
-
 using TestingLayer.partonair.UserTest.Constants;
+
 
 namespace TestingLayer.partonair.UserTest.MediatR.Queries
 {
-    public class GetByRoleUserQueryHandlerTest : BaseUserApplicationTestFixture
+    public class GetByRoleUserQueryHandlerTest : BaseUserApplicationTestFixture<GetByRoleUserQueryHandler>
     {
-        private readonly GetByRoleUserQueryHandler _handler;
-        private readonly ICollection<UserViewDTO> _usersListRoleVisitor;
-        private readonly ICollection<UserViewDTO> _usersListRoleEmployee;
-        private readonly ICollection<UserViewDTO> _usersListRoleCompany;
-        public GetByRoleUserQueryHandlerTest()
-        {
-            _handler = new GetByRoleUserQueryHandler(_mockUserService.Object);
-            _usersListRoleVisitor =
-[
-new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_VISITOR,null),
-                new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_VISITOR,null),
-            ];
-            _usersListRoleEmployee =
-[
-new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_VISITOR,null),
-                new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_EMPLOYEE,null),
-            ];
-            _usersListRoleCompany =
-[
-new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_VISITOR,null),
-                new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_COMPANY,null),
-            ];
-        }
-
         [Fact]
         public async Task GetByRoleUserQueryHandler_ShouldReturn_UsersListWithRoleVisitor()
         {
-            _mockUserService.Setup(s => s.GetByRoleAsyncService(UserConstants.ROLE_VISITOR)).ReturnsAsync(_usersListRoleVisitor);
+            ICollection<UserViewDTO> usersListRoleVisitor =
+            [
+            new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_VISITOR,null),
+            new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_VISITOR,null),
+            ];
+
+            _mockUserService.Setup(s => s.GetByRoleAsyncService(UserConstants.ROLE_VISITOR)).ReturnsAsync(usersListRoleVisitor);
 
             var result = await _handler.Handle(new GetByRoleUserQuery(UserConstants.ROLE_VISITOR), CancellationToken.None);
 
             Assert.NotNull(result);
-            Assert.Equal(2, _usersListRoleVisitor.Count);
+            Assert.Equal(2, usersListRoleVisitor.Count);
             Assert.IsType<List<UserViewDTO>>(result);
 
             _mockUserService.Verify(v => v.GetByRoleAsyncService(UserConstants.ROLE_VISITOR), Times.Once);
@@ -54,12 +36,19 @@ new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,D
         [Fact]
         public async Task GetByRoleUserQueryHandler_ShouldReturn_UsersListWithRoleEmployee()
         {
-            _mockUserService.Setup(s => s.GetByRoleAsyncService(UserConstants.ROLE_VISITOR)).ReturnsAsync(_usersListRoleEmployee);
+        ICollection<UserViewDTO> usersListRoleEmployee =
+        [
+        new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_VISITOR,null),
+        new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_EMPLOYEE,null),
+        ];
+
+
+            _mockUserService.Setup(s => s.GetByRoleAsyncService(UserConstants.ROLE_VISITOR)).ReturnsAsync(usersListRoleEmployee);
 
             var result = await _handler.Handle(new GetByRoleUserQuery(UserConstants.ROLE_VISITOR), CancellationToken.None);
 
             Assert.NotNull(result);
-            Assert.Equal(2, _usersListRoleEmployee.Count);
+            Assert.Equal(usersListRoleEmployee.Count, result.Count);
             Assert.IsType<List<UserViewDTO>>(result);
 
             _mockUserService.Verify(v => v.GetByRoleAsyncService(UserConstants.ROLE_VISITOR), Times.Once);
@@ -68,12 +57,17 @@ new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,D
         [Fact]
         public async Task GetByRoleUserQueryHandler_ShouldReturn_UsersListWithRoleCompany()
         {
-            _mockUserService.Setup(s => s.GetByRoleAsyncService(UserConstants.ROLE_VISITOR)).ReturnsAsync(_usersListRoleCompany);
+           ICollection<UserViewDTO> usersListRoleCompany =
+            [
+            new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_VISITOR,null),
+            new (Guid.NewGuid(), UserConstants.NAME,UserConstants.EMAIL,false,DateTime.Now,DateTime.Now,UserConstants.ROLE_COMPANY,null),
+            ];
+            _mockUserService.Setup(s => s.GetByRoleAsyncService(UserConstants.ROLE_VISITOR)).ReturnsAsync(usersListRoleCompany);
 
             var result = await _handler.Handle(new GetByRoleUserQuery(UserConstants.ROLE_VISITOR), CancellationToken.None);
 
             Assert.NotNull(result);
-            Assert.Equal(2, _usersListRoleCompany.Count);
+            Assert.Equal(usersListRoleCompany.Count, result.Count);
             Assert.IsType<List<UserViewDTO>>(result);
 
             _mockUserService.Verify(v => v.GetByRoleAsyncService(UserConstants.ROLE_VISITOR), Times.Once);

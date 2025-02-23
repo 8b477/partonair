@@ -8,14 +8,8 @@ using Moq;
 
 namespace TestingLayer.partonair.UserTest.MediatR.Commands
 {
-    public class DeleteUserCommandHandlerTest : BaseUserApplicationTestFixture
+    public class DeleteUserCommandHandlerTest : BaseUserApplicationTestFixture<DeleteUserCommandHandler>
     {
-        private readonly DeleteUserCommandHandler _handler;
-
-        public DeleteUserCommandHandlerTest() => _handler = new DeleteUserCommandHandler(_mockUserService.Object);
-
-
-
         [Fact]
         public async Task DeleteUserCommandHandler_ShouldReturnVoid()
         {

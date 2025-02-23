@@ -9,15 +9,19 @@ using Moq;
 
 namespace TestingLayer.partonair.ProfilTest.MediatR.Queries
 {
-    public class GetByIdProfileQueryHandlerTest(Guid idProfile) : BaseProfileApplicationTestFixture<GetByIdProfileQueryHandler>
+    public class GetByIdProfileQueryHandlerTest() : BaseProfileApplicationTestFixture<GetByIdProfileQueryHandler>
     {
-        private readonly Guid _idProfile = idProfile;    
+        private readonly Guid _idProfile = Guid.NewGuid();    
 
         [Fact]
         public async Task GetByIdProfileQueryHandler_ShouldReturn_Success_ProfileViewDTO()
-        { 
+        {
+            ProfileViewDTO dto = new (_idProfile,"Super test description", Guid.NewGuid());
+
             // Act
-            _mockProfileService.Setup(s => s.GetByGuidAsyncService(_idProfile)).ReturnsAsync(It.IsAny<ProfileViewDTO>());
+            _mockProfileService.Setup(s => s.GetByGuidAsyncService(_idProfile))
+                               .ReturnsAsync(dto);
+
             var result = await _handler.Handle(new GetByIdProfileQuery(_idProfile), CancellationToken.None);
 
             // Assert
@@ -31,7 +35,8 @@ namespace TestingLayer.partonair.ProfilTest.MediatR.Queries
         public async Task GetByIdProfileQueryHandler_ShouldThrow_Infrasctructure_ResourceNotFoundException()
         {
             // Act
-            _mockProfileService.Setup(s => s.GetByGuidAsyncService(_idProfile)).ThrowsAsync(new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFoundException));
+            _mockProfileService.Setup(s => s.GetByGuidAsyncService(_idProfile))
+                .ThrowsAsync(new InfrastructureLayerException(InfrastructureLayerErrorType.ResourceNotFoundException));
 
             var exception = await Assert.ThrowsAsync<InfrastructureLayerException>(()
                 =>_handler.Handle(new GetByIdProfileQuery(_idProfile), CancellationToken.None));
