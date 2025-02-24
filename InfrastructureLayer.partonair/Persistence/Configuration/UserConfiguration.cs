@@ -20,6 +20,10 @@ namespace InfrastructureLayer.partonair.Persistence.Configuration
                 .WithOne(p => p.User)
                 .HasForeignKey<User>(p => p.FK_Profile)
                 .IsRequired(false);
+
+            builder
+                .HasMany<Contact>(u => u.Contacts)
+                .WithOne(c => c.Requestor) ;
         }
     }
 }
