@@ -23,5 +23,7 @@ namespace DomainLayer.partonair.Entities
         // Because apply zero constraint for the user, he is free to add profil or no.
         public Guid? FK_Profile { get; set; }
         public Profile? Profile { get; set; }
+
+        public ICollection<Contact>? Contacts { get; set; }
     }
 }
