@@ -16,7 +16,8 @@ namespace DomainLayer.partonair.Entities
         public DateTime AddedAt { get; set; }
         public bool IsFriendly { get; set; }
         public bool IsBlocked { get; set; }
-        public DateTime BlockedAt { get; set; }
+        public DateTime? BlockedAt { get; set; }
+        public DateTime? AcceptedAt { get; set; }
         public StatusContact ContactStatus { get; set; }
 
         // Who send invitation
