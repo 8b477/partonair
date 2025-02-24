@@ -83,8 +83,8 @@ DECLARE @Evaluation5Id UNIQUEIDENTIFIER = NEWID();
 INSERT INTO [dbo].[Evaluations]
     ([Id], [EvaluationCommentary], [EvaluationCreatedAt], [EvaluationValue], [FK_Owner], [FK_Sender])
 VALUES
-    (@Evaluation1Id, 'Excellent travail en équipe'            , '2024-02-01', 5, @User1Id, @User4Id   ),
+    (@Evaluation1Id, 'Excellent travail en équipe'            , '2024-02-01', 5, @User1Id, @User2Id   ),
     (@Evaluation2Id, 'Bonne communication'                    , '2024-02-02', 4, @User2Id, @User5Id   ),
-    (@Evaluation3Id, 'Compétences techniques impressionnantes', '2024-02-03', 5, @User3Id, @User1Id   ),
-    (@Evaluation4Id, 'Collaboration efficace'                 , '2024-02-04', 4, @User4Id, @User1Id),
-    (@Evaluation5Id, 'Très professionnel'                     , '2024-02-05', 5, @User5Id, @User2Id   );
+    (@Evaluation3Id, 'Compétences techniques impressionnantes', '2024-02-03', 5, @User3Id, @User4Id   ),
+    (@Evaluation4Id, 'Collaboration efficace'                 , '2024-02-04', 4, @User4Id, @User3Id   ),
+    (@Evaluation5Id, 'Très professionnel'                     , '2024-02-05', 5, @User1Id, @User5Id   );
