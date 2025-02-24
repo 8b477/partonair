@@ -1,6 +1,5 @@
 ﻿-- Nettoyer les tables existantes
 DELETE FROM [dbo].[Evaluations];
-DELETE FROM [dbo].[Friendly];
 DELETE FROM [dbo].[Contacts];
 DELETE FROM [dbo].[Profiles];
 DELETE FROM [dbo].[Users];
@@ -48,27 +47,22 @@ UPDATE [dbo].[Users] SET [FK_Profile] = @Profile5Id WHERE [Id] = @User5Id;
 DECLARE @Contact1Id UNIQUEIDENTIFIER = NEWID();
 DECLARE @Contact2Id UNIQUEIDENTIFIER = NEWID();
 DECLARE @Contact3Id UNIQUEIDENTIFIER = NEWID();
+DECLARE @Contact4Id UNIQUEIDENTIFIER = NEWID();
+DECLARE @Contact5Id UNIQUEIDENTIFIER = NEWID();
 
 INSERT INTO [dbo].[Contacts]
-    ([Id], [ContactName], [ContactEmail])
+    ([Id], [ContactName], [ContactEmail], [AddedAt], [IsFriendly], [AcceptedAt], [IsBlocked], [BlockedAt], [ContactStatus], [FK_User], [FK_Contact])
 VALUES
-    (@Contact1Id, 'Emma Wilson', 'emma.wilson@email.com'),
-    (@Contact2Id, 'Thomas Anderson', 'thomas.anderson@email.com'),
-    (@Contact3Id, 'Julie Brown', 'julie.brown@email.com');
+    (@Contact1Id, 'Emma Wilson', 'emma.wilson@email.com', '2024-01-20 10:30:00', 1, '2024-01-20 11:45:00', 0, NULL, 'Accepted', @User1Id, @User4Id),
+    (@Contact2Id, 'Thomas Anderson', 'thomas.anderson@email.com', '2024-01-21 14:45:00', 0, NULL, 0, NULL, 'Pending', @User2Id, @User5Id),
+    (@Contact3Id, 'Julie Brown', 'julie.brown@email.com', '2024-01-22 09:15:00', 1, '2024-01-22 10:30:00', 0, NULL, 'Accepted', @User3Id, @User1Id),
+    (@Contact4Id, 'Pierre Bernard', 'pierre.bernard@email.com', '2024-01-23 11:00:00', 1, '2024-01-23 13:20:00', 0, NULL, 'Accepted', @User4Id, @User1Id),
+    (@Contact5Id, 'Sophie Dubois', 'sophie.dubois@email.com', '2024-01-24 16:30:00', 0, NULL, 0, NULL, 'Pending', @User5Id, @User2Id);
 
--- Insertion des relations amicales
-INSERT INTO [dbo].[Friendly]
-    ([AddedAt], [FriendlyStatus], [FK_User], [Fk_Contact])
-VALUES
-    ('2024-01-20', 'Accepted', @User1Id, @Contact1Id),
-    ('2024-01-21', 'Pending', @User2Id, @Contact2Id),
-    ('2024-01-22', 'Accepted', @User3Id, @Contact3Id),
-    ('2024-01-23', 'Accepted', @User4Id, @Contact1Id),
-    ('2024-01-24', 'Pending', @User5Id, @Contact2Id);
 
 -- Insertion des évaluations
 INSERT INTO [dbo].[Evaluations]
-    ([EvaluationCommentary], [EvaluationCreatedAt], [EvaluationValue], [FK_User], [FK_Contact])
+    ([EvaluationCommentary], [EvaluationCreatedAt], [EvaluationValue], [FK_Owner], [FK_Sender])
 VALUES
     ('Excellent travail en équipe', '2024-02-01', 5, @User1Id, @Contact1Id),
     ('Bonne communication', '2024-02-02', 4, @User2Id, @Contact2Id),

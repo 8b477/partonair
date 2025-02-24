@@ -65,12 +65,11 @@
     <Build Include="Tables\Users.sql" />
     <Build Include="Tables\Profiles.sql" />
     <Build Include="Tables\Contacts.sql" />
-    <Build Include="Tables\Friendly.sql" />
     <Build Include="Tables\Evaluations.sql" />
   </ItemGroup>
-<ItemGroup>
+  <ItemGroup>
     <PostDeploy Include="Scripts\post-deploy-main.sql" />
-</ItemGroup>
+  </ItemGroup>
   <ItemGroup>
     <None Include="Profiles\Database.partonair.publish.xml" />
   </ItemGroup>
