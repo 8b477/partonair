@@ -49,16 +49,29 @@ DECLARE @Contact2Id UNIQUEIDENTIFIER = NEWID();
 DECLARE @Contact3Id UNIQUEIDENTIFIER = NEWID();
 DECLARE @Contact4Id UNIQUEIDENTIFIER = NEWID();
 DECLARE @Contact5Id UNIQUEIDENTIFIER = NEWID();
+DECLARE @Contact6Id UNIQUEIDENTIFIER = NEWID();
+DECLARE @Contact7Id UNIQUEIDENTIFIER = NEWID();
+DECLARE @Contact8Id UNIQUEIDENTIFIER = NEWID();
+DECLARE @Contact9Id UNIQUEIDENTIFIER = NEWID();
+DECLARE @Contact10Id UNIQUEIDENTIFIER = NEWID();
 
 INSERT INTO [dbo].[Contacts]
     ([Id], [ContactName], [ContactEmail], [AddedAt], [IsFriendly], [AcceptedAt], [IsBlocked], [BlockedAt], [ContactStatus], [FK_User], [FK_Contact])
 VALUES
-    (@Contact1Id, 'Emma Wilson'    , 'emma.wilson@email.com'    , '2024-01-20 10:30:00', 1, '2024-01-20 11:45:00', 0, NULL, 'Accepted', @User1Id, @User4Id),
-    (@Contact2Id, 'Thomas Anderson', 'thomas.anderson@email.com', '2024-01-21 14:45:00', 0, NULL                 , 0, NULL, 'Pending' , @User2Id, @User5Id),
-    (@Contact3Id, 'Julie Brown'    , 'julie.brown@email.com'    , '2024-01-22 09:15:00', 1, '2024-01-22 10:30:00', 0, NULL, 'Accepted', @User3Id, @User1Id),
-    (@Contact4Id, 'Pierre Bernard' , 'pierre.bernard@email.com' , '2024-01-23 11:00:00', 1, '2024-01-23 13:20:00', 0, NULL, 'Accepted', @User4Id, @User1Id),
-    (@Contact5Id, 'Sophie Dubois'  , 'sophie.dubois@email.com'  , '2024-01-24 16:30:00', 0, NULL                 , 0, NULL, 'Pending' , @User5Id, @User2Id);
+    (@Contact1Id  , 'Marie Martin'   , 'marie.martin@email.com'   , '2024-01-20 10:30:00' , 1, '2024-01-20 11:45:00', 0, NULL, 'Accepted', @User1Id, @User2Id),
+    (@Contact2Id  , 'Jean Dupont'    , 'jean.dupont@email.com'    , '2024-01-20 10:30:00' , 1, '2024-01-20 11:45:00', 0, NULL, 'Accepted', @User2Id, @User1Id),
 
+    (@Contact3Id  , 'Lucas Petit'    , 'lucas.petit@email.com'    , '2024-01-21 14:45:00' , 0, NULL                 , 0, NULL, 'Pending' , @User1Id, @User5Id),
+    (@Contact4Id  , 'Jean Dupont'    , 'jean.dupont@email.com'    , '2024-01-21 14:45:00' , 0, NULL                 , 0, NULL, 'Pending' , @User5Id, @User1Id),
+
+    (@Contact5Id  , 'Lucas Petit'    , 'lucas.petit@email.com'    , '2024-01-22 09:15:00' , 1, '2024-01-22 10:30:00', 0, NULL, 'Accepted', @User3Id, @User5Id),
+    (@Contact6Id  , 'Pierre Bernard' , 'pierre.bernard@email.com' , '2024-01-22 09:15:00' , 1, '2024-01-22 10:30:00', 0, NULL, 'Accepted', @User5Id, @User3Id),
+
+    (@Contact7Id  , 'Pierre Bernard' , 'pierre.bernard@email.com' , '2024-01-23 11:00:00' , 1, '2024-01-23 13:20:00', 0, NULL, 'Accepted', @User4Id, @User3Id),
+    (@Contact8Id  , 'Sophie Dubois'  , 'sophie.dubois@email.com'  , '2024-01-23 11:00:00' , 1, '2024-01-23 13:20:00', 0, NULL, 'Accepted', @User3Id, @User4Id),
+
+    (@Contact9Id  , 'Marie Martin'   , 'marie.martin@email.com'   ,  '2024-01-24 16:30:00', 0, NULL                 , 0, NULL, 'Pending' , @User5Id, @User2Id),
+    (@Contact10Id , 'Lucas Petit'    , 'lucas.petit@email.com'    , '2024-01-24 16:30:00' , 0, NULL                 , 0, NULL, 'Pending' , @User2Id, @User5Id);
 
 -- Insertion des évaluations
 DECLARE @Evaluation1Id UNIQUEIDENTIFIER = NEWID();
