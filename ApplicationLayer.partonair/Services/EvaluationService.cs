@@ -1,7 +1,9 @@
 ﻿using ApplicationLayer.partonair.DTOs;
 using ApplicationLayer.partonair.Interfaces;
+using ApplicationLayer.partonair.Mappers;
 
 using DomainLayer.partonair.Contracts;
+using DomainLayer.partonair.Entities;
 
 
 namespace ApplicationLayer.partonair.Services
@@ -10,29 +12,115 @@ namespace ApplicationLayer.partonair.Services
     {
         private readonly IUnitOfWork _UOW = UOW;
 
-        public Task<EvaluationViewDTO> CreateAsyncService(EvaluationCreateDTO eval)
+
+        #region COMMANDS
+        public async Task<EvaluationViewDTO> CreateAsyncService(Guid idOwner, EvaluationCreateDTO eval)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _UOW.BeginTransactionAsync();
+
+                var existingOwner = await _UOW.Users.GetByGuidAsync(idOwner);
+                var existingSender = await _UOW.Users.GetByGuidAsync(eval.Id_Sender);
+
+                Evaluation entity = eval.ToEntity(existingOwner, existingSender);
+
+                var created = await _UOW.Evaluations.CreateAsync(entity);
+
+                await _UOW.SaveChangesAsync();
+                await _UOW.CommitTransactionAsync();
+
+                return created.ToView();
+            }
+            catch
+            {
+                await _UOW.RollbackTransactionAsync();
+                throw;
+            }
         }
 
-        public Task DeleteAsyncService(Guid id)
+        public async Task<EvaluationViewDTO> UpdateAsyncService(Guid idEval, EvaluationUpdateDTO eval)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _UOW.BeginTransactionAsync();
+
+                var existingEvaluation = await _UOW.Evaluations.GetByGuidAsync(idEval);
+
+                Evaluation evalToUpdate = CompareAndUpdateValueNotNull(existingEvaluation, eval);
+
+                var updated = await _UOW.Evaluations.Update(evalToUpdate);
+
+                await _UOW.SaveChangesAsync();
+                await _UOW.CommitTransactionAsync();
+
+                return updated.ToView();
+            }
+            catch
+            {
+                await _UOW.RollbackTransactionAsync();
+                throw;
+            }
         }
 
-        public Task<ICollection<EvaluationViewDTO>> GetAllFilteredbyUserAsyncService()
+        public async Task DeleteAsyncService(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _UOW.BeginTransactionAsync();
+
+                var existingEval = await _UOW.Evaluations.GetByGuidAsync(id);
+
+                await _UOW.Evaluations.Delete(existingEval.Id);
+                await _UOW.SaveChangesAsync();
+                await _UOW.CommitTransactionAsync();
+
+                return;
+            }
+            catch
+            {
+                await _UOW.RollbackTransactionAsync();
+                throw;
+            }
         }
 
-        public Task<EvaluationViewDTO> GetByGuidAsyncService(Guid id)
+        #endregion
+
+
+
+        #region QUERIES
+
+        public async Task<ICollection<EvaluationViewDTO>> GetAllGrouppByUserAsyncService()
         {
-            throw new NotImplementedException();
+            var result = await _UOW.Evaluations.GetAllAsync();
+
+            return result
+                        .Select(e => e.ToView())
+                        .ToList();
         }
 
-        public Task<EvaluationViewDTO> UpdateAsyncService(EvaluationUpdateDTO eval)
+        public async Task<EvaluationViewDTO> GetByGuidAsyncService(Guid id)
         {
-            throw new NotImplementedException();
+            var result = await _UOW.Evaluations.GetByGuidAsync(id);
+
+            return result.ToView();
         }
+
+        #endregion
+
+
+
+        #region PRIVATE METHODS
+        private static Evaluation CompareAndUpdateValueNotNull(Evaluation existingEval, EvaluationUpdateDTO newEval)
+        {
+            existingEval.EvaluationCommentary = newEval.Commentary ?? existingEval.EvaluationCommentary;
+            existingEval.EvaluationValue = newEval.Value ?? existingEval.EvaluationValue;
+            existingEval.EvaluationUpdatedAt = DateTime.Now;
+
+            return existingEval;
+        }
+        #endregion
+
+
     }
 }

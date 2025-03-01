@@ -7,10 +7,12 @@ namespace DomainLayer.partonair.Entities
         public Guid Id { get; set; }
         public string EvaluationCommentary { get; set; }
         public DateTime EvaluationCreatedAt { get; set; }
-        public DateTime EvaluationUpdatedAt { get; set; }
+        public DateTime? EvaluationUpdatedAt { get; set; }
         public int EvaluationValue { get; set; }
 
-        public User FK_Owner { get; set; }
-        public User FK_Sender { get; set; }
+        public Guid FK_Owner { get; set; }
+        public User Owner { get; set; }
+        public Guid FK_Sender { get; set; }
+        public User Sender { get; set; }
     }
 }

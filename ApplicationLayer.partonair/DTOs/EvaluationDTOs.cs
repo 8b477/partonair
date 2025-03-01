@@ -6,6 +6,8 @@ namespace ApplicationLayer.partonair.DTOs
 {
     public record EvaluationCreateDTO
         (   
+            Guid Id_Sender,
+
             [Required(ErrorMessage = "The field is required")]
             [MinLength(5,ErrorMessage = "The field must contain 5 characters")]
             [MaxLength(255,ErrorMessage = "The field should contain max 255 characters")]
@@ -18,6 +20,7 @@ namespace ApplicationLayer.partonair.DTOs
 
     public record EvaluationUpdateDTO
         (
+            Guid Id_Sender,
             string? Commentary,
             int? Value
         );

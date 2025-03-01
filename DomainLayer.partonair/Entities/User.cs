@@ -18,16 +18,12 @@ namespace DomainLayer.partonair.Entities
         public DateTime LastConnection { get; set; }
         public Roles Role { get; set; }
 
-        // Navigation Property
-        // Why is may be null ?
-        // Because apply zero constraint for the user, he is free to add profil or no.
         public Guid? FK_Profile { get; set; }
         public Profile? Profile { get; set; }
 
-        // requestor
-        public ICollection<Contact> RequestedContacts { get; set; } = new List<Contact>();
-
-        // recipient
-        public ICollection<Contact> ReceivedContacts { get; set; } = new List<Contact>();
+        public ICollection<Contact> RequestedContacts { get; set; } = [];
+        public ICollection<Contact> ReceivedContacts { get; set; } = [];
+        public ICollection<Evaluation> RequestedEvaluations { get; set; } = [];
+        public ICollection<Evaluation> ReceivedEvaluations { get; set; } = [];
     }
 }

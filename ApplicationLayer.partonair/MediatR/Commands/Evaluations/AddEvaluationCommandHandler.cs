@@ -3,6 +3,7 @@ using ApplicationLayer.partonair.Interfaces;
 
 using MediatR;
 
+
 namespace ApplicationLayer.partonair.MediatR.Commands.Evaluations
 {
     public class AddEvaluationCommandHandler(IEvaluationService evaluationService) : IRequestHandler<AddEvaluationCommand, EvaluationViewDTO>
@@ -10,7 +11,7 @@ namespace ApplicationLayer.partonair.MediatR.Commands.Evaluations
         private readonly IEvaluationService _evaluationService = evaluationService;
         public async Task<EvaluationViewDTO> Handle(AddEvaluationCommand request, CancellationToken cancellationToken)
         {
-            return await _evaluationService.CreateAsyncService(request.Eval);
+            return await _evaluationService.CreateAsyncService(request.IdOwner,request.Eval);
         }
     }
 }

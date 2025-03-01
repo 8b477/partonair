@@ -39,17 +39,17 @@ namespace API.partonair.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(EvaluationCreateDTO eval)
+        public async Task<IActionResult> CreateAsync(Guid idOwner,EvaluationCreateDTO eval)
         {
-            var evaluationCreated = await _mediator.Send(new AddEvaluationCommand(eval));
+            var evaluationCreated = await _mediator.Send(new AddEvaluationCommand(idOwner,eval));
 
             return Ok(evaluationCreated);
         }
 
         [HttpPatch]
-        public async Task<IActionResult> UpdateAsync(EvaluationUpdateDTO eval)
+        public async Task<IActionResult> UpdateAsync(Guid idEval,EvaluationUpdateDTO eval)
         {
-            var evaluationCreated = await _mediator.Send(new UpdateEvaluationCommand(eval));
+            var evaluationCreated = await _mediator.Send(new UpdateEvaluationCommand(idEval,eval));
 
             return Ok(evaluationCreated);
         }

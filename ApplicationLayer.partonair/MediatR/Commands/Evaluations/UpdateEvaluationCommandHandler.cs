@@ -11,7 +11,7 @@ namespace ApplicationLayer.partonair.MediatR.Commands.Evaluations
         private readonly IEvaluationService _evaluationService = evaluationService;
         public async Task<EvaluationViewDTO> Handle(UpdateEvaluationCommand request, CancellationToken cancellationToken)
         {
-            return await _evaluationService.UpdateAsyncService(request.Eval);
+            return await _evaluationService.UpdateAsyncService(request.IdEval,request.Eval);
         }
     }
 }
