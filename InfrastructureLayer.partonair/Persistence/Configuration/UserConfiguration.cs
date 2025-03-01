@@ -22,8 +22,12 @@ namespace InfrastructureLayer.partonair.Persistence.Configuration
                 .IsRequired(false);
 
             builder
-                .HasMany<Contact>(u => u.Contacts)
-                .WithOne(c => c.Requestor) ;
+                .HasMany<Contact>(u => u.RequestedContacts)
+                .WithOne(c => c.Sender) ;
+
+            builder
+                .HasMany<Contact>(u => u.ReceivedContacts)
+                .WithOne(c => c.Receiver);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace InfrastructureLayer.partonair.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new ContactConfiguration());
         }
     }
 }

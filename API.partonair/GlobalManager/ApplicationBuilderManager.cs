@@ -14,7 +14,7 @@
 
         public static WebApplication ConfigureExceptionHandling(this WebApplication app)
         {
-            app.UseExceptionHandler();
+            //app.UseExceptionHandler();
             app.UseStatusCodePages();
 
             return app;

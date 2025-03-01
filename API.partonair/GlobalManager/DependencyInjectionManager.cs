@@ -1,8 +1,8 @@
 ﻿using DomainLayer.partonair.Contracts;
 
 using ApplicationLayer.partonair.Interfaces;
-using ApplicationLayer.partonair.MediatR.Queries.Users;
 using ApplicationLayer.partonair.Services;
+using ApplicationLayer.partonair.MediatR.Configurations;
 
 using InfrastructureLayer.partonair.Repositories;
 
@@ -16,7 +16,10 @@ namespace API.partonair.GlobalManager
         public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
         {
             // MEDIATR
-            services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(GetByIdUserQueryHandler).Assembly));
+            services.AddMediatR(config =>
+            {
+                config.RegisterServicesFromAssembly(typeof(ApplicationLayerMediatRConfiguration).Assembly);
+            });
 
             // USER
             services.AddScoped<IUserService, UserService>();
@@ -24,11 +27,18 @@ namespace API.partonair.GlobalManager
             // PROFILE
             services.AddScoped<IProfileService, ProfileService>();
 
+            // CONTACT
+            services.AddScoped<IContactService, ContactService>();
+
+            // EVALUATION
+            services.AddScoped<IEvaluationService, EvaluationService>();
+
             // UNIT OF WORK
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // BCrypt
             services.AddScoped<IBCryptService, BCryptService>();
+
 
             return services;
         }
@@ -41,6 +51,13 @@ namespace API.partonair.GlobalManager
 
             //PROFILE
             services.AddScoped<IProfileRepository, ProfileRepository>();
+
+            // CONTACT
+            services.AddScoped<IContactRepository, ContactRepository>();
+
+            // EVALUATION
+            services.AddScoped<IEvaluationRepository, EvaluationRepository>();
+
             return services;
         }
 

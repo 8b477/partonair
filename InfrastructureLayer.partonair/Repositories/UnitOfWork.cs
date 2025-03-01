@@ -21,6 +21,12 @@ namespace InfrastructureLayer.partonair.Repositories
 
         private IProfileRepository? _profileRepository;
         public IProfileRepository Profiles => _profileRepository ??= new ProfileRepository(_context);
+
+        private IContactRepository? _contactRepository;
+        public IContactRepository Contacts => _contactRepository ??= new ContactRepository(_context);
+
+        private IEvaluationRepository? _evaluationRepository;
+        public IEvaluationRepository Evaluations => _evaluationRepository ??= new EvaluationRepository(_context);
         // ---
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

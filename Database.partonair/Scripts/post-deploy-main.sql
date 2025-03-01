@@ -56,7 +56,7 @@ DECLARE @Contact9Id UNIQUEIDENTIFIER = NEWID();
 DECLARE @Contact10Id UNIQUEIDENTIFIER = NEWID();
 
 INSERT INTO [dbo].[Contacts]
-    ([Id], [ContactName], [ContactEmail], [AddedAt], [IsFriendly], [AcceptedAt], [IsBlocked], [BlockedAt], [ContactStatus], [FK_User], [FK_Contact])
+    ([Id], [ContactName], [ContactEmail], [AddedAt], [IsFriendly], [AcceptedAt], [IsBlocked], [BlockedAt], [ContactStatus], [Id_Sender], [Id_Receiver])
 VALUES
     (@Contact1Id  , 'Marie Martin'   , 'marie.martin@email.com'   , '2024-01-20 10:30:00' , 1, '2024-01-20 11:45:00', 0, NULL, 'Accepted', @User1Id, @User2Id),
     (@Contact2Id  , 'Jean Dupont'    , 'jean.dupont@email.com'    , '2024-01-20 10:30:00' , 1, '2024-01-20 11:45:00', 0, NULL, 'Accepted', @User2Id, @User1Id),

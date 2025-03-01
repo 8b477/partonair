@@ -24,6 +24,10 @@ namespace DomainLayer.partonair.Entities
         public Guid? FK_Profile { get; set; }
         public Profile? Profile { get; set; }
 
-        public ICollection<Contact>? Contacts { get; set; }
+        // requestor
+        public ICollection<Contact> RequestedContacts { get; set; } = new List<Contact>();
+
+        // recipient
+        public ICollection<Contact> ReceivedContacts { get; set; } = new List<Contact>();
     }
 }

@@ -6,6 +6,7 @@ namespace DomainLayer.partonair.Enums
     {
         Pending,
         Accepted,
+        Blocked,
         Refused
     }
 }
