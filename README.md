@@ -31,27 +31,6 @@
 ## 🐳 Conteneurisation
 - **Docker** - [Cheat Sheet](#docker)
 
-## 📦 Packages NuGet principaux
-
-### 🪄 Couche API
-- MediatR  
-- Microsoft.EntityFrameworkCore.SqlServer  
-- Microsoft.VisualStudio.Azure.Containers.Tools.Targets  
-- Swashbuckle.AspNetCore  
-- Microsoft.AspNetCore.Authentication.JwtBearer  
-
-### 🧠 Couche Application
-- MediatR  
-- FluentValidation.AspNetCore  
-- BCrypt.Net-Next
-  
-### 🗃️ Couche Infrastructure
-- Microsoft.EntityFrameworkCore  
-- Microsoft.EntityFrameworkCore.SqlServer  
-
-### 🧪 Couche Tests
-- xUnit.net
-
 --------
 --------
 
