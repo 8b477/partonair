@@ -10,7 +10,7 @@ using Moq;
 
 namespace TestingLayer.partonair.UserTest
 {
-    public class ExtendBaseUserApplicationServiceTestFixture
+    public class BaseUserApplicationServiceTestFixture
     {
         protected readonly Mock<IUnitOfWork> _mockUoW;
         protected readonly Mock<IUserRepository> _mockUserRepo;
@@ -18,7 +18,7 @@ namespace TestingLayer.partonair.UserTest
         protected readonly Mock<ILogger<UserService>> _mockLogger;
         protected readonly UserService _userService;
 
-        public ExtendBaseUserApplicationServiceTestFixture()
+        public BaseUserApplicationServiceTestFixture()
         {
             _mockUoW = new();
             _mockUserRepo = new();

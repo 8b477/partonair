@@ -6,7 +6,7 @@ using Moq;
 
 namespace TestingLayer.partonair.UserTest.Services
 {
-    public class DeleteServiceTest : ExtendBaseUserApplicationServiceTestFixture
+    public class DeleteServiceTest : BaseUserApplicationServiceTestFixture
     {
         private readonly Guid _id;
         public DeleteServiceTest() => _id = Guid.NewGuid();

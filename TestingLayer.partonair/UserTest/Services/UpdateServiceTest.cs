@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace TestingLayer.partonair.UserTest.Services
 {
-    public class UpdateServiceTest : ExtendBaseUserApplicationServiceTestFixture
+    public class UpdateServiceTest : BaseUserApplicationServiceTestFixture
     {
         private readonly Guid _id;
         private readonly User _existingUser;

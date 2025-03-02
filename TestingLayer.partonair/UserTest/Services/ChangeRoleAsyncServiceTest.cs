@@ -7,7 +7,7 @@ using Moq;
 
 namespace TestingLayer.partonair.UserTest.Services
 {
-    public class ChangeRoleAsyncServiceTest : ExtendBaseUserApplicationServiceTestFixture
+    public class ChangeRoleAsyncServiceTest : BaseUserApplicationServiceTestFixture
     {
         private readonly Guid _id;
         private readonly UserChangeRoleDTO _userVisitor;

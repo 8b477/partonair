@@ -11,7 +11,7 @@ using TestingLayer.partonair.UserTest.Constants;
 
 namespace TestingLayer.partonair.UserTest.Services
 {
-    public class CreateAsyncServiceTest : ExtendBaseUserApplicationServiceTestFixture
+    public class CreateAsyncServiceTest : BaseUserApplicationServiceTestFixture
     {
         private readonly UserCreateDTO _dto = new(UserConstants.NAME, UserConstants.EMAIL, UserConstants.PASSWORD);
         private readonly User _entity = new() { Id = Guid.NewGuid(), UserName = UserConstants.NAME, Email = UserConstants.EMAIL, IsPublic = false, Profile = null, FK_Profile = null, LastConnection = DateTime.Now, UserCreatedAt = DateTime.Now, PasswordHashed = UserConstants.PASSWORD_HASHED,Role = DomainLayer.partonair.Enums.Roles.Visitor};
