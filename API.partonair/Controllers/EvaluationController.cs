@@ -39,7 +39,7 @@ namespace API.partonair.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(Guid idOwner,EvaluationCreateDTO eval)
+        public async Task<IActionResult> CreateAsync([FromQuery] Guid idOwner, EvaluationCreateDTO eval)
         {
             var evaluationCreated = await _mediator.Send(new AddEvaluationCommand(idOwner,eval));
 

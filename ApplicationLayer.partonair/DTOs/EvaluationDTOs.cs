@@ -6,7 +6,7 @@ namespace ApplicationLayer.partonair.DTOs
 {
     public record EvaluationCreateDTO
         (   
-            Guid Id_Sender,
+            Guid Id_Owner,
 
             [Required(ErrorMessage = "The field is required")]
             [MinLength(5,ErrorMessage = "The field must contain 5 characters")]
@@ -25,5 +25,5 @@ namespace ApplicationLayer.partonair.DTOs
             int? Value
         );
 
-    public record EvaluationViewDTO(Guid Id, DateTime CreatedAt, DateTime? UpdateAt, int Value, Guid Id_Owner, Guid Id_Sender);
+    public record EvaluationViewDTO(Guid Id, DateTime CreatedAt, DateTime? UpdateAt, int Value, string Commentary, Guid Id_Owner, string OwnerName, Guid Id_Sender, string SenderName);
 }

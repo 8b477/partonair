@@ -1,5 +1,7 @@
 ﻿using DomainLayer.partonair.Contracts;
 using DomainLayer.partonair.Entities;
+using DomainLayer.partonair.Exceptions;
+using DomainLayer.partonair.Exceptions.Enums;
 
 using InfrastructureLayer.partonair.Persistence;
 
@@ -20,5 +22,17 @@ namespace InfrastructureLayer.partonair.Repositories
 
             return result ?? [];
         }
+
+        public override async Task<Evaluation> GetByGuidAsync(Guid id)
+        {
+            var result = await _dbSet
+                                    .Where(e => e.Id == id)
+                                    .Include(e => e.Owner)
+                                    .Include(e => e.Sender)
+                                    .FirstOrDefaultAsync();
+
+            return result ?? throw new InfrastructureLayerException(InfrastructureLayerErrorType.EntityIsNullException, $"Identifier : {id} - No match");
+        }
+
     }
 }

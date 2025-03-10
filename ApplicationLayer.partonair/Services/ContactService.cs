@@ -32,9 +32,9 @@ namespace ApplicationLayer.partonair.Services
 
                 var receiver = await _UOW.Users.GetByGuidAsync(contact.Id_Receiver);
                 var sender = await _UOW.Users.GetByGuidAsync(contact.Id_Sender);
-                var existingContact = await _UOW.Contacts.FindContactAsync(sender.Id,receiver.Id);
-
-                if (existingContact is not null)
+                var existingContact = await _UOW.Contacts.CheckIsContactExist(receiver.Id, sender.Id);
+                
+                if (existingContact)
                     throw new ApplicationLayerException(ApplicationLayerErrorType.ConstraintViolationErrorException, "The contact you wish to add is already in the friends list, please check your request");
 
                 var contactEntity = contact.ToEntity(receiver, sender);

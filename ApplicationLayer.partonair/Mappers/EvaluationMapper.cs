@@ -17,7 +17,7 @@ namespace ApplicationLayer.partonair.Mappers
                 EvaluationValue = eval.Value,
                 FK_Owner = existingOwner.Id,
                 Owner = existingOwner,
-                FK_Sender = eval.Id_Sender,
+                FK_Sender = sender.Id,
                 Sender = sender
             };
         }
@@ -30,8 +30,11 @@ namespace ApplicationLayer.partonair.Mappers
                     eval.EvaluationCreatedAt,
                     eval.EvaluationUpdatedAt,
                     eval.EvaluationValue,
+                    eval.EvaluationCommentary,
                     eval.Owner.Id,
-                    eval.Sender.Id
+                    eval.Owner.UserName,
+                    eval.Sender.Id,
+                    eval.Sender.UserName
                 );
         }
     }

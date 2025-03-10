@@ -14,14 +14,14 @@ namespace ApplicationLayer.partonair.Services
 
 
         #region COMMANDS
-        public async Task<EvaluationViewDTO> CreateAsyncService(Guid idOwner, EvaluationCreateDTO eval)
+        public async Task<EvaluationViewDTO> CreateAsyncService(Guid idSender, EvaluationCreateDTO eval)
         {
             try
             {
                 await _UOW.BeginTransactionAsync();
 
-                var existingOwner = await _UOW.Users.GetByGuidAsync(idOwner);
-                var existingSender = await _UOW.Users.GetByGuidAsync(eval.Id_Sender);
+                var existingOwner = await _UOW.Users.GetByGuidAsync(eval.Id_Owner);
+                var existingSender = await _UOW.Users.GetByGuidAsync(idSender);
 
                 Evaluation entity = eval.ToEntity(existingOwner, existingSender);
 
@@ -71,7 +71,20 @@ namespace ApplicationLayer.partonair.Services
 
                 var existingEval = await _UOW.Evaluations.GetByGuidAsync(id);
 
+                var ownerEvaluated = await _UOW.Users.GetByGuidAsync(existingEval.FK_Owner);
+                var senderEvaluation = await _UOW.Users.GetByGuidAsync(existingEval.FK_Sender);
+
+                var evaluationOwnerToUp = ownerEvaluated.ReceivedEvaluations.Select(e => e.Id == existingEval.Id);
+                var evaluationSenderToUp = senderEvaluation.RequestedEvaluations.Select(e => e.Id == existingEval.Id);
+
+                ownerEvaluated.ReceivedEvaluations.Remove(existingEval);
+                senderEvaluation.RequestedEvaluations.Remove(existingEval);
+
+                await _UOW.Users.Update(ownerEvaluated);
+                await _UOW.Users.Update(senderEvaluation);
+
                 await _UOW.Evaluations.Delete(existingEval.Id);
+
                 await _UOW.SaveChangesAsync();
                 await _UOW.CommitTransactionAsync();
 

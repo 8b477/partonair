@@ -87,7 +87,7 @@ namespace InfrastructureLayer.partonair.Repositories
             }
         }
 
-        public async Task<T> GetByGuidAsync(Guid id)
+        public virtual async Task<T> GetByGuidAsync(Guid id)
         {
             try
             {

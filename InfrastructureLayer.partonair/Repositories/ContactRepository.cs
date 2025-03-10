@@ -69,5 +69,16 @@ namespace InfrastructureLayer.partonair.Repositories
 
             return result ?? [];
         }
+
+        public async Task<bool> CheckIsContactExist(Guid idToCheck1, Guid idToCheck2)
+        {
+            var result1 = await _dbSet.Where(c => c.Id_Sender == idToCheck1 && c.Id_Receiver == idToCheck2).FirstOrDefaultAsync();
+            var result2 = await _dbSet.Where(c => c.Id_Receiver == idToCheck1 && c.Id_Sender == idToCheck2).FirstOrDefaultAsync();
+
+            if (result1 != null || result2 != null)
+                return true;
+
+            return false;
+        }
     }
 }

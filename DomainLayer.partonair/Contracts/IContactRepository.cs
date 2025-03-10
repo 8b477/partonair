@@ -11,5 +11,6 @@ namespace DomainLayer.partonair.Contracts
         Task<ICollection<Contact>> GetByPendingStatusAsync(StatusContact status);
         Task<ICollection<Contact>> GetByAcceptedStatusAsync(StatusContact status);
         Task<ICollection<Contact>> GetByBlockedStatusAsync(StatusContact status);
+        Task<bool> CheckIsContactExist(Guid idToCheck1, Guid idToCheck2);
     }
 }
