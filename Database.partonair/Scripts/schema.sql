@@ -1,5 +1,3 @@
--- schema.sql
-
 -- Crée la base de données si elle n'existe pas déjà
 IF DB_ID('partonair') IS NULL
 BEGIN
@@ -8,14 +6,6 @@ END;
 
 -- Bascule sur la base de données partonair
 USE partonair;
-
--- Supprime les tables si elles existent déjà (dans l'ordre pour éviter les problèmes de clés étrangères)
-IF OBJECT_ID('dbo.Evaluations', 'U') IS NOT NULL DROP TABLE dbo.Evaluations;
-IF OBJECT_ID('dbo.Friendly', 'U') IS NOT NULL DROP TABLE dbo.Friendly;
-IF OBJECT_ID('dbo.Contacts', 'U') IS NOT NULL DROP TABLE dbo.Contacts;
-IF OBJECT_ID('dbo.Users', 'U') IS NOT NULL DROP TABLE dbo.Users;
-IF OBJECT_ID('dbo.Profiles', 'U') IS NOT NULL DROP TABLE dbo.Profiles;
-
 
 -- Création des tables
 CREATE TABLE [dbo].[Users] (
@@ -33,40 +23,36 @@ CREATE TABLE [dbo].[Users] (
 CREATE TABLE [dbo].[Profiles] (
     [Id] UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
     [ProfileDescription] NVARCHAR(MAX) NOT NULL,
-    [FK_User] UNIQUEIDENTIFIER NOT NULL,
-    FOREIGN KEY ([FK_User]) REFERENCES [Users]([Id])
+	[FK_User] UNIQUEIDENTIFIER FOREIGN KEY REFERENCES [Users](Id) NOT NULL
 );
 
 -- Ajout de la clé étrangère après la création de Profiles
 ALTER TABLE [dbo].[Users] 
 ADD FOREIGN KEY ([FK_Profile]) REFERENCES [Profiles]([Id]);
 
-CREATE TABLE [dbo].[Contacts] (
-    [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL,
-    [ContactName] VARCHAR(200) NOT NULL,
-    [ContactEmail] VARCHAR(250) NOT NULL
+CREATE TABLE [dbo].[Contacts]
+(
+	[Id] UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
+	[ContactName] VARCHAR(200) NOT NULL,
+	[ContactEmail] VARCHAR(250) NOT NULL,
+	[AddedAt] DATETIME NOT NULL,
+	[IsFriendly] BIT NOT NULL,
+	[AcceptedAt] DATETIME,
+	[IsBlocked] BIT NOT NULL,
+	[BlockedAt] DATETIME,
+	[ContactStatus] VARCHAR(50) DEFAULT 'Pending' NOT NULL,
+	[Id_Sender] UNIQUEIDENTIFIER FOREIGN KEY REFERENCES [Users](Id) NOT NULL,
+	[Id_Receiver] UNIQUEIDENTIFIER FOREIGN KEY REFERENCES [Users](Id) NOT NULL
 );
 
-CREATE TABLE [dbo].[Friendly] (
-    [Id] UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
-    [AddedAt] DATETIME NOT NULL,
-    [RemovedAt] DATETIME,
-    [FriendlyStatus] VARCHAR(50) DEFAULT 'Pending',
-    [FK_User] UNIQUEIDENTIFIER NOT NULL,
-    [Fk_Contact] UNIQUEIDENTIFIER NOT NULL,
-    FOREIGN KEY ([FK_User]) REFERENCES [Users]([Id]),
-    FOREIGN KEY ([Fk_Contact]) REFERENCES [Contacts]([Id])
-);
-
-CREATE TABLE [dbo].[Evaluations] (
-    [Id] UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
-    [EvaluationCommentary] NVARCHAR(MAX) NOT NULL,
-    [EvaluationCreatedAt] DATETIME NOT NULL,
-    [EvaluationUpdatedAt] DATETIME,
-    [EvaluationValue] INT NOT NULL,
-    [FK_User] UNIQUEIDENTIFIER NOT NULL,
-    [FK_Contact] UNIQUEIDENTIFIER NOT NULL,
-    CONSTRAINT CHK_EvaluationValue_Range CHECK ([EvaluationValue] >= 1 AND [EvaluationValue] <= 5),
-    FOREIGN KEY ([FK_User]) REFERENCES [Users]([Id]),
-    FOREIGN KEY ([FK_Contact]) REFERENCES [Contacts]([Id])
+CREATE TABLE [dbo].[Evaluations]
+(
+	[Id] UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
+	[EvaluationCommentary] NVARCHAR(MAX) NOT NULL,
+	[EvaluationCreatedAt] DATETIME NOT NULL,
+	[EvaluationUpdatedAt] DATETIME,
+	[EvaluationValue] INT NOT NULL,
+	CONSTRAINT CHK_EvaluationValue_Range CHECK ([EvaluationValue] >= 1 AND [EvaluationValue] <= 5),
+	[FK_Owner] UNIQUEIDENTIFIER FOREIGN KEY REFERENCES [Users](Id) NOT NULL,
+	[FK_Sender] UNIQUEIDENTIFIER FOREIGN KEY REFERENCES [Users](Id) NOT NULL
 );

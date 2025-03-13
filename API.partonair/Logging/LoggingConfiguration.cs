@@ -25,7 +25,7 @@ namespace API.partonair.Logging
                     .Enrich.WithThreadId()
                     .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
                     .WriteTo.GrafanaLoki(
-                        uri: configuration["Logging:LokiUrl"],
+                        uri: configuration["Logging:Loki:Url"] ?? throw new ArgumentNullException("Key 'Logging:LokiUrl' is empty"),
                         labels: new[] {
                             new LokiLabel { Key = "app", Value = applicationName },
                             new LokiLabel { Key = "env", Value = context.HostingEnvironment.EnvironmentName }

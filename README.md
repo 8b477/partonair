@@ -30,6 +30,8 @@
 
 ## 🐳 Conteneurisation
 - **Docker** - [Cheat Sheet](#docker)
+- **Loki** Gestion des logs
+- **Grafana** Visualition et analyse de log
 
 --------
 --------
@@ -45,3 +47,7 @@
 - **Remove images**: `docker rmi {ID_Image1} {ID_Image2}`
 - **Check logs**: `docker-compose logs -f`
 - **Check target container logs**: `docker logs {ID_Container}`
+
+URl Swagger UI : http://localhost:5000/swagger/index.html
+URL Grafana : http://localhost:3000
+Tous les logs de connexion et ports exposés sont consultables par service dans le fichier : *docker-compose.yml*

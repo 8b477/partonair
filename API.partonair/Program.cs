@@ -1,4 +1,5 @@
 using API.partonair.GlobalManager;
+using API.partonair.Logging;
 
 using InfrastructureLayer.partonair.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables();
 
-// Temporaire pour Docker
+
 var useDockerConfig = Environment.GetEnvironmentVariable("USE_DOCKER_CONFIG");
 
 if (useDockerConfig == "true")
@@ -18,6 +19,9 @@ if (useDockerConfig == "true")
 }else{
     builder.Services.SqlServerConnectionManager(builder.Configuration);
 }
+
+// Loki Grafana config log
+LoggingConfiguration.ConfigureLogging(builder.Host,builder.Configuration,"partonair");
 
 builder.Services           
                 .AddInfrastructureLayer()

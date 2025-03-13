@@ -25,6 +25,6 @@ echo "Database 'partonair' is ready."
 
 # Exécuter les scripts de création et d'insertion
 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$SA_PASSWORD" -d partonair -i /scripts/schema.sql
-/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$SA_PASSWORD" -d partonair -i /scripts/seed-data.sql
+/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$SA_PASSWORD" -d partonair -i /scripts/post-deploy-main.sql
 
 echo "Database initialization completed successfully!"

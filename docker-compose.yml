@@ -17,6 +17,7 @@ services:
       - partonair-network
     restart: unless-stopped
 
+
   db:
     build:
       context: ./Database.partonair
@@ -40,9 +41,42 @@ services:
       start_period: 20s
     restart: unless-stopped
 
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+      - loki-data:/loki
+    command: -config.file=/etc/loki/local-config.yaml -config.expand-env=true
+    networks:
+      - partonair-network
+    restart: unless-stopped
+
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - loki
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - partonair-network
+    restart: unless-stopped
+
+
 networks:
   partonair-network:
     driver: bridge
 
+
 volumes:
   db-data:
+  loki-data:
+  grafana-data:
